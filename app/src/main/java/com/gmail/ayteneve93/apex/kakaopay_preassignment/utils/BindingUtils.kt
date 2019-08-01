@@ -9,7 +9,7 @@ object BindingUtils {
 
 
     @JvmStatic
-    @BindingAdapter("profileImage")
+    @BindingAdapter("thumbnail")
     fun loadImage(view : ImageView, imageUrl : String) {
         Glide.with(view.context)
             .load(imageUrl).apply(RequestOptions.circleCropTransform())

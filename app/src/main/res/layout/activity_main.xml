@@ -25,16 +25,20 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <fragment
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:name="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListFragment"
-                android:id="@+id/fragment3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mainToolbar"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+        <LinearLayout android:layout_width="0dp" android:layout_height="0dp"
+                      android:visibility="@{safeUnbox(viewModel.mFragmentVisibility) ? View.VISIBLE : View.GONE}"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/mainToolbar">
+            <fragment
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:name="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListFragment"
+                    android:id="@+id/fragment3"
+            />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -58,7 +58,7 @@ class KakaoImageModelManager{
             KakaoImageModelDeserializer()
         ).create()
 
-    fun rxKakaoImageSearchByKeyword(keyword : String, sortOption: KakaoImageSortOption, page : Int, size : Int = 20) : Single<KakaoImageModelList>{
+    fun rxKakaoImageSearchByKeyword(queryKeyword : String, sortOption: KakaoImageSortOption, page : Int, size : Int) : Single<KakaoImageModelList>{
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(OkHttpClient())
@@ -66,7 +66,7 @@ class KakaoImageModelManager{
             .addConverterFactory(GsonConverterFactory.create(kakaoImageModelGson))
             .build()
             .create(KakaoImageSearchApi::class.java)
-            .getImages(keyword, sortOption.optionString, page, size)
+            .getImages(queryKeyword, sortOption.optionString, page, size)
     }
 
 }

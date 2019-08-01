@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">이미지 탐색기</string>
     <string name="developer_name">이상훈</string>
+    <string name="search_view_hint">이미지 검색</string>
     <string name="search_list_title_hint">검색할 이미지의 키워드를 입력해주세요</string>
     <string name="search_list_title">\'%1$s\'(으)로 검색</string>
+    <string name="no_search_result_caption">검색 결과가 없습니다</string>
+    <string name="no_search_result_title">\'%1$s\'의 검색결과가 없습니다</string>
+    <string name="searching">검색중&#8230;</string>
+    <string name="search_error_title">오류가 발생했습니다 </string>
 </resources>

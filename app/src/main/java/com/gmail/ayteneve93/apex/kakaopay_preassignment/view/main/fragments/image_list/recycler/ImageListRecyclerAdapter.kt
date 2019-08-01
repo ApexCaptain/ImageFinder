@@ -1,9 +1,10 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler
 
 import android.app.Application
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
@@ -14,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+@Suppress("spellCheckingInspection")
 class ImageListRecyclerAdapter(
     private val application : Application,
     private val mKakaoImageModelManager : KakaoImageModelManager
@@ -21,6 +23,7 @@ class ImageListRecyclerAdapter(
 
     private val mImageListItemViewModelList : ArrayList<ImageListItemViewModel> = ArrayList()
     private val mCompositeDisposable = CompositeDisposable()
+    private val mAnimAppearMills = 800L
 
     override fun getItemCount(): Int = mImageListItemViewModelList.size
 
@@ -29,7 +32,11 @@ class ImageListRecyclerAdapter(
         holder.apply {
             bind(eachImageListItemViewModel)
             itemView.tag = eachImageListItemViewModel
+            itemView.startAnimation(AnimationUtils.loadAnimation(application, R.anim.anim_item_image).apply {
+                duration = mAnimAppearMills
+            })
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListItemViewHolder {
@@ -40,19 +47,10 @@ class ImageListRecyclerAdapter(
         )
     }
 
-    fun test() {
-        for(x in 1..100) {
-            mImageListItemViewModelList.add(ImageListItemViewModel(application))
-        }
-        Log.d("ayteneve93_test", "notify")
-        notifyDataSetChanged()
-    }
-
-    @Suppress("spellCheckingInspection")
-    fun searchImage(keyword : String, sortOption: KakaoImageSortOption, page : Int, size : Int = 20) {
+    fun searchImage(queryKeyword : String, sortOption: KakaoImageSortOption, page : Int, size : Int, onSearchResult : (isError : Boolean, errorMessage : String?, isEmpty : Boolean, isEnd : Boolean) -> Unit) {
         mImageListItemViewModelList.clear()
         mCompositeDisposable.add(
-            mKakaoImageModelManager.rxKakaoImageSearchByKeyword(keyword, sortOption, page, size)
+            mKakaoImageModelManager.rxKakaoImageSearchByKeyword(queryKeyword, sortOption, page, size)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -60,16 +58,14 @@ class ImageListRecyclerAdapter(
                         it.documents.forEach { eachKakaoImageModel ->
                             mImageListItemViewModelList.add(ImageListItemViewModel(application).apply {
                                 mKakaoImageModel = eachKakaoImageModel
-
-
-
-
                             })
                         }
                         notifyDataSetChanged()
+                        onSearchResult(false, null, mImageListItemViewModelList.isEmpty(), it.isEnd)
                     },
                     {
-
+                        notifyDataSetChanged()
+                        onSearchResult(true, it.message, true, true)
                     })
         )
     }

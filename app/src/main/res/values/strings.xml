@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Image Finder</string>
     <string name="developer_name">SangHun Lee</string>
+    <string name="search_view_hint">Image Search</string>
     <string name="search_list_title_hint">Please, input your image keyword</string>
     <string name="search_list_title">Searched by \'%1$s\'</string>
+    <string name="no_search_result_caption">No Search Result</string>
+    <string name="no_search_result_title">No Search Result for \'%1$s\'</string>
+    <string name="searching">Searching&#8230;</string>
+    <string name="search_error_title">Error occurred </string>
 </resources>

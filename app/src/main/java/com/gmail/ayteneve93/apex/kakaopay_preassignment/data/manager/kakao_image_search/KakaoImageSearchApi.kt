@@ -12,7 +12,7 @@ interface KakaoImageSearchApi {
     @Headers("Authorization: KakaoAK 096880bf3645de9453d183477e88f9f2")
     @GET("v2/search/image")
     fun getImages(
-        @Query(value = "query", encoded = true) keyword : String,
+        @Query(value = "query", encoded = true) queryKeyword : String,
         @Query(value = "sort", encoded = true) sortOptionString : String,
         @Query(value = "page", encoded = true) page : Int,
         @Query(value = "size", encoded = true) size : Int
