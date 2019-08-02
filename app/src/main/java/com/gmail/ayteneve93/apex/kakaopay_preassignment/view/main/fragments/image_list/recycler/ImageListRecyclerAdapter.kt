@@ -1,9 +1,9 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler
 
 import android.app.Application
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,11 +11,12 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.ItemImageListBinding
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-@Suppress("spellCheckingInspection")
+@Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 class ImageListRecyclerAdapter(
     private val application : Application,
     private val mKakaoImageModelManager : KakaoImageModelManager
@@ -47,10 +48,12 @@ class ImageListRecyclerAdapter(
         )
     }
 
-    fun searchImage(queryKeyword : String, sortOption: KakaoImageSortOption, page : Int, size : Int, onSearchResult : (isError : Boolean, errorMessage : String?, isEmpty : Boolean, isEnd : Boolean) -> Unit) {
+    fun searchImage(queryKeyword : String, sortOption: KakaoImageSortOption, pageNumber : Int, size : Int,
+                    onSearchResult : (isError : Boolean, errorMessage : String?, isEmpty : Boolean, isEnd : Boolean) -> Unit) {
         mImageListItemViewModelList.clear()
+        mCompositeDisposable.clear()
         mCompositeDisposable.add(
-            mKakaoImageModelManager.rxKakaoImageSearchByKeyword(queryKeyword, sortOption, page, size)
+            mKakaoImageModelManager.rxKakaoImageSearchByKeyword(queryKeyword, sortOption, pageNumber, size)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

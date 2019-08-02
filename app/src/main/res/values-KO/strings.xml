@@ -2,10 +2,18 @@
     <string name="app_name">이미지 탐색기</string>
     <string name="developer_name">이상훈</string>
     <string name="search_view_hint">이미지 검색</string>
-    <string name="search_list_title_hint">검색할 이미지의 키워드를 입력해주세요</string>
+    <string name="search_list_title_hint">키워드를 입력해주세요</string>
     <string name="search_list_title">\'%1$s\'(으)로 검색</string>
     <string name="no_search_result_caption">검색 결과가 없습니다</string>
     <string name="no_search_result_title">\'%1$s\'의 검색결과가 없습니다</string>
     <string name="searching">검색중&#8230;</string>
     <string name="search_error_title">오류가 발생했습니다 </string>
+    <string name="prev_page_button_text">◀  이전 페이지</string>
+    <string name="next_page_button_text">다음 페이지  ▶</string>
+    <string name="page_count">페이지 %1$d</string>
+
+    <string name="menu_title_search">검색</string>
+    <string name="menu_title_sort_option">정렬기준</string>
+    <string name="menu_title_sort_accuracy">정확도순</string>
+    <string name="menu_title_sort_recency">최신순</string>
 </resources>

@@ -5,37 +5,76 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
+import org.koin.ext.isInt
+
 
 class ImageListViewModel(
-    application: Application
+    application: Application,
+    mPreferenceUtils: PreferenceUtils
 ) : BaseViewModel(application){
 
     private val mApplication : Application = application
+    private val initialPageNumber = 1
+    private val maxPageNumber = 50
 
-    var mTitle = MutableLiveData<CharSequence>().apply { value = application.getString(R.string.search_list_title_hint) }
+    var mSearchResultTitle = MutableLiveData<CharSequence>().apply {
+        value = if(::mRecentQueryKeyword.isInitialized) mApplication.getString(R.string.search_list_title, mRecentQueryKeyword)
+                else application.getString(R.string.search_list_title_hint)
+    }
     var mAbnormalResultMessage = MutableLiveData<CharSequence>().apply { value = application.getString(R.string.no_search_result_caption) }
-    private lateinit var mRecentQueryKeyword : String
-    var mSortOption = ObservableField(KakaoImageSortOption.ACCURACY)
-    var mPage = ObservableField(1)
+    var mPageNumberText = MutableLiveData<CharSequence>()
     var mNoSearchResult = ObservableField(false)
+    var mSortOption = mPreferenceUtils.getSortOption()
+    var mPrevPageButtonAvailability = ObservableField(false)
+    var mNextPageButtonAvailability = ObservableField(false)
+    var mPageButtonVisibility = ObservableField(false)
+    var mPageNumber = initialPageNumber
+    private lateinit var mRecentQueryKeyword : String
 
-    lateinit var onQueryChangedListener : (queryKeyword : String, sortOption : KakaoImageSortOption, page : Int) -> Unit
+    lateinit var onQueryChangedListener : (queryKeyword : String, sortOption : KakaoImageSortOption, pageNumber : Int) -> Unit
     fun inputNewKeyword(queryKeyword : String) {
         mRecentQueryKeyword = queryKeyword
-        mTitle.value = mApplication.getString(R.string.searching)
-        onQueryChangedListener(queryKeyword, mSortOption.get()!!, mPage.get()!!)
+        mSearchResultTitle.value = mApplication.getString(R.string.searching)
+        onQueryChangedListener(queryKeyword, mSortOption, mPageNumber)
     }
-    fun setSearchResult(isError : Boolean, errorMessage : String?, isEmpty : Boolean, isEnd : Boolean) {
+    fun changeSortOption(sortOption: KakaoImageSortOption) {
+        mSortOption = sortOption
+        if(::mRecentQueryKeyword.isInitialized) onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber)
+    }
+    fun setSearchResult(isError : Boolean, errorMessage : String?, pageNumber : Int, isEmpty : Boolean, isEnd : Boolean) {
         if(isError) {
+            mPageButtonVisibility.set(false)
             mNoSearchResult.set(isError)
             errorMessage?.let { mAbnormalResultMessage.value = it }
-            mTitle.value = mApplication.getString(R.string.search_error_title)
+            mSearchResultTitle.value = mApplication.getString(R.string.search_error_title)
             return
         }
+        mPageNumber = pageNumber
+        mPageNumberText.value = mApplication.getString(R.string.page_count, mPageNumber)
         mNoSearchResult.set(isEmpty)
         mAbnormalResultMessage.value = mApplication.getString(R.string.no_search_result_caption)
-        if(isEmpty) mTitle.value = mApplication.getString(R.string.no_search_result_title, mRecentQueryKeyword)
-        else mTitle.value = mApplication.getString(R.string.search_list_title, mRecentQueryKeyword)
+        if(isEmpty) mSearchResultTitle.value = mApplication.getString(R.string.no_search_result_title, mRecentQueryKeyword)
+        else mSearchResultTitle.value = mApplication.getString(R.string.search_list_title, mRecentQueryKeyword)
+
+        if(isEmpty) mPageButtonVisibility.set(false)
+        else {
+            mPageButtonVisibility.set(true)
+            if(mPageNumber == initialPageNumber) mPrevPageButtonAvailability.set(false)
+            else mPrevPageButtonAvailability.set(true)
+            if(mPageNumber == maxPageNumber || isEnd) mNextPageButtonAvailability.set(false)
+            else mNextPageButtonAvailability.set(true)
+        }
+    }
+
+    // Layout 과 바인딩 된 메소드
+    fun boundOnPrevPageButtonClick() {
+        if(!mPrevPageButtonAvailability.get()!!) return
+        onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber - 1)
+    }
+    fun boundOnNextPageButtonClick() {
+        if(!mNextPageButtonAvailability.get()!!) return
+        onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber + 1)
     }
 }

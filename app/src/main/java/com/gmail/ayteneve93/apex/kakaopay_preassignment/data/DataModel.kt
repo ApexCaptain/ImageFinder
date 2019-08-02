@@ -1,9 +1,10 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.data
 
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import java.time.LocalDate
 import java.util.*
 
-@Suppress("spellCheckingInspection")
+@Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 data class KakaoImageModel(
     val collection : String,
     val date : LocalDate,
@@ -15,7 +16,7 @@ data class KakaoImageModel(
     val width : Int
 )
 
-@Suppress("spellCheckingInspection")
+@Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 data class KakaoImageModelList(
     val isEnd : Boolean,
     val pageableCount : Int,

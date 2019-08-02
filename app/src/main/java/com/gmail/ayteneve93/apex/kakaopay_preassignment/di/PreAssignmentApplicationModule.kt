@@ -1,6 +1,7 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.di
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainViewModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListViewModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel
@@ -13,7 +14,7 @@ val viewModelModule = module {
         MainViewModel(get())
     }
     viewModel {
-        ImageListViewModel(get())
+        ImageListViewModel(get(), get())
     }
     viewModel {
         ImageListItemViewModel(get())
@@ -28,9 +29,13 @@ val dataModelManager = module {
     single { KakaoImageModelManager() }
 }
 
+val util = module {
+    single { PreferenceUtils(get()) }
+}
 
 val PreAssignmentApplicationModule = listOf(
     viewModelModule,
     recyclerAdapter,
-    dataModelManager
+    dataModelManager,
+    util
 )

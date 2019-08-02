@@ -2,6 +2,7 @@ package com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_imag
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModelList
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import com.google.gson.*
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -13,7 +14,7 @@ import java.time.LocalDate
 import kotlin.collections.ArrayList
 
 
-@Suppress("spellCheckingInspection")
+@Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 class KakaoImageModelManager{
 
     private val baseUrl = "https://dapi.kakao.com"
@@ -58,7 +59,7 @@ class KakaoImageModelManager{
             KakaoImageModelDeserializer()
         ).create()
 
-    fun rxKakaoImageSearchByKeyword(queryKeyword : String, sortOption: KakaoImageSortOption, page : Int, size : Int) : Single<KakaoImageModelList>{
+    fun rxKakaoImageSearchByKeyword(queryKeyword : String, sortOption: KakaoImageSortOption, pageNumber : Int, size : Int) : Single<KakaoImageModelList>{
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(OkHttpClient())
@@ -66,7 +67,7 @@ class KakaoImageModelManager{
             .addConverterFactory(GsonConverterFactory.create(kakaoImageModelGson))
             .build()
             .create(KakaoImageSearchApi::class.java)
-            .getImages(queryKeyword, sortOption.optionString, page, size)
+            .getImages(queryKeyword, sortOption.optionString, pageNumber, size)
     }
 
 }

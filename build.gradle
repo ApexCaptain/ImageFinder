@@ -1,14 +1,26 @@
 buildscript {
     ext {
-        // 플러그인
+        // 안드로이드 플러그인
         android_plugin_version = '3.4.2'
+
         // 코틀린
         kotlin_version = '1.3.41'
         koin_version = '2.0.1'
 
-        // rx 버젼
+        // rxJava & rsAndroid
         rx_java_version = '2.2.2'
         rx_android_version = '2.1.0'
+
+        // Retrofit2
+        retrofit2_version = '2.4.0'
+        retrofit2_rxjava_adapter_version = '2.3.0'
+        retroift2_gson_converter_version = '2.4.0'
+
+        // Glide
+        glide_version = '4.9.0'
+        glide_compiler_version = '4.8.0'
+
+        // Custom Layout Components
 
 
     }

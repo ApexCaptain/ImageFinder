@@ -10,14 +10,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintDimensionRatio="1:1"
                 android:scaleType="fitCenter"
                 app:thumbnail="@{viewModel.mKakaoImageModel.thumbnailUrl}" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+
+<!--
+               android:layout_width="match_parent"
+                android:layout_height="0dp"
+-->
