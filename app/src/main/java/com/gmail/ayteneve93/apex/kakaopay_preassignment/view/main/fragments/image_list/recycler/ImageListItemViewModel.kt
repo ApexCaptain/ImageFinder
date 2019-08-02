@@ -3,6 +3,8 @@ package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.ima
 import android.app.Application
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.util.Log
+import android.view.View
 import androidx.databinding.ObservableField
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
@@ -13,6 +15,15 @@ class ImageListItemViewModel(
     application: Application
 ) : BaseViewModel(application){
     lateinit var mKakaoImageModel : KakaoImageModel
+    lateinit var mImageSizePercentage : ObservableField<Float>
 
+    fun onImageItemClick() {
+        Log.d("ayteneve93_test", "clicked")
+    }
+    fun onImageItemLongClick(view : View) : Boolean {
+        Log.d("ayteneve93_test", "longClicked")
+
+        return false
+    }
 
 }

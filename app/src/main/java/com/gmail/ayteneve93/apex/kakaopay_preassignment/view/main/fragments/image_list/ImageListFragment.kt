@@ -6,10 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.graphics.Rect
 import android.util.Log
-import android.view.ScaleGestureDetector
-import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.FragmentImageListBinding
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter
@@ -28,6 +26,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
 
     private val mImageListViewModel : ImageListViewModel by viewModel()
     private val mImageListRecyclerAdapter :ImageListRecyclerAdapter by inject()
+    private val mPreferenceUtils : PreferenceUtils by inject()
     private val mColumnCountRatio : Int by lazy {
         Resources.getSystem().displayMetrics.let {
             val widthPixels = it.widthPixels.toDouble()
@@ -63,14 +62,16 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                     mImageListViewModel.changeSortOption(sortOption)
                                 }
 
+                                MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED -> {
+                                    val displayCount = intent.getIntExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 30)
+                                    mImageListViewModel.changeDisplayCount(displayCount)
+                                }
+
                                 // 사용자가 화면을 Pinch 함(줌 인 혹은 줌 아웃)
                                 MainBroadcastPreference.Action.PINCH -> {
-                                    when(intent.getBooleanExtra(MainBroadcastPreference.Extra.PinchState.KEY, MainBroadcastPreference.Extra.PinchState.PredefinedValues.ZOOM_IN)) {
-                                        MainBroadcastPreference.Extra.PinchState.PredefinedValues.ZOOM_IN -> {
-                                            Log.d("ayteneve93_test", "줌 인")
-                                        }
-                                        MainBroadcastPreference.Extra.PinchState.PredefinedValues.ZOOM_OUT -> {
-                                            Log.d("ayteneve93_test", "줌 아웃")
+                                    intent.getBooleanExtra(MainBroadcastPreference.Extra.PinchState.KEY, MainBroadcastPreference.Extra.PinchState.PredefinedValues.ZOOM_IN).also {
+                                        mImageListRecyclerAdapter.resizeOnPinch(it) {
+                                            setRecyclerViewLayoutManager()
                                         }
                                     }
                                 }
@@ -98,7 +99,6 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
     override fun setUp() {
         setBroadcastReceiver()
         setImageListRecyclerAdapter()
-        setImageListRecyclerDecoration()
         setViewModelListener()
     }
 
@@ -107,6 +107,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             arrayOf(
                 MainBroadcastPreference.Action.NEW_SEARCH_QUERY_INPUT,
                 MainBroadcastPreference.Action.SORT_OPTION_CHANGED,
+                MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED,
                 MainBroadcastPreference.Action.PINCH
             ).forEach {
                 eachAction ->
@@ -118,57 +119,42 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
     override fun onDestroy() {
         super.onDestroy()
         activity?.unregisterReceiver(mImageListBroadcastReceiver)
+        mImageListRecyclerAdapter.clear()
     }
 
     private fun setImageListRecyclerAdapter() {
        mViewDataBinding.imageListRecyclerView.apply {
            adapter = mImageListRecyclerAdapter
-           layoutManager =
-               if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) GridLayoutManager(mActivity, 3)
-               else GridLayoutManager(mActivity, 5)
-           addItemDecoration(object : RecyclerView.ItemDecoration() {
-               override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                   val space = 15
-                   outRect.apply {
-                       left = space
-                       right = space
-                       bottom = space
-                       top = if(parent.getChildLayoutPosition(view) == 0) space else 0
-                   }
-               }
-           })
        }
+        setRecyclerViewLayoutManager()
     }
 
-    private fun setImageListRecyclerDecoration() {
-        mImageListRecyclerDecoration = object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-
-                super.getItemOffsets(outRect, view, parent, state)
-            }
+    private fun setRecyclerViewLayoutManager() {
+        val portraitImageColumnCount = mPreferenceUtils.getImageColumnCount()
+        mViewDataBinding.imageListRecyclerView.apply {
+            val prevPosition = if(layoutManager != null) (layoutManager as GridLayoutManager).findFirstVisibleItemPosition() else 0
+            layoutManager = if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) GridLayoutManager(mActivity, portraitImageColumnCount)
+            else GridLayoutManager(mActivity, portraitImageColumnCount * mColumnCountRatio)
+            (layoutManager as GridLayoutManager).scrollToPosition(prevPosition)
         }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        mViewDataBinding.imageListRecyclerView.layoutManager =
-            if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) GridLayoutManager(mActivity, 3)
-            else GridLayoutManager(mActivity, 5)
+        setRecyclerViewLayoutManager()
     }
 
     private fun setViewModelListener() {
         mImageListViewModel.apply {
             onQueryChangedListener = {
-                queryKeyword, sortOption, pageNumber ->
-                mImageListRecyclerAdapter.searchImage(queryKeyword, sortOption, pageNumber, 45) {
+                queryKeyword, sortOption, pageNumber, displayCount ->
+                mImageListRecyclerAdapter.searchImage(queryKeyword, sortOption, pageNumber, displayCount) {
                     isError, errorMessage, isEmpty, isEnd ->
                     mImageListViewModel.setSearchResult(isError, errorMessage, pageNumber, isEmpty, isEnd)
                 }
             }
         }
     }
-
-
 
 }
 

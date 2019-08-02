@@ -22,7 +22,7 @@ val viewModelModule = module {
 }
 
 val recyclerAdapter = module {
-    single { ImageListRecyclerAdapter(get(), get()) }
+    single { ImageListRecyclerAdapter(get(), get(), get()) }
 }
 
 val dataModelManager = module {

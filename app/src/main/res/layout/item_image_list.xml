@@ -6,23 +6,31 @@
                 name="viewModel"
                 type="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel"/>
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="?selectableItemBackgroundBorderless"
+            android:onClick="@{() -> viewModel.onImageItemClick()}"
+            android:onLongClick="@{(v) -> viewModel.onImageItemLongClick(v)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintDimensionRatio="1:1"
                 android:scaleType="fitCenter"
-                app:thumbnail="@{viewModel.mKakaoImageModel.thumbnailUrl}" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:thumbnail="@{viewModel.mKakaoImageModel.thumbnailUrl}"
+                app:layout_constraintStart_toStartOf="@+id/gl_left"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/gl_right"
+                android:layout_marginTop="12dp" android:layout_marginBottom="12dp" android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"/>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content" android:id="@+id/gl_left"
+                                                    app:layout_constraintGuide_begin="@{0.5f - safeUnbox(viewModel.mImageSizePercentage)/2}"
+                                                    android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content" android:id="@+id/gl_right"
+                                                    app:layout_constraintGuide_begin="@{0.5f + safeUnbox(viewModel.mImageSizePercentage)/2}"
+                                                    android:orientation="vertical"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-
-<!--
-               android:layout_width="match_parent"
-                android:layout_height="0dp"
--->

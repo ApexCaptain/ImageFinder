@@ -13,7 +13,14 @@
     <string name="page_count">Page %1$d</string>
 
     <string name="menu_title_search">Search</string>
+
     <string name="menu_title_sort_option">Sort Option</string>
     <string name="menu_title_sort_accuracy">by Accuracy</string>
     <string name="menu_title_sort_recency">by Recency</string>
+
+    <string name="menu_title_display_count_option">Display Count</string>
+    <string name="menu_title_display_count_30">30 Views</string>
+    <string name="menu_title_display_count_50">50 Views</string>
+    <string name="menu_title_display_count_80">80 Views</string>
+
 </resources>

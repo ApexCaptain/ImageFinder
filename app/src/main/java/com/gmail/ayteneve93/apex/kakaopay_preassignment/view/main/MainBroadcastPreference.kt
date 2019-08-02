@@ -8,6 +8,7 @@ object MainBroadcastPreference {
     object Action {
         const val NEW_SEARCH_QUERY_INPUT = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.NEW_SEARCH_QUERY_INPUT"
         const val SORT_OPTION_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.SORT_OPTION_CHANGED"
+        const val DISPLAY_COUNT_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.DISPLAY_COUNT_CHANGED"
         const val PINCH = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.PINCH"
     }
 
@@ -31,6 +32,9 @@ object MainBroadcastPreference {
                 const val ZOOM_IN = true
                 const val ZOOM_OUT = false
             }
+        }
+        object DisplayCount {
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.DisplayCount.KEY"
         }
     }
 

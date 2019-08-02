@@ -89,6 +89,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             KakaoImageSortOption.ACCURACY -> menu!!.findItem(R.id.menuMainAppBarSortByAccuracy).isChecked = true
             KakaoImageSortOption.RECENCY -> menu!!.findItem(R.id.menuMainAppBarSortByRecency).isChecked = true
         }
+        when(mPreferenceUtils.getDisplayCount()) {
+            30 -> menu.findItem(R.id.menuMainAppBarDisplayCount_30).isChecked = true
+            50 -> menu.findItem(R.id.menuMainAppBarDisplayCount_50).isChecked = true
+            80 -> menu.findItem(R.id.menuMainAppBarDisplayCount_80).isChecked = true
+        }
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -108,6 +113,30 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     action = MainBroadcastPreference.Action.SORT_OPTION_CHANGED
                     putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
                     putExtra(MainBroadcastPreference.Extra.SortOption.KEY, KakaoImageSortOption.RECENCY)
+                })
+            }
+            R.id.menuMainAppBarDisplayCount_30 -> {
+                mPreferenceUtils.setDisplayCount(30)
+                sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 30)
+                })
+            }
+            R.id.menuMainAppBarDisplayCount_50 -> {
+                mPreferenceUtils.setDisplayCount(50)
+                sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 50)
+                })
+            }
+            R.id.menuMainAppBarDisplayCount_80 -> {
+                mPreferenceUtils.setDisplayCount(80)
+                sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 80)
                 })
             }
         }

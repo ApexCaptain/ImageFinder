@@ -13,7 +13,14 @@
     <string name="page_count">페이지 %1$d</string>
 
     <string name="menu_title_search">검색</string>
+
     <string name="menu_title_sort_option">정렬기준</string>
     <string name="menu_title_sort_accuracy">정확도순</string>
     <string name="menu_title_sort_recency">최신순</string>
+
+    <string name="menu_title_display_count_option">표시 개수</string>
+    <string name="menu_title_display_count_30">30 개</string>
+    <string name="menu_title_display_count_50">50 개</string>
+    <string name="menu_title_display_count_80">80 개</string>
+
 </resources>

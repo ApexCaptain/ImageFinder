@@ -1,6 +1,7 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
@@ -31,18 +32,16 @@ class ImageListViewModel(
     var mNextPageButtonAvailability = ObservableField(false)
     var mPageButtonVisibility = ObservableField(false)
     var mPageNumber = initialPageNumber
+    var mDisplayCount = mPreferenceUtils.getDisplayCount()
     private lateinit var mRecentQueryKeyword : String
 
-    lateinit var onQueryChangedListener : (queryKeyword : String, sortOption : KakaoImageSortOption, pageNumber : Int) -> Unit
+    lateinit var onQueryChangedListener : (queryKeyword : String, sortOption : KakaoImageSortOption, pageNumber : Int, displayCount : Int) -> Unit
     fun inputNewKeyword(queryKeyword : String) {
         mRecentQueryKeyword = queryKeyword
         mSearchResultTitle.value = mApplication.getString(R.string.searching)
-        onQueryChangedListener(queryKeyword, mSortOption, mPageNumber)
+        onQueryChangedListener(queryKeyword, mSortOption, mPageNumber, mDisplayCount)
     }
-    fun changeSortOption(sortOption: KakaoImageSortOption) {
-        mSortOption = sortOption
-        if(::mRecentQueryKeyword.isInitialized) onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber)
-    }
+
     fun setSearchResult(isError : Boolean, errorMessage : String?, pageNumber : Int, isEmpty : Boolean, isEnd : Boolean) {
         if(isError) {
             mPageButtonVisibility.set(false)
@@ -68,13 +67,26 @@ class ImageListViewModel(
         }
     }
 
+    fun changeSortOption(sortOption: KakaoImageSortOption) {
+        mSortOption = sortOption
+        if(::mRecentQueryKeyword.isInitialized) onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber, mDisplayCount)
+    }
+
+    fun changeDisplayCount(displayCount : Int) {
+        val prevDisplayCount = mDisplayCount
+        mDisplayCount = displayCount
+        if(::mRecentQueryKeyword.isInitialized)  {
+            mPageNumber = kotlin.math.ceil(prevDisplayCount * mPageNumber / displayCount.toDouble()).toInt()
+            if(mPageNumber > maxPageNumber) mPageNumber = maxPageNumber
+            onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber, mDisplayCount)
+        }
+    }
+
     // Layout 과 바인딩 된 메소드
     fun boundOnPrevPageButtonClick() {
-        if(!mPrevPageButtonAvailability.get()!!) return
-        onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber - 1)
+        onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber - 1, mDisplayCount)
     }
     fun boundOnNextPageButtonClick() {
-        if(!mNextPageButtonAvailability.get()!!) return
-        onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber + 1)
+        onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber + 1, mDisplayCount)
     }
 }

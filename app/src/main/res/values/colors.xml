@@ -6,5 +6,6 @@
     <color name="colorPrimaryDark">#222222</color>
     <color name="colorBrightDark">#A0522D</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorTransparent">#00000000</color>
     <color name="ic_launcher_background">#FFFFCC</color>
 </resources>

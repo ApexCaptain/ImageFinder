@@ -7,13 +7,25 @@
             android:title="@string/menu_title_search"
             app:showAsAction="always"/>
 
-    <item android:id="@+id/menuMainAppBarSubmenu" android:title="@string/menu_title_sort_option">
+    <item android:title="@string/menu_title_sort_option">
         <menu>
-            <group android:id="@+id/menuMainAppBarSortOptions" android:checkableBehavior="single">
+            <group android:checkableBehavior="single">
                 <item android:id="@+id/menuMainAppBarSortByAccuracy" android:title="@string/menu_title_sort_accuracy"/>
                 <item android:id="@+id/menuMainAppBarSortByRecency" android:title="@string/menu_title_sort_recency"/>
             </group>
         </menu>
     </item>
+
+    <item android:title="@string/menu_title_display_count_option">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/menuMainAppBarDisplayCount_30" android:title="@string/menu_title_display_count_30"/>
+                <item android:id="@+id/menuMainAppBarDisplayCount_50" android:title="@string/menu_title_display_count_50"/>
+                <item android:id="@+id/menuMainAppBarDisplayCount_80" android:title="@string/menu_title_display_count_80"/>
+            </group>
+        </menu>
+    </item>
+
+
 
 </menu>
