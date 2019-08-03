@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.GridLayoutManager
@@ -35,8 +37,6 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             else (heightPixels/widthPixels).roundToInt()
         }
     }
-
-    private lateinit var mImageListRecyclerDecoration : RecyclerView.ItemDecoration
 
     private val mImageListBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
@@ -84,17 +84,9 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_image_list
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
-
-    override fun getViewModel(): ImageListViewModel {
-        return mImageListViewModel
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_image_list
+    override fun getBindingVariable(): Int = BR.viewModel
+    override fun getViewModel(): ImageListViewModel = mImageListViewModel
 
     override fun setUp() {
         setBroadcastReceiver()
@@ -132,10 +124,10 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
     private fun setRecyclerViewLayoutManager() {
         val portraitImageColumnCount = mPreferenceUtils.getImageColumnCount()
         mViewDataBinding.imageListRecyclerView.apply {
-            val prevPosition = if(layoutManager != null) (layoutManager as GridLayoutManager).findFirstVisibleItemPosition() else 0
+            val position = if(layoutManager != null) (layoutManager as GridLayoutManager).findFirstVisibleItemPosition() else 0
             layoutManager = if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) GridLayoutManager(mActivity, portraitImageColumnCount)
             else GridLayoutManager(mActivity, portraitImageColumnCount * mColumnCountRatio)
-            (layoutManager as GridLayoutManager).scrollToPosition(prevPosition)
+            scrollToPosition(position)
         }
     }
 
@@ -154,6 +146,10 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                 }
             }
         }
+    }
+
+    companion object {
+        fun newInstance() = ImageListFragment()
     }
 
 }

@@ -1,6 +1,7 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.data
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
+import java.io.Serializable
 import java.time.LocalDate
 import java.util.*
 
@@ -14,7 +15,7 @@ data class KakaoImageModel(
     val imageUrl : String,
     val thumbnailUrl : String,
     val width : Int
-)
+) : Serializable
 
 @Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 data class KakaoImageModelList(

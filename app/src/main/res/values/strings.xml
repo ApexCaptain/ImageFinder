@@ -7,9 +7,9 @@
     <string name="no_search_result_caption">No Search Result</string>
     <string name="no_search_result_title">No Search Result for \'%1$s\'</string>
     <string name="searching">Searching&#8230;</string>
-    <string name="search_error_title">Error occurred </string>
-    <string name="prev_page_button_text">◀  Prev Page</string>
-    <string name="next_page_button_text">Next Page  ▶</string>
+    <string name="search_error_title">Error occurred</string>
+    <string name="prev_page_button_text">◀ Prev Page</string>
+    <string name="next_page_button_text">Next Page ▶</string>
     <string name="page_count">Page %1$d</string>
 
     <string name="menu_title_search">Search</string>
@@ -22,5 +22,9 @@
     <string name="menu_title_display_count_30">30 Views</string>
     <string name="menu_title_display_count_50">50 Views</string>
     <string name="menu_title_display_count_80">80 Views</string>
+
+    <string name="press_again_to_exist">
+        Press again to exit
+    </string>
 
 </resources>

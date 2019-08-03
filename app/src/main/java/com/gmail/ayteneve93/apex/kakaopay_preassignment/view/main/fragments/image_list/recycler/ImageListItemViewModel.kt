@@ -14,15 +14,15 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
 class ImageListItemViewModel(
     application: Application
 ) : BaseViewModel(application){
+
     lateinit var mKakaoImageModel : KakaoImageModel
     lateinit var mImageSizePercentage : ObservableField<Float>
+    lateinit var onImageItemClickListener : () -> Unit
 
     fun onImageItemClick() {
-        Log.d("ayteneve93_test", "clicked")
+        onImageItemClickListener()
     }
     fun onImageItemLongClick(view : View) : Boolean {
-        Log.d("ayteneve93_test", "longClicked")
-
         return false
     }
 

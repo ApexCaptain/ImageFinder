@@ -2,18 +2,26 @@ package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main
 
 import android.app.Activity
 import android.app.SearchManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.content.IntentFilter
+import android.os.Handler
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.FragmentManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.ActivityMainBinding
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseActivity
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListFragment
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.MainFragmentState
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -21,25 +29,63 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private val mMainViewModel : MainViewModel by viewModel()
     private val mPreferenceUtils : PreferenceUtils by inject()
+    private var mAppTerminateConfirmFlag = false
+    private val mAppTerminateConfirmHandler = Handler()
     private lateinit var mSearchView : SearchView
     private lateinit var mScaleGestureDetector : ScaleGestureDetector
+    private lateinit var mFragmentManager: FragmentManager
+    private lateinit var mMainFragmentState: MainFragmentState
+    private lateinit var mImageListFragment: ImageListFragment
+    private lateinit var mImageDetailFragment: ImageDetailFragment
 
+    private val mMainBroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, intent: Intent?) {
+            intent?.let {
+                it.action?.let {
+                    actionString ->
+                    intent.getStringExtra(MainBroadcastPreference.Target.KEY)?.let {
+                        target ->
+                        if(target == MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY) {
+                            when(actionString) {
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_main
+                                // 이미지 아이템이 클릭됨
+                                MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED -> {
+                                    showImageDetailFragment(intent.getSerializableExtra(MainBroadcastPreference.Extra.ImageItem.KEY) as KakaoImageModel)
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    override fun getViewModel(): MainViewModel {
-        return mMainViewModel
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
+    override fun getLayoutId(): Int = R.layout.activity_main
+    override fun getViewModel(): MainViewModel = mMainViewModel
+    override fun getBindingVariable(): Int = BR.viewModel
 
     override fun setUp() {
+        setBroadcastReceiver()
         setToolBar()
         setScaleGestureDetector()
+        setFragmentManager()
+    }
+
+    private fun setBroadcastReceiver() {
+        registerReceiver(mMainBroadcastReceiver, IntentFilter().also {
+            arrayOf(
+                MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED
+            ).forEach {
+                eachAction ->
+                it.addAction(eachAction)
+            }
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(mMainBroadcastReceiver)
     }
 
     private fun setToolBar() {
@@ -66,7 +112,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow((currentFocus?: View(this@MainActivity)).windowToken, 0)
                     this@apply.onActionViewCollapsed()
-                    // ToDo 여기서 현재 Frag 상태 확인하고 Detail 이면 Search 로 바꾸는 코드 들어가야함
+                    if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL) onBackPressed()
                     sendBroadcast(Intent().apply {
                         action = MainBroadcastPreference.Action.NEW_SEARCH_QUERY_INPUT
                         putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
@@ -140,6 +186,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 })
             }
         }
+        if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL) onBackPressed()
         return false
     }
 
@@ -165,4 +212,56 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         if(::mScaleGestureDetector.isInitialized) mScaleGestureDetector.onTouchEvent(ev)
         return super.dispatchTouchEvent(ev)
     }
+
+    override fun onBackPressed() {
+        if(!mSearchView.isIconified) {
+            mSearchView.onActionViewCollapsed()
+            return
+        }
+
+        if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL){
+            mMainFragmentState = MainFragmentState.IMAGE_LIST
+            super.onBackPressed()
+            return
+        }
+
+        if(!mAppTerminateConfirmFlag) {
+            Toast.makeText(this, R.string.press_again_to_exist, Toast.LENGTH_LONG).show()
+            mAppTerminateConfirmFlag = true
+            mAppTerminateConfirmHandler.removeCallbacksAndMessages(null)
+            mAppTerminateConfirmHandler.postDelayed({
+                mAppTerminateConfirmFlag = false
+            }, 3000)
+            return
+        }
+        finish()
+
+    }
+
+    private fun setFragmentManager() {
+        mMainFragmentState = MainFragmentState.IMAGE_LIST
+        mFragmentManager = supportFragmentManager
+        mImageListFragment = ImageListFragment.newInstance()
+        mImageDetailFragment = ImageDetailFragment.newInstance()
+        mFragmentManager
+            .beginTransaction()
+            .add(mViewDataBinding.mainFragmentContainer.id, mImageListFragment)
+            .add(mViewDataBinding.mainFragmentContainer.id, mImageDetailFragment)
+            .show(mImageListFragment)
+            .hide(mImageDetailFragment)
+            .commit()
+    }
+
+    private fun showImageDetailFragment(imageModel : KakaoImageModel) {
+        mMainFragmentState = MainFragmentState.IMAGE_DETAIL
+        mFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(R.anim.anim_fragment_enter_from_right, R.anim.anim_fragment_exit_to_left,
+                R.anim.anim_fragment_enter_from_left, R.anim.anim_fragment_exit_to_right)
+            .hide(mImageListFragment)
+            .show(mImageDetailFragment.receiveImageModel(imageModel))
+            .addToBackStack(null)
+            .commit()
+    }
+
 }

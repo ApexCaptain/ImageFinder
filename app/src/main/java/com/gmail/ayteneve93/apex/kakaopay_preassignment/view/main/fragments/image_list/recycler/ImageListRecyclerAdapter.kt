@@ -1,8 +1,10 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler
 
 import android.app.Application
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -15,6 +17,7 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.ItemImageListBinding
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -81,6 +84,13 @@ class ImageListRecyclerAdapter(
                             mImageListItemViewModelList.add(ImageListItemViewModel(application).apply {
                                 mKakaoImageModel = eachKakaoImageModel
                                 mImageSizePercentage = this@ImageListRecyclerAdapter.mImageSizePercentage
+                                onImageItemClickListener = {
+                                    application.sendBroadcast(Intent().apply {
+                                        action = MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED
+                                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
+                                        putExtra(MainBroadcastPreference.Extra.ImageItem.KEY, mKakaoImageModel)
+                                    })
+                                }
                             })
                         }
                         notifyDataSetChanged()

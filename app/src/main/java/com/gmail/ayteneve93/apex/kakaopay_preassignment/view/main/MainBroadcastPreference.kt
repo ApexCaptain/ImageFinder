@@ -10,11 +10,13 @@ object MainBroadcastPreference {
         const val SORT_OPTION_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.SORT_OPTION_CHANGED"
         const val DISPLAY_COUNT_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.DISPLAY_COUNT_CHANGED"
         const val PINCH = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.PINCH"
+        const val IMAGE_ITEM_CLICKED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.IMAGE_ITEM_CLICKED"
     }
 
     object Target {
         const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.KEY"
         object PredefinedValues {
+            const val MAIN_ACTIVITY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PredefinedValues.IMAGE_LIST"
             const val IMAGE_LIST = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PredefinedValues.IMAGE_LIST"
         }
     }
@@ -35,6 +37,9 @@ object MainBroadcastPreference {
         }
         object DisplayCount {
             const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.DisplayCount.KEY"
+        }
+        object ImageItem {
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImageItem.KEY"
         }
     }
 
