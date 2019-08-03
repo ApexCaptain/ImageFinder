@@ -23,8 +23,26 @@
     <string name="menu_title_display_count_50">50 Views</string>
     <string name="menu_title_display_count_80">80 Views</string>
 
-    <string name="press_again_to_exist">
-        Press again to exit
+    <string name="image_detail_sub_title">Detail Photo Info ▼</string>
+    <string name="image_detail_dialog_title">Image Information</string>
+    <string name="image_detail_info_collection">
+        Collection   : %1$s
     </string>
+    <string name="image_detail_info_datetime">
+        Date         : %1$s
+    </string>
+    <string name="image_detail_info_display_sitename">
+        Site Name    : %1$s
+    </string>
+    <string name="image_detail_info_height">
+        Image Height : %1$d pixels
+    </string>
+    <string name="image_detail_info_width">
+        Image Width  : %1$d pixels
+    </string>
+
+    <string name="close">Close</string>
+
+    <string name="press_again_to_exist">Press again to exit</string>
 
 </resources>

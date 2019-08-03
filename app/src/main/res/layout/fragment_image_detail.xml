@@ -7,12 +7,94 @@
         <variable name="viewModel" type="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel"/>
     </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <ImageView
-                android:src="@mipmap/ic_launcher"
+
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBar"
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsingToolBar"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:contentScrim="?attr/colorPrimary"
+                    android:fitsSystemWindows="true"
+                    app:expandedTitleMarginStart="48dp"
+                    app:expandedTitleMarginEnd="64dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <ImageView
+                        app:layout_collapseMode="parallax"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        app:mainImage="@{viewModel.mKakaoImageModel.imageUrl}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.Toolbar
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:layout_collapseMode="pin"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize">
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/infoButton"
+                android:onClick="@{() -> viewModel.boundOnInfoButtonClick()}"
+                app:srcCompat = "@android:drawable/ic_dialog_info"
+                android:layout_marginEnd="65dp"
+                app:layout_anchor = "@id/appBar"
+                app:layout_anchorGravity="bottom|end"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/imageView2"/>
+                android:layout_height="wrap_content"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/downloadButton"
+                android:onClick="@{() -> viewModel.boundOnDownloadButtonClick()}"
+                app:srcCompat = "@drawable/ic_download"
+                app:layout_anchor = "@id/appBar"
+                app:layout_anchorGravity="bottom|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/detailInfoContainer">
+
+            <WebView
+                    app:loadImageDetailDocumentUrl="@{viewModel.mKakaoImageModel.docUrl}"
+                    app:setImageDetailDocumentClient="@{viewModel.mImageDetailDocumentClient}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" android:id="@+id/detailWebView"
+                    android:layout_marginTop="8dp">
+            </WebView>
+
+            <com.wang.avi.AVLoadingIndicatorView
+                    app:indicatorName="BallSpinFadeLoaderIndicator"
+                    app:indicatorColor="@color/colorBrightDark"
+                    style="@style/AVLoadingIndicatorView.Large"
+                    android:visibility="@{safeUnbox(viewModel.mIsWebViewLoading) ? View.VISIBLE : View.GONE}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="@+id/detailWebView"
+                    app:layout_constraintStart_toStartOf="@+id/detailWebView" android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/detailWebView"
+                    android:id="@+id/detailWebViewProgressIndicator" android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

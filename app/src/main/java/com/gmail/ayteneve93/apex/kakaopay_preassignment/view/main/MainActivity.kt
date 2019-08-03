@@ -36,7 +36,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private lateinit var mFragmentManager: FragmentManager
     private lateinit var mMainFragmentState: MainFragmentState
     private lateinit var mImageListFragment: ImageListFragment
-    private lateinit var mImageDetailFragment: ImageDetailFragment
 
     private val mMainBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
@@ -51,6 +50,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                 // 이미지 아이템이 클릭됨
                                 MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED -> {
                                     showImageDetailFragment(intent.getSerializableExtra(MainBroadcastPreference.Extra.ImageItem.KEY) as KakaoImageModel)
+                                }
+
+                                // 이미지 상세정보 프래그먼트를 강제 종료하라는 명령
+                                MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT -> {
+                                    mMainFragmentState = MainFragmentState.IMAGE_LIST
+                                    super@MainActivity.onBackPressed()
                                 }
 
                             }
@@ -75,7 +80,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun setBroadcastReceiver() {
         registerReceiver(mMainBroadcastReceiver, IntentFilter().also {
             arrayOf(
-                MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED
+                MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED,
+                MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)
@@ -194,13 +200,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mScaleGestureDetector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             private val scaleSensitivity = 7
             override fun onScale(detector: ScaleGestureDetector?): Boolean {
-                detector?.let {
-                    if(kotlin.math.abs(it.currentSpan - it.previousSpan) > scaleSensitivity) {
-                        sendBroadcast(Intent().apply {
-                            action = MainBroadcastPreference.Action.PINCH
-                            putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
-                            putExtra(MainBroadcastPreference.Extra.PinchState.KEY, it.scaleFactor > 1)
-                        })
+                if(mMainFragmentState == MainFragmentState.IMAGE_LIST) {
+                    detector?.let {
+                        if (kotlin.math.abs(it.currentSpan - it.previousSpan) > scaleSensitivity) {
+                            sendBroadcast(Intent().apply {
+                                action = MainBroadcastPreference.Action.PINCH
+                                putExtra(
+                                    MainBroadcastPreference.Target.KEY,
+                                    MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                                )
+                                putExtra(MainBroadcastPreference.Extra.PinchState.KEY, it.scaleFactor > 1)
+                            })
+                        }
                     }
                 }
                 return true
@@ -220,8 +231,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL){
-            mMainFragmentState = MainFragmentState.IMAGE_LIST
-            super.onBackPressed()
+            sendBroadcast(Intent().apply {
+                action = MainBroadcastPreference.Action.BACK_BUTTON_PRESSED
+                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_DETAIL)
+            })
             return
         }
 
@@ -242,24 +255,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mMainFragmentState = MainFragmentState.IMAGE_LIST
         mFragmentManager = supportFragmentManager
         mImageListFragment = ImageListFragment.newInstance()
-        mImageDetailFragment = ImageDetailFragment.newInstance()
         mFragmentManager
             .beginTransaction()
             .add(mViewDataBinding.mainFragmentContainer.id, mImageListFragment)
-            .add(mViewDataBinding.mainFragmentContainer.id, mImageDetailFragment)
             .show(mImageListFragment)
-            .hide(mImageDetailFragment)
             .commit()
     }
 
     private fun showImageDetailFragment(imageModel : KakaoImageModel) {
         mMainFragmentState = MainFragmentState.IMAGE_DETAIL
+        val imageDetailFragment = ImageDetailFragment.newInstance(application, imageModel)
         mFragmentManager
             .beginTransaction()
             .setCustomAnimations(R.anim.anim_fragment_enter_from_right, R.anim.anim_fragment_exit_to_left,
                 R.anim.anim_fragment_enter_from_left, R.anim.anim_fragment_exit_to_right)
             .hide(mImageListFragment)
-            .show(mImageDetailFragment.receiveImageModel(imageModel))
+            .add(mViewDataBinding.mainFragmentContainer.id, imageDetailFragment)
+            .show(imageDetailFragment)
             .addToBackStack(null)
             .commit()
     }

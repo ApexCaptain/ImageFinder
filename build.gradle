@@ -21,6 +21,7 @@ buildscript {
         glide_compiler_version = '4.8.0'
 
         // Custom Layout Components
+        wang_avi_process_indicator_version = '2.1.3'
 
 
     }

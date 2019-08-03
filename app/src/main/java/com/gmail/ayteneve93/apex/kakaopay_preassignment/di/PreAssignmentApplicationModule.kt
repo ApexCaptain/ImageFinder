@@ -20,9 +20,6 @@ val viewModelModule = module {
     viewModel {
         ImageListItemViewModel(get())
     }
-    viewModel {
-        ImageDetailViewModel(get())
-    }
 }
 
 val recyclerAdapter = module {
