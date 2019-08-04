@@ -9,7 +9,8 @@ object MainBroadcastPreference {
         const val NEW_SEARCH_QUERY_INPUT = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.NEW_SEARCH_QUERY_INPUT"
         const val SORT_OPTION_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.SORT_OPTION_CHANGED"
         const val DISPLAY_COUNT_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.DISPLAY_COUNT_CHANGED"
-        const val PINCH = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.PINCH"
+        const val PINCHING = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.PINCHING"
+        const val PINCH_STATE = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.PINCH_STATE"
         const val IMAGE_ITEM_CLICKED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.IMAGE_ITEM_CLICKED"
         const val BACK_BUTTON_PRESSED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.BACK_BUTTON_PRESSED"
         const val CLOSE_IMAGE_DETAIL_FRAGMENT = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.CLOSE_IMAGE_DETAIL_FRAGMENT"
@@ -31,11 +32,18 @@ object MainBroadcastPreference {
         object SortOption {
             const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.SortOption.KEY"
         }
-        object PinchState {
-            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.PinchState.KEY"
+        object IsZoomIn {
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.IsZoomIn.KEY"
             object PredefinedValues {
                 const val ZOOM_IN = true
                 const val ZOOM_OUT = false
+            }
+        }
+        object IsPichBeigin {
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.IsPichBeigin.KEY"
+            object PredefinedValues {
+                const val BEGIN = true
+                const val END = false
             }
         }
         object DisplayCount {

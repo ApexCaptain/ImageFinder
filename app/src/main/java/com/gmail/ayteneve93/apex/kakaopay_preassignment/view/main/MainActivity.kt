@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val mPreferenceUtils : PreferenceUtils by inject()
     private var mAppTerminateConfirmFlag = false
     private val mAppTerminateConfirmHandler = Handler()
+    private var mBackButtonEnabledFromDetail = true
     private lateinit var mSearchView : SearchView
     private lateinit var mScaleGestureDetector : ScaleGestureDetector
     private lateinit var mFragmentManager: FragmentManager
@@ -204,17 +206,45 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     detector?.let {
                         if (kotlin.math.abs(it.currentSpan - it.previousSpan) > scaleSensitivity) {
                             sendBroadcast(Intent().apply {
-                                action = MainBroadcastPreference.Action.PINCH
+                                action = MainBroadcastPreference.Action.PINCHING
                                 putExtra(
                                     MainBroadcastPreference.Target.KEY,
                                     MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
                                 )
-                                putExtra(MainBroadcastPreference.Extra.PinchState.KEY, it.scaleFactor > 1)
+                                putExtra(MainBroadcastPreference.Extra.IsZoomIn.KEY, it.scaleFactor > 1)
                             })
                         }
                     }
                 }
                 return true
+            }
+
+            override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
+                sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.PINCH_STATE
+                    putExtra(
+                        MainBroadcastPreference.Target.KEY,
+                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                    )
+                    putExtra(
+                        MainBroadcastPreference.Extra.IsPichBeigin.KEY,
+                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.BEGIN)
+                })
+                return super.onScaleBegin(detector)
+            }
+
+            override fun onScaleEnd(detector: ScaleGestureDetector?) {
+                sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.PINCH_STATE
+                    putExtra(
+                        MainBroadcastPreference.Target.KEY,
+                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                    )
+                    putExtra(
+                        MainBroadcastPreference.Extra.IsPichBeigin.KEY,
+                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END)
+                })
+                super.onScaleEnd(detector)
             }
         })
     }
@@ -231,10 +261,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL){
-            sendBroadcast(Intent().apply {
-                action = MainBroadcastPreference.Action.BACK_BUTTON_PRESSED
-                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_DETAIL)
-            })
+            if(mBackButtonEnabledFromDetail) {
+                sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.BACK_BUTTON_PRESSED
+                    putExtra(
+                        MainBroadcastPreference.Target.KEY,
+                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_DETAIL
+                    )
+                })
+            }
             return
         }
 
@@ -274,6 +309,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .show(imageDetailFragment)
             .addToBackStack(null)
             .commit()
+        mBackButtonEnabledFromDetail = false
+        Handler().postDelayed({mBackButtonEnabledFromDetail = true}, 500)
     }
 
 }

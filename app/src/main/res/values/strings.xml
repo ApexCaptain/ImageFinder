@@ -26,19 +26,19 @@
     <string name="image_detail_sub_title">Detail Photo Info ▼</string>
     <string name="image_detail_dialog_title">Image Information</string>
     <string name="image_detail_info_collection">
-        Collection   : %1$s
+        Collection : %1$s
     </string>
     <string name="image_detail_info_datetime">
-        Date         : %1$s
+        Date : %1$s
     </string>
     <string name="image_detail_info_display_sitename">
-        Site Name    : %1$s
+        Site Name : %1$s
     </string>
     <string name="image_detail_info_height">
         Image Height : %1$d pixels
     </string>
     <string name="image_detail_info_width">
-        Image Width  : %1$d pixels
+        Image Width : %1$d pixels
     </string>
 
     <string name="close">Close</string>

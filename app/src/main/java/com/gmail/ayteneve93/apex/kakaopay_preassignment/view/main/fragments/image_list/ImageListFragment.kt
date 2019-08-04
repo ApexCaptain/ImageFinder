@@ -6,12 +6,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.os.Bundle
-import android.os.Handler
-import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
@@ -68,11 +66,19 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                 }
 
                                 // 사용자가 화면을 Pinch 함(줌 인 혹은 줌 아웃)
-                                MainBroadcastPreference.Action.PINCH -> {
-                                    intent.getBooleanExtra(MainBroadcastPreference.Extra.PinchState.KEY, MainBroadcastPreference.Extra.PinchState.PredefinedValues.ZOOM_IN).also {
+                                MainBroadcastPreference.Action.PINCHING -> {
+                                    intent.getBooleanExtra(MainBroadcastPreference.Extra.IsZoomIn.KEY, MainBroadcastPreference.Extra.IsZoomIn.PredefinedValues.ZOOM_IN).also {
                                         mImageListRecyclerAdapter.resizeOnPinch(it) {
                                             setRecyclerViewLayoutManager()
                                         }
+                                    }
+                                }
+
+                                // Pinch 중에는 Refresh 비활성화
+                                MainBroadcastPreference.Action.PINCH_STATE -> {
+                                    when(intent.getBooleanExtra(MainBroadcastPreference.Extra.IsPichBeigin.KEY, MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END)) {
+                                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.BEGIN -> mViewDataBinding.imageListRefreshLayout.isEnabled = false
+                                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END -> mViewDataBinding.imageListRefreshLayout.isEnabled = true
                                     }
                                 }
 
@@ -92,6 +98,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         setBroadcastReceiver()
         setImageListRecyclerAdapter()
         setViewModelListener()
+        setRefreshLayout()
     }
 
     private fun setBroadcastReceiver() {
@@ -100,7 +107,8 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                 MainBroadcastPreference.Action.NEW_SEARCH_QUERY_INPUT,
                 MainBroadcastPreference.Action.SORT_OPTION_CHANGED,
                 MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED,
-                MainBroadcastPreference.Action.PINCH
+                MainBroadcastPreference.Action.PINCHING,
+                MainBroadcastPreference.Action.PINCH_STATE
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)
@@ -143,7 +151,30 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                 mImageListRecyclerAdapter.searchImage(queryKeyword, sortOption, pageNumber, displayCount) {
                     isError, errorMessage, isEmpty, isEnd ->
                     mImageListViewModel.setSearchResult(isError, errorMessage, pageNumber, isEmpty, isEnd)
+                    with(mViewDataBinding.imageListRefreshLayout) {
+                        isEnabled = true
+                        if(isRefreshing) isRefreshing = false
+                    }
                 }
+            }
+        }
+    }
+
+    private fun setRefreshLayout() {
+        mViewDataBinding.imageListRefreshLayout.apply {
+            setWaveRGBColor(255, 237, 163)
+            isEnabled = false
+            setOnRefreshListener {
+                mViewDataBinding.imageListRecyclerView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_alpha_disappear).apply {
+                    setAnimationListener(object : Animation.AnimationListener {
+                        override fun onAnimationRepeat(p0: Animation?) = Unit
+                        override fun onAnimationEnd(p0: Animation?) {
+                            mImageListRecyclerAdapter.clear()
+                            mImageListViewModel.refresh()
+                        }
+                        override fun onAnimationStart(p0: Animation?) = Unit
+                    })
+                })
             }
         }
     }

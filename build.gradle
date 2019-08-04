@@ -22,6 +22,7 @@ buildscript {
 
         // Custom Layout Components
         wang_avi_process_indicator_version = '2.1.3'
+        wave_swpie_refresh_layout_version = '1.6'
 
 
     }
@@ -42,6 +43,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://jitpack.io"
+        }
     }
 }
 

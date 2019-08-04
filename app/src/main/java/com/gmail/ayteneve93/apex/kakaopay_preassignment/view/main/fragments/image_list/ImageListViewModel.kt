@@ -82,6 +82,12 @@ class ImageListViewModel(
         }
     }
 
+    fun refresh() {
+        if(::mRecentQueryKeyword.isInitialized) {
+            onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber, mDisplayCount)
+        }
+    }
+
     // Layout 과 바인딩 된 메소드
     fun boundOnPrevPageButtonClick() {
         onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber - 1, mDisplayCount)
