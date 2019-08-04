@@ -70,6 +70,7 @@ dependencies {
 
     // TedPermission
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
+    implementation 'com.linroid.filtermenu:library:0.2.3'
 
 
 }

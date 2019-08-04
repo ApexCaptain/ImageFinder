@@ -6,18 +6,22 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.util.Log
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.FragmentImageListBinding
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter
+import com.linroid.filtermenu.library.FilterMenu
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.math.roundToInt
@@ -27,6 +31,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
     private val mImageListViewModel : ImageListViewModel by viewModel()
     private val mImageListRecyclerAdapter :ImageListRecyclerAdapter by inject()
     private val mPreferenceUtils : PreferenceUtils by inject()
+    private val mImageOperationController : ImageOperationController by inject()
     private val mColumnCountRatio : Int by lazy {
         Resources.getSystem().displayMetrics.let {
             val widthPixels = it.widthPixels.toDouble()
@@ -84,7 +89,12 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
 
                                 // 이미지 선택 모드(단일 & 다중) 변경 알림
                                 MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED -> {
-                                    mImageListRecyclerAdapter.setSelectionMode(intent.getBooleanExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, true))
+                                    with(intent.getBooleanExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, true)) {
+                                        mImageListRecyclerAdapter.setSelectionMode(this)
+                                        if(this) showFilterMenu()
+                                        else hideFilterMenu()
+                                    }
+
                                 }
 
                             }
@@ -104,6 +114,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         setImageListRecyclerAdapter()
         setViewModelListener()
         setRefreshLayout()
+        setFilterMenu()
     }
 
     private fun setBroadcastReceiver() {
@@ -172,6 +183,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             isEnabled = false
             setOnRefreshListener {
                 mImageListRecyclerAdapter.setSelectionMode(false)
+                hideFilterMenu()
                 mViewDataBinding.imageListRecyclerView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_alpha_disappear).apply {
                     setAnimationListener(object : Animation.AnimationListener {
                         override fun onAnimationRepeat(p0: Animation?) = Unit
@@ -184,6 +196,47 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                 })
             }
         }
+    }
+
+    private fun setFilterMenu() {
+        val downloadButton = 0
+        val shareButton = 1
+        FilterMenu.Builder(context)
+            .addItem(R.drawable.ic_download)
+            .addItem(R.drawable.ic_share)
+            .attach(mViewDataBinding.imageListFilterMenu)
+            .withListener(object : FilterMenu.OnMenuChangeListener {
+                override fun onMenuItemClick(view: View?, position: Int) {
+                    when(position) {
+                        downloadButton -> mImageOperationController.startDownload()
+                        shareButton -> mImageOperationController.startShare(mActivity!!)
+                    }
+                    hideFilterMenu()
+                    mImageOperationController.clearImageModels()
+                    mImageListRecyclerAdapter.setSelectionMode(false)
+                }
+                override fun onMenuCollapse() = Unit
+                override fun onMenuExpand() = Unit
+            })
+            .build()
+    }
+
+    private fun showFilterMenu() {
+        mImageListViewModel.showFilterMenu()
+        val filterAppearAnim = AnimationUtils.loadAnimation(context, R.anim.anim_filter_menu_appear)
+        mViewDataBinding.imageListFilterMenu.startAnimation(filterAppearAnim)
+    }
+
+    private fun hideFilterMenu() {
+        val filterDisappearAnim = AnimationUtils.loadAnimation(context, R.anim.anim_filter_menu_disappear)
+        filterDisappearAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationEnd(p0: Animation?) {
+                mImageListViewModel.hideFilterMenu()
+            }
+            override fun onAnimationRepeat(p0: Animation?) = Unit
+            override fun onAnimationStart(p0: Animation?) = Unit
+        })
+        mViewDataBinding.imageListFilterMenu.startAnimation(filterDisappearAnim)
     }
 
     companion object {

@@ -33,6 +33,7 @@ class ImageListViewModel(
     var mPageButtonVisibility = ObservableField(false)
     var mPageNumber = initialPageNumber
     var mDisplayCount = mPreferenceUtils.getDisplayCount()
+    var mFilterMenuVisibility = ObservableField(false)
     private lateinit var mRecentQueryKeyword : String
 
     lateinit var onQueryChangedListener : (queryKeyword : String, sortOption : KakaoImageSortOption, pageNumber : Int, displayCount : Int) -> Unit
@@ -86,6 +87,14 @@ class ImageListViewModel(
         if(::mRecentQueryKeyword.isInitialized) {
             onQueryChangedListener(mRecentQueryKeyword, mSortOption, mPageNumber, mDisplayCount)
         }
+    }
+
+    fun showFilterMenu() {
+        mFilterMenuVisibility.set(true)
+    }
+
+    fun hideFilterMenu() {
+        mFilterMenuVisibility.set(false)
     }
 
     // Layout 과 바인딩 된 메소드

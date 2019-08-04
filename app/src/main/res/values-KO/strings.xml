@@ -45,6 +45,23 @@
 
     <string name="press_again_to_exist">한 번 더 누르시면 종료됩니다</string>
 
+    <string name="dialog_image_download_wifi_warning_title">와이파이가 오프라인 상태입니다</string>
+    <string name="dialog_image_download_wifi_warning_message">
+        추가적인 통신요금이 부과 될 수 있습니다.
+        \n 계속하시겠습니까?
+    </string>
+    <string name="dialog_image_download_wifi_warning_positive_button_txt">네</string>
+    <string name="dialog_image_download_wifi_warning_negative_button_txt">아니오</string>
 
+    <string name="txt_image_download_succeed">다운로드가 완료되었습니다</string>
+    <string name="txt_image_download_failed">다운로드에 실패했습니다</string>
+
+    <string name = "permission_external_storage_rational_message">
+        파일을 다운로드 위해서는 저장소 권한이 필요합니다.
+    </string>
+    <string name= "permission_external_storage_denied_message">
+        권한 설정이 거부되었습니다.
+        \n[설정] -> [권한] 탭에서 다시 설정하실 수 있습니다.
+    </string>
 
 </resources>

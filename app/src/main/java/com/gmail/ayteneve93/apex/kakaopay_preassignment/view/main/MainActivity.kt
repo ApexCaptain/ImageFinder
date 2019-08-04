@@ -15,7 +15,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.FragmentManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
-import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.ActivityMainBinding
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private val mMainViewModel : MainViewModel by viewModel()
     private val mPreferenceUtils : PreferenceUtils by inject()
-    private val mImageDownloadController : ImageDownloadController by inject()
+    private val mImageOperationController : ImageOperationController by inject()
     private var mAppTerminateConfirmFlag = false
     private val mAppTerminateConfirmHandler = Handler()
     private var mBackButtonEnabledFromDetail = true
@@ -340,7 +340,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun showImageDetailFragment(imageModel : KakaoImageModel) {
 
         mMainFragmentState = MainFragmentState.IMAGE_DETAIL
-        val imageDetailFragment = ImageDetailFragment.newInstance(application, imageModel, mImageDownloadController)
+        val imageDetailFragment = ImageDetailFragment.newInstance(application, imageModel, mImageOperationController)
         mFragmentManager
             .beginTransaction()
             .setCustomAnimations(R.anim.anim_fragment_enter_from_right, R.anim.anim_fragment_exit_to_left,

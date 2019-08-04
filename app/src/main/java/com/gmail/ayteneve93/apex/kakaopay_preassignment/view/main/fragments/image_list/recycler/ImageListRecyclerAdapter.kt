@@ -7,7 +7,6 @@ import android.content.res.Resources
 import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -15,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
-import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.ItemImageListBinding
@@ -31,7 +30,7 @@ class ImageListRecyclerAdapter(
     private val application : Application,
     private val mKakaoImageModelManager : KakaoImageModelManager,
     private val mPreferenceUtils: PreferenceUtils,
-    private val mImageDownloadController: ImageDownloadController
+    private val mImageOperationController: ImageOperationController
 ) : RecyclerView.Adapter<ImageListRecyclerAdapter.ImageListItemViewHolder>(){
 
     private val mImageListItemViewModelList : ArrayList<ImageListItemViewModel> = ArrayList()
@@ -87,11 +86,11 @@ class ImageListRecyclerAdapter(
                 .subscribe(
                     {
                         it.documents.forEach { eachKakaoImageModel ->
-                            mImageListItemViewModelList.add(ImageListItemViewModel(application, mImageDownloadController).apply {
+                            mImageListItemViewModelList.add(ImageListItemViewModel(application, mImageOperationController).apply {
                                 mKakaoImageModel = eachKakaoImageModel
                                 mImageSizePercentage = this@ImageListRecyclerAdapter.mImageSizePercentage
                                 mIsOnMultipleSelectionMode = this@ImageListRecyclerAdapter.mIsOnMultipleSelectionMode
-                                mIsItemSelected = ObservableField(mImageDownloadController.isImageModelExists(mKakaoImageModel))
+                                mIsItemSelected = ObservableField(mImageOperationController.isImageModelExists(mKakaoImageModel))
                                 setEventHandlerOnSelectionModeChanged()
                                 onImageItemClickListener = {
                                     application.sendBroadcast(Intent().apply {
@@ -156,7 +155,7 @@ class ImageListRecyclerAdapter(
 
     fun setSelectionMode(selectionMode : Boolean) {
         mIsOnMultipleSelectionMode.set(selectionMode)
-        if(!selectionMode) mImageDownloadController.clearImageModels()
+        if(!selectionMode) mImageOperationController.clearImageModels()
     }
 
     class ImageListItemViewHolder(

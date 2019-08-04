@@ -7,7 +7,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.ObservableField
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
-import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
 
@@ -15,7 +15,7 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
 class ImageDetailViewModel (
     application: Application,
     imageModel : KakaoImageModel,
-    private val mImageDownloadController: ImageDownloadController
+    private val mImageOperationController: ImageOperationController
 ) : BaseViewModel(application) {
     var mKakaoImageModel : KakaoImageModel = imageModel
     val mIsWebViewLoading = ObservableField(true)
@@ -40,8 +40,8 @@ class ImageDetailViewModel (
         onInfoButtonClickListener()
     }
     fun boundOnDownloadButtonClick() {
-
-        //mImageDownloadController.test(mKakaoImageModel)
+        mImageOperationController.addImageModel(mKakaoImageModel)
+        mImageOperationController.startDownload()
     }
 }
 

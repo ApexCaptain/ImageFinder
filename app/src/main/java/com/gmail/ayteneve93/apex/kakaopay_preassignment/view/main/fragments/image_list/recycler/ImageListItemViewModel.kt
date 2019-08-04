@@ -8,7 +8,7 @@ import android.os.Vibrator
 import android.view.View
 import androidx.databinding.Observable
 import androidx.databinding.ObservableField
-import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
@@ -17,7 +17,7 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastP
 @Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 class ImageListItemViewModel(
     application: Application,
-    private val mImageDownloadController: ImageDownloadController
+    private val mImageOperationController: ImageOperationController
 ) : BaseViewModel(application){
 
     private val mApplication = application
@@ -54,13 +54,18 @@ class ImageListItemViewModel(
                 putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
                 putExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.SELECTION_MODE)
             })
+            mApplication.sendBroadcast(Intent().apply {
+                action = MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
+                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                putExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.SELECTION_MODE)
+            })
         }
         return false
     }
     fun boundOnImageItemCheckedChanged(isChecked : Boolean) {
         mIsItemSelected.set(isChecked)
-        if(isChecked) mImageDownloadController.addImageModel(mKakaoImageModel)
-        else mImageDownloadController.removeImageModel(mKakaoImageModel)
+        if(isChecked) mImageOperationController.addImageModel(mKakaoImageModel)
+        else mImageOperationController.removeImageModel(mKakaoImageModel)
     }
 
 }

@@ -1,6 +1,6 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.di
 
-import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainViewModel
@@ -28,7 +28,7 @@ val recyclerAdapter = module {
 
 val dataModelManager = module {
     single { KakaoImageModelManager() }
-    single { ImageDownloadController(get()) }
+    single { ImageOperationController(get()) }
 }
 
 val util = module {

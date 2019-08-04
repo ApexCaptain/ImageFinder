@@ -84,6 +84,25 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.linroid.filtermenu.library.FilterMenuLayout
+                android:id="@+id/imageListFilterMenu"
+
+                app:fm_expandedRadius="100dp"
+                app:fm_collapsedRadius="30dp"
+
+                app:fm_centerBottom="50dp"
+                app:fm_centerRight="50dp"
+                app:fm_primaryColor="@color/colorAccent"
+                app:fm_primaryDarkColor="@color/colorPrimaryDark"
+                android:visibility="@{safeUnbox(viewModel.mFilterMenuVisibility) ? View.VISIBLE : View.GONE}"
+                android:elevation="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/mainFragmentContainer"
+                app:layout_constraintBottom_toBottomOf="@+id/mainFragmentContainer">
+
+        </com.linroid.filtermenu.library.FilterMenuLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"

@@ -48,4 +48,24 @@
 
     <string name="press_again_to_exist">Press again to exit</string>
 
+    <string name="dialog_image_download_wifi_warning_title">WiFi network is not online</string>
+    <string name="dialog_image_download_wifi_warning_message">
+        This operation could occur additional communication charge.
+        \n Would you like to continue?
+    </string>
+    <string name="dialog_image_download_wifi_warning_positive_button_txt">Yes</string>
+    <string name="dialog_image_download_wifi_warning_negative_button_txt">No</string>
+
+    <string name="txt_image_download_succeed">Download Succeeded</string>
+    <string name="txt_image_download_failed">Failed to download images</string>
+
+    <string name = "permission_external_storage_rational_message">
+        This application needs storage permission to download files
+    </string>
+    <string name= "permission_external_storage_denied_message">
+        Permission denied. You can grant it later in
+        \n[Setting] -> [Permission] tab
+    </string>
+
+
 </resources>
