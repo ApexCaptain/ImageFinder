@@ -82,6 +82,11 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                     }
                                 }
 
+                                // 이미지 선택 모드(단일 & 다중) 변경 알림
+                                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED -> {
+                                    mImageListRecyclerAdapter.setSelectionMode(intent.getBooleanExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, true))
+                                }
+
                             }
                         }
                     }
@@ -108,7 +113,8 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                 MainBroadcastPreference.Action.SORT_OPTION_CHANGED,
                 MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED,
                 MainBroadcastPreference.Action.PINCHING,
-                MainBroadcastPreference.Action.PINCH_STATE
+                MainBroadcastPreference.Action.PINCH_STATE,
+                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)
@@ -165,6 +171,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             setWaveRGBColor(255, 237, 163)
             isEnabled = false
             setOnRefreshListener {
+                mImageListRecyclerAdapter.setSelectionMode(false)
                 mViewDataBinding.imageListRecyclerView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_alpha_disappear).apply {
                     setAnimationListener(object : Animation.AnimationListener {
                         override fun onAnimationRepeat(p0: Animation?) = Unit

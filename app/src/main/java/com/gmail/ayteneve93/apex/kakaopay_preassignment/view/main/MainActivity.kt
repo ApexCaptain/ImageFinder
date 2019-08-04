@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -16,6 +15,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.FragmentManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.ActivityMainBinding
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
@@ -30,9 +30,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private val mMainViewModel : MainViewModel by viewModel()
     private val mPreferenceUtils : PreferenceUtils by inject()
+    private val mImageDownloadController : ImageDownloadController by inject()
     private var mAppTerminateConfirmFlag = false
     private val mAppTerminateConfirmHandler = Handler()
     private var mBackButtonEnabledFromDetail = true
+    private var mIsOnMultipleSelectionMode = false
     private lateinit var mSearchView : SearchView
     private lateinit var mScaleGestureDetector : ScaleGestureDetector
     private lateinit var mFragmentManager: FragmentManager
@@ -60,6 +62,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     super@MainActivity.onBackPressed()
                                 }
 
+                                // 이미지 선택 모드(단일 & 다중) 변경 알림
+                                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED -> {
+                                    when(intent.getBooleanExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, true)) {
+                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.SELECTION_MODE -> {
+                                            mIsOnMultipleSelectionMode = true
+
+                                        }
+                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.NORMAL_MODE -> {
+                                            mIsOnMultipleSelectionMode = false
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -83,7 +98,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         registerReceiver(mMainBroadcastReceiver, IntentFilter().also {
             arrayOf(
                 MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED,
-                MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT
+                MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT,
+                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)
@@ -126,6 +142,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
                         putExtra(MainBroadcastPreference.Extra.QueryString.KEY, query)
                     })
+                    dismissMultiSelectionMode()
                     return true
                 }
 
@@ -194,6 +211,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 })
             }
         }
+        dismissMultiSelectionMode()
         if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL) onBackPressed()
         return false
     }
@@ -255,6 +273,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun onBackPressed() {
+        if(mIsOnMultipleSelectionMode) {
+            dismissMultiSelectionMode()
+            return
+        }
+
         if(!mSearchView.isIconified) {
             mSearchView.onActionViewCollapsed()
             return
@@ -286,6 +309,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     }
 
+    private fun dismissMultiSelectionMode() {
+        if(mIsOnMultipleSelectionMode) {
+            sendBroadcast(Intent().apply {
+                action = MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
+                putExtra(
+                    MainBroadcastPreference.Target.KEY,
+                    MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                )
+                putExtra(
+                    MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY,
+                    MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.NORMAL_MODE
+                )
+            })
+            mIsOnMultipleSelectionMode = false
+        }
+    }
+
     private fun setFragmentManager() {
         mMainFragmentState = MainFragmentState.IMAGE_LIST
         mFragmentManager = supportFragmentManager
@@ -298,8 +338,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun showImageDetailFragment(imageModel : KakaoImageModel) {
+
         mMainFragmentState = MainFragmentState.IMAGE_DETAIL
-        val imageDetailFragment = ImageDetailFragment.newInstance(application, imageModel)
+        val imageDetailFragment = ImageDetailFragment.newInstance(application, imageModel, mImageDownloadController)
         mFragmentManager
             .beginTransaction()
             .setCustomAnimations(R.anim.anim_fragment_enter_from_right, R.anim.anim_fragment_exit_to_left,

@@ -14,15 +14,15 @@ import androidx.databinding.library.baseAdapters.BR
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.FragmentImageDetailBinding
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
-import kotlinx.android.synthetic.main.fragment_image_list.view.*
 
 @Suppress("SetJavaScriptEnabled")
-class ImageDetailFragment(application : Application, imageModel: KakaoImageModel) : BaseFragment<FragmentImageDetailBinding, ImageDetailViewModel>() {
+class ImageDetailFragment(application : Application, imageModel: KakaoImageModel, imageDownloadController: ImageDownloadController) : BaseFragment<FragmentImageDetailBinding, ImageDetailViewModel>() {
 
-    private val mImageDetailViewModel : ImageDetailViewModel = ImageDetailViewModel(application, imageModel)
+    private val mImageDetailViewModel : ImageDetailViewModel = ImageDetailViewModel(application, imageModel, imageDownloadController)
 
     private val mImageDetailBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
@@ -122,7 +122,7 @@ class ImageDetailFragment(application : Application, imageModel: KakaoImageModel
     }
 
     companion object {
-        fun newInstance(application: Application, imageModel: KakaoImageModel) = ImageDetailFragment(application, imageModel)
+        fun newInstance(application: Application, imageModel: KakaoImageModel, imageDownloadController: ImageDownloadController) = ImageDetailFragment(application, imageModel, imageDownloadController)
     }
 
 }

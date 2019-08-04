@@ -1,9 +1,12 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.databinding.ItemImageListBinding
@@ -26,7 +30,8 @@ import io.reactivex.schedulers.Schedulers
 class ImageListRecyclerAdapter(
     private val application : Application,
     private val mKakaoImageModelManager : KakaoImageModelManager,
-    private val mPreferenceUtils: PreferenceUtils
+    private val mPreferenceUtils: PreferenceUtils,
+    private val mImageDownloadController: ImageDownloadController
 ) : RecyclerView.Adapter<ImageListRecyclerAdapter.ImageListItemViewHolder>(){
 
     private val mImageListItemViewModelList : ArrayList<ImageListItemViewModel> = ArrayList()
@@ -35,8 +40,8 @@ class ImageListRecyclerAdapter(
     private val mImageSizePercentage = ObservableField(mPreferenceUtils.getImageSizePercentage())
     private val mImageResizeOffset = 0.02f
     private val mMaxImageSizePercentage = 1.0f
-    private val mMinImageSizePercentage = 0.5f
-    private val mMinImageSizePixels = 400
+    private val mMinImageSizePercentage = 0.7f
+    private val mMinImageSizePixels = 450
     private val mMaxPortraitColumnCount : Int by lazy {
         Resources.getSystem().displayMetrics.let {
             val widthPixels = it.widthPixels
@@ -48,6 +53,7 @@ class ImageListRecyclerAdapter(
     private val mMinPortraitColumnCount = 1
     private var mDisableAppearAnim = false
     private val mDiasbleAppearAnimHandler = Handler()
+    private val mIsOnMultipleSelectionMode = ObservableField(false)
 
     override fun getItemCount(): Int = mImageListItemViewModelList.size
 
@@ -81,9 +87,12 @@ class ImageListRecyclerAdapter(
                 .subscribe(
                     {
                         it.documents.forEach { eachKakaoImageModel ->
-                            mImageListItemViewModelList.add(ImageListItemViewModel(application).apply {
+                            mImageListItemViewModelList.add(ImageListItemViewModel(application, mImageDownloadController).apply {
                                 mKakaoImageModel = eachKakaoImageModel
                                 mImageSizePercentage = this@ImageListRecyclerAdapter.mImageSizePercentage
+                                mIsOnMultipleSelectionMode = this@ImageListRecyclerAdapter.mIsOnMultipleSelectionMode
+                                mIsItemSelected = ObservableField(mImageDownloadController.isImageModelExists(mKakaoImageModel))
+                                setEventHandlerOnSelectionModeChanged()
                                 onImageItemClickListener = {
                                     application.sendBroadcast(Intent().apply {
                                         action = MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED
@@ -122,6 +131,8 @@ class ImageListRecyclerAdapter(
                     mDiasbleAppearAnimHandler.removeCallbacksAndMessages(null)
                     mDiasbleAppearAnimHandler.postDelayed({ mDisableAppearAnim = false }, mAnimAppearMills)
                     notifyColumnCountChanged()
+                    (application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator)
+                        .vibrate(VibrationEffect.createOneShot(100, 100))
                 } else mImageSizePercentage.set(magnifiedImageSize)
             }
         } else {
@@ -134,11 +145,18 @@ class ImageListRecyclerAdapter(
                     mDiasbleAppearAnimHandler.removeCallbacksAndMessages(null)
                     mDiasbleAppearAnimHandler.postDelayed({ mDisableAppearAnim = false }, mAnimAppearMills)
                     notifyColumnCountChanged()
+                    (application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator)
+                        .vibrate(VibrationEffect.createOneShot(100, 100))
                 } else mImageSizePercentage.set(reducedImageSize)
             }
         }
 
         mPreferenceUtils.setImageSizePercentage(mImageSizePercentage.get()!!)
+    }
+
+    fun setSelectionMode(selectionMode : Boolean) {
+        mIsOnMultipleSelectionMode.set(selectionMode)
+        if(!selectionMode) mImageDownloadController.clearImageModels()
     }
 
     class ImageListItemViewHolder(

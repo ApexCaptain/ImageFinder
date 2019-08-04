@@ -7,13 +7,15 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.ObservableField
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageDownloadController
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
 
 @Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 class ImageDetailViewModel (
     application: Application,
-    imageModel : KakaoImageModel
+    imageModel : KakaoImageModel,
+    private val mImageDownloadController: ImageDownloadController
 ) : BaseViewModel(application) {
     var mKakaoImageModel : KakaoImageModel = imageModel
     val mIsWebViewLoading = ObservableField(true)
@@ -29,7 +31,6 @@ class ImageDetailViewModel (
         }
 
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            //view?.loadUrl(url)
             return false
         }
     }
@@ -39,5 +40,27 @@ class ImageDetailViewModel (
         onInfoButtonClickListener()
     }
     fun boundOnDownloadButtonClick() {
+
+        //mImageDownloadController.test(mKakaoImageModel)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
