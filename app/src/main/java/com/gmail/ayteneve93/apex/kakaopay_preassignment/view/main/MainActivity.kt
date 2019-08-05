@@ -1,7 +1,6 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main
 
-import android.app.Activity
-import android.app.SearchManager
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -22,7 +21,6 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseActivity
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListFragment
-import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.MainFragmentState
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -31,15 +29,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val mMainViewModel : MainViewModel by viewModel()
     private val mPreferenceUtils : PreferenceUtils by inject()
     private val mImageOperationController : ImageOperationController by inject()
-    private var mAppTerminateConfirmFlag = false
+
     private val mAppTerminateConfirmHandler = Handler()
+    private val mImageDownloadCompleteNotificationId = 0
+    private val mImageDownloadCompleteNotificationReqCode = 1000
+    private val mImageDownloadCompleteNotificationChannelId = "view.main.mImageDownloadCompleteNotificationChannelId"
+    private val mImageDownloadCompleteNotificationChannelName = "view.main.mImageDownloadCompleteNotificationChannelName"
+
     private var mBackButtonEnabledFromDetail = true
     private var mIsOnMultipleSelectionMode = false
+    private var mAppTerminateConfirmFlag = false
+
     private lateinit var mSearchView : SearchView
     private lateinit var mScaleGestureDetector : ScaleGestureDetector
     private lateinit var mFragmentManager: FragmentManager
     private lateinit var mMainFragmentState: MainFragmentState
     private lateinit var mImageListFragment: ImageListFragment
+    private lateinit var mNotificationManager : NotificationManager
 
     private val mMainBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
@@ -75,6 +81,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     }
                                 }
 
+                                MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED -> {
+                                    when(intent.getStringExtra(MainBroadcastPreference.Extra.ImageOperation.KEY)) {
+                                        MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.SHARE -> {
+                                            this@MainActivity.startActivity(
+                                                Intent.createChooser(intent.getParcelableExtra<Intent>(Intent.EXTRA_INTENT), getString(R.string.intent_title_image_sharing_target)))
+                                        }
+                                        MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.DOWNLOAD -> {
+                                            Toast.makeText(this@MainActivity, R.string.txt_image_download_succeed, Toast.LENGTH_LONG).show()
+                                            showImageDownloadCompleteNotification()
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -92,6 +111,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         setToolBar()
         setScaleGestureDetector()
         setFragmentManager()
+        setNotificationChannel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mImageOperationController.clearSharedDriectory()
     }
 
     private fun setBroadcastReceiver() {
@@ -99,7 +124,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             arrayOf(
                 MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED,
                 MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT,
-                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
+                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED,
+                MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)
@@ -338,7 +364,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun showImageDetailFragment(imageModel : KakaoImageModel) {
-
         mMainFragmentState = MainFragmentState.IMAGE_DETAIL
         val imageDetailFragment = ImageDetailFragment.newInstance(application, imageModel, mImageOperationController)
         mFragmentManager
@@ -354,4 +379,61 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         Handler().postDelayed({mBackButtonEnabledFromDetail = true}, 500)
     }
 
+
+
+    private fun setNotificationChannel() {
+        mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val imageDownloadCompleteNotificationChannel : NotificationChannel = NotificationChannel (
+            mImageDownloadCompleteNotificationChannelId,
+            mImageDownloadCompleteNotificationChannelName,
+            NotificationManager.IMPORTANCE_LOW).apply {
+            enableLights(false)
+            enableVibration(false)
+            lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        }
+        mNotificationManager.createNotificationChannel(imageDownloadCompleteNotificationChannel)
+    }
+
+    private fun showImageDownloadCompleteNotification() {
+        val openGalleryIntent : Intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            type = "image/*"
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        val imageDownloadCompletePendingIntent : PendingIntent = PendingIntent.getActivity(
+            this, mImageDownloadCompleteNotificationReqCode,
+            openGalleryIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val imageDownloadCompleteNotification : Notification = Notification.Builder(this, mImageDownloadCompleteNotificationChannelId)
+            .setContentTitle(getString(R.string.txt_image_download_succeed))
+            .setContentText(getString(R.string.txt_image_download_succeed_notification_message))
+            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setAutoCancel(true)
+            .setContentIntent(imageDownloadCompletePendingIntent)
+            .build()
+        mNotificationManager.notify(mImageDownloadCompleteNotificationId, imageDownloadCompleteNotification)
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

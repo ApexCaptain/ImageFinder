@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <application
             android:name=".PreAssignmentApplication"
             android:allowBackup="true"
@@ -32,6 +31,18 @@
                 android:name=".view.main.MainActivity"
                 android:configChanges="orientation|screenSize">
         </activity>
+        
+        <provider
+                android:grantUriPermissions="true"
+                android:exported="false"
+                android:authorities="${applicationId}"
+                android:name="androidx.core.content.FileProvider">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/image_share_path"/>
+        </provider>
+        
+
     </application>
 
 </manifest>

@@ -58,9 +58,12 @@
 
     <string name="txt_image_download_succeed">Download Succeeded</string>
     <string name="txt_image_download_failed">Failed to download images</string>
+    <string name="txt_image_download_succeed_notification_message">Please, tab to check your files</string>
+
+    <string name="intent_title_image_sharing_target">Where do you want to send these?</string>
 
     <string name = "permission_external_storage_rational_message">
-        This application needs storage permission to download files
+        This application needs storage permission to download or share files
     </string>
     <string name= "permission_external_storage_denied_message">
         Permission denied. You can grant it later in

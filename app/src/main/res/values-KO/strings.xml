@@ -55,9 +55,12 @@
 
     <string name="txt_image_download_succeed">다운로드가 완료되었습니다</string>
     <string name="txt_image_download_failed">다운로드에 실패했습니다</string>
+    <string name="txt_image_download_succeed_notification_message">파일 내용을 보시려면 클릭해주세요</string>
+
+    <string name="intent_title_image_sharing_target">어디로 보낼까요?</string>
 
     <string name = "permission_external_storage_rational_message">
-        파일을 다운로드 위해서는 저장소 권한이 필요합니다.
+        파일을 저장 혹은 공유하기 위해서는 저장소 권한이 필요합니다.
     </string>
     <string name= "permission_external_storage_denied_message">
         권한 설정이 거부되었습니다.

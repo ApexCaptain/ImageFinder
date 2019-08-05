@@ -15,6 +15,7 @@ object MainBroadcastPreference {
         const val BACK_BUTTON_PRESSED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.BACK_BUTTON_PRESSED"
         const val CLOSE_IMAGE_DETAIL_FRAGMENT = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.CLOSE_IMAGE_DETAIL_FRAGMENT"
         const val IMAGE_ITEM_SELECTION_MODE_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED"
+        const val IMAGE_OPERATION_FINISHED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.IMAGE_OPERATION_FINISHED"
     }
 
     object Target {
@@ -58,6 +59,13 @@ object MainBroadcastPreference {
             object PredefinedValues {
                 const val SELECTION_MODE = true
                 const val NORMAL_MODE = false
+            }
+        }
+        object ImageOperation {
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImagerOperation.KEY"
+            object PredefinedValues {
+                const val SHARE = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImagerOperation.PredefinedValues.SHARE"
+                const val DOWNLOAD = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImagerOperation.PredefinedValues.DOWNLOAD"
             }
         }
     }

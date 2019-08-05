@@ -2,7 +2,6 @@ package com.gmail.ayteneve93.apex.kakaopay_preassignment.controller
 
 import android.app.AlertDialog
 import android.app.Application
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,15 +9,17 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.Environment
-import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.databinding.ObservableField
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.BuildConfig
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import java.io.File
@@ -29,37 +30,43 @@ import java.util.ArrayList
 class ImageOperationController(
     private val application: Application
 ) {
-
     private val mDownloadDirectory : File by lazy {
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).also {
             if(!it.exists()) it.mkdir()
         }
     }
-
+    private val mShareDirectory : File by lazy {
+        File(application.filesDir.canonicalPath + "/sharedImages").also {
+            if(!it.exists()) it.mkdir()
+        }
+    }
     private val mImageModelMap : HashMap<String, KakaoImageModel> = HashMap()
+    var mIsOnOperation = ObservableField(false)
+    private var mIsImageOnSharing = false
     fun isImageModelExists(imageModel: KakaoImageModel) : Boolean = mImageModelMap.containsKey(imageModel.imageUrl)
     fun addImageModel(imageModel: KakaoImageModel) { mImageModelMap.put(imageModel.imageUrl, imageModel) }
     fun removeImageModel(imageModel: KakaoImageModel) = mImageModelMap.remove(imageModel.imageUrl)
     fun clearImageModels() = mImageModelMap.clear()
 
-    fun startShare(acitivty : AppCompatActivity) {
-        Intent().apply {
-            action = Intent.ACTION_SEND_MULTIPLE
-            val urlList : ArrayList<Uri> = ArrayList()
-            mImageModelMap.keys.forEach {
-                urlList.add(Uri.parse(it))
+    private enum class ImageOperation{ SHARE, DOWNLOAD }
+
+    fun startShare() {
+        checkPermsiionAnd(ImageOperation.SHARE)
+    }
+    fun clearSharedDriectory() {
+        if(mIsImageOnSharing) {
+            mIsImageOnSharing = false
+            mShareDirectory.listFiles().forEach {
+                if (it.exists()) it.canonicalFile.delete()
             }
-            //putParcelableArrayListExtra(Intent.EXTRA_STREAM, urlList)
-
-            type = "text/plain"
-
-
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            acitivty.startActivity(Intent.createChooser(this, "Share images to..."))
         }
     }
 
     fun startDownload() {
+        checkPermsiionAnd(ImageOperation.DOWNLOAD)
+    }
+
+    private fun checkPermsiionAnd(imageOperation: ImageOperation) {
         val clonedImageModelMap : HashMap<String, KakaoImageModel> = with(mImageModelMap) {
             val tmpHashMap = HashMap<String, KakaoImageModel>()
             forEach { tmpHashMap[it.key] = it.value }
@@ -71,26 +78,26 @@ class ImageOperationController(
                     val isWifiConnected : Boolean = with((application.getSystemService(Context.WIFI_SERVICE) as WifiManager)) {
                         isWifiEnabled && connectionInfo.networkId != -1
                     }
-                    if(isWifiConnected) runDownloadProcess(clonedImageModelMap)
+                    if(isWifiConnected) loadImageTo(clonedImageModelMap, imageOperation)
                     else {
                         AlertDialog.Builder(application).apply {
                             setTitle(R.string.dialog_image_download_wifi_warning_title)
                             setMessage(R.string.dialog_image_download_wifi_warning_message)
                             setPositiveButton(R.string.dialog_image_download_wifi_warning_positive_button_txt) { _, _ ->
-                                runDownloadProcess(clonedImageModelMap)
+                                loadImageTo(clonedImageModelMap, imageOperation)
                             }
                             setNegativeButton(R.string.dialog_image_download_wifi_warning_negative_button_txt) { _, _ ->
-                                downloadFailed()
+                                preProcessRejected()
                             }
                         }
                     }
                 }
 
                 override fun onPermissionDenied(deniedPermissions: ArrayList<String>?) {
-                    downloadFailed()
+                    preProcessRejected()
                 }
 
-                private fun downloadFailed() {
+                private fun preProcessRejected() {
                     Toast.makeText(application, R.string.txt_image_download_failed, Toast.LENGTH_LONG).show()
                 }
 
@@ -102,10 +109,11 @@ class ImageOperationController(
             .check()
     }
 
-    private fun runDownloadProcess(clonedImageModelMap : HashMap<String, KakaoImageModel>) {
+    private fun loadImageTo(clonedImageModelMap : HashMap<String, KakaoImageModel>, imageOperation : ImageOperation) {
         val totalImageCount = clonedImageModelMap.size
         var currentImageCount = 0
-
+        val directoryToStore = if(imageOperation == ImageOperation.SHARE)mShareDirectory else mDownloadDirectory
+        mIsOnOperation.set(true)
         clonedImageModelMap.forEach {
             Glide.with(application)
                 .asBitmap()
@@ -113,14 +121,39 @@ class ImageOperationController(
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onLoadCleared(placeholder: Drawable?) = Unit
                     override fun onResourceReady(bitmapImage: Bitmap, transition: Transition<in Bitmap>?) {
-                        val imageFile = File(mDownloadDirectory, application.getString(R.string.download_image_prefix, it.value.hashCode()) + ".jpg")
+                        val imageFile = File(directoryToStore, application.getString(R.string.download_image_prefix, it.value.hashCode()) + ".jpg")
                         try {
                             FileOutputStream(imageFile).also { fileOutputStream ->
                                 bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
                                 fileOutputStream.close()
                                 notifyAndroidNewImageAdded(imageFile)
                                 currentImageCount++
-                                if(currentImageCount == totalImageCount) Toast.makeText(application, application.getString(R.string.txt_image_download_succeed), Toast.LENGTH_LONG).show()
+                                if(currentImageCount == totalImageCount) {
+                                    mIsOnOperation.set(false)
+                                    application.sendBroadcast(Intent().apply {
+                                        action = MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED
+                                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
+                                        when(imageOperation) {
+                                            ImageOperation.SHARE -> {
+                                                putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.SHARE)
+                                                putExtra(Intent.EXTRA_INTENT, Intent().apply {
+                                                    action = Intent.ACTION_SEND_MULTIPLE
+                                                    type = "image/jpeg"
+                                                    putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList<Uri>().also {
+                                                        mShareDirectory.listFiles().forEach { eachFileToShare ->
+                                                            if(eachFileToShare.extension == "jpg") it.add(FileProvider.getUriForFile(application, BuildConfig.APPLICATION_ID, eachFileToShare))
+                                                        }
+                                                    })
+                                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                })
+                                                mIsImageOnSharing = true
+                                            }
+                                            ImageOperation.DOWNLOAD -> {
+                                                putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.DOWNLOAD)
+                                            }
+                                        }
+                                    })
+                                }
                             }
                         } catch(e : Exception) { e.printStackTrace() }
                     }

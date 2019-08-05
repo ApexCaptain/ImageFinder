@@ -20,9 +20,9 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
 
 @Suppress("SetJavaScriptEnabled")
-class ImageDetailFragment(application : Application, imageModel: KakaoImageModel, imageOperationController: ImageOperationController) : BaseFragment<FragmentImageDetailBinding, ImageDetailViewModel>() {
+class ImageDetailFragment(application : Application, imageModel: KakaoImageModel, private val mImageOperationController: ImageOperationController) : BaseFragment<FragmentImageDetailBinding, ImageDetailViewModel>() {
 
-    private val mImageDetailViewModel : ImageDetailViewModel = ImageDetailViewModel(application, imageModel, imageOperationController)
+    private val mImageDetailViewModel : ImageDetailViewModel = ImageDetailViewModel(application, imageModel, mImageOperationController)
 
     private val mImageDetailBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
@@ -38,7 +38,6 @@ class ImageDetailFragment(application : Application, imageModel: KakaoImageModel
                                 MainBroadcastPreference.Action.BACK_BUTTON_PRESSED -> {
                                     mViewDataBinding.detailWebView.let {
                                         imageDetailWebView ->
-
                                         if(imageDetailWebView.canGoBack() && imageDetailWebView.url != mImageDetailViewModel.mKakaoImageModel.docUrl) imageDetailWebView.goBack()
                                         else application.sendBroadcast(Intent().apply {
                                             action = MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT

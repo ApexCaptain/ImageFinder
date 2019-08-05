@@ -209,7 +209,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                 override fun onMenuItemClick(view: View?, position: Int) {
                     when(position) {
                         downloadButton -> mImageOperationController.startDownload()
-                        shareButton -> mImageOperationController.startShare(mActivity!!)
+                        shareButton -> mImageOperationController.startShare()
                     }
                     hideFilterMenu()
                     mImageOperationController.clearImageModels()
@@ -237,6 +237,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             override fun onAnimationStart(p0: Animation?) = Unit
         })
         mViewDataBinding.imageListFilterMenu.startAnimation(filterDisappearAnim)
+
     }
 
     companion object {

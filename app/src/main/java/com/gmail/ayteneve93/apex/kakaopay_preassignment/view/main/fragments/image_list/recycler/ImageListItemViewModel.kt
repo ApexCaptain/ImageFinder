@@ -43,7 +43,7 @@ class ImageListItemViewModel(
         } else onImageItemClickListener()
     }
     fun boundOnImageItemLongClick(view : View) : Boolean {
-        if(!mIsOnMultipleSelectionMode.get()!!) {
+        if(!mIsOnMultipleSelectionMode.get()!! && !mImageOperationController.mIsOnOperation.get()!!) {
             mIsOnMultipleSelectionMode.set(true)
             (mApplication.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator)
                 .vibrate(VibrationEffect.createOneShot(100, 100))

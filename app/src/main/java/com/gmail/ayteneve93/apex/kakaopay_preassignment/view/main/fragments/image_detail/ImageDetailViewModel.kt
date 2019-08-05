@@ -35,13 +35,21 @@ class ImageDetailViewModel (
         }
     }
 
+    fun boundOnShareButtonClick() {
+        if(!mImageOperationController.mIsOnOperation.get()!!) {
+            mImageOperationController.addImageModel(mKakaoImageModel)
+            mImageOperationController.startShare()
+        }
+    }
     lateinit var onInfoButtonClickListener : () -> Unit
     fun boundOnInfoButtonClick() {
         onInfoButtonClickListener()
     }
     fun boundOnDownloadButtonClick() {
-        mImageOperationController.addImageModel(mKakaoImageModel)
-        mImageOperationController.startDownload()
+        if(!mImageOperationController.mIsOnOperation.get()!!) {
+            mImageOperationController.addImageModel(mKakaoImageModel)
+            mImageOperationController.startDownload()
+        }
     }
 }
 
