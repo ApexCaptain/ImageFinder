@@ -68,6 +68,8 @@ dependencies {
     implementation "com.wang.avi:library:$wang_avi_process_indicator_version"
     implementation "com.github.recruit-lifestyle:WaveSwipeRefreshLayout:$wave_swpie_refresh_layout_version"
 
+    implementation 'com.github.shadowalker77:wp7progressbar:1.0.5'
+
     // TedPermission
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
     implementation 'com.linroid.filtermenu:library:0.2.3'

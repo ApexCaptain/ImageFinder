@@ -25,6 +25,9 @@
             </group>
         </menu>
     </item>
+    <item
+            android:id="@+id/menuMainAppBarClearSearchHistory"
+            android:title="@string/menu_title_clear_search_history"/>
 
 
 

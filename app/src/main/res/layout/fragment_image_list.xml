@@ -97,9 +97,7 @@
                 android:visibility="@{safeUnbox(viewModel.mFilterMenuVisibility) ? View.VISIBLE : View.GONE}"
                 android:elevation="8dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/mainFragmentContainer"
-                app:layout_constraintBottom_toBottomOf="@+id/mainFragmentContainer">
+                android:layout_height="wrap_content">
 
         </com.linroid.filtermenu.library.FilterMenuLayout>
 
@@ -107,6 +105,8 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+
 
             <ImageView
                     android:visibility="@{safeUnbox(viewModel.mNoSearchResult) ? View.VISIBLE : View.GONE}"
@@ -135,7 +135,8 @@
 
                     android:id="@+id/imageListRefreshLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:layout_editor_absoluteX="0dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/imageListRecyclerView"

@@ -17,7 +17,7 @@
         <CheckBox
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_percent="0.2"
-                android:checked="@={viewModel.mIsItemSelected}"
+                android:checked="@{safeUnbox(viewModel.mIsItemSelected)}"
                 android:onCheckedChanged="@{(compoundButton, checked) -> viewModel.boundOnImageItemCheckedChanged(checked)}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

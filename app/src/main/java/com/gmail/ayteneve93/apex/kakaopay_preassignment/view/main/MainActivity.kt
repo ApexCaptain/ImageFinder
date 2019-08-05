@@ -5,11 +5,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.database.Cursor
 import android.os.Handler
+import android.provider.SearchRecentSuggestions
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.databinding.Observable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.FragmentManager
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
@@ -94,6 +97,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     }
                                 }
 
+                                MainBroadcastPreference.Action.FINISH_APPLICATION -> {
+                                    finishApplication()
+                                }
+
                             }
                         }
                     }
@@ -106,12 +113,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getViewModel(): MainViewModel = mMainViewModel
     override fun getBindingVariable(): Int = BR.viewModel
 
+
     override fun setUp() {
         setBroadcastReceiver()
         setToolBar()
         setScaleGestureDetector()
         setFragmentManager()
         setNotificationChannel()
+        setImageOperationIndicator()
     }
 
     override fun onResume() {
@@ -125,7 +134,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED,
                 MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT,
                 MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED,
-                MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED
+                MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED,
+                MainBroadcastPreference.Action.FINISH_APPLICATION
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)
@@ -150,6 +160,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main_app_bar, menu)
         val searchManager : SearchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        val suggestions = SearchRecentSuggestions(this, MainRecentSearchSuggestionsProvider.AUTHORITY,
+            MainRecentSearchSuggestionsProvider.MODE)
+
         mSearchView = menu!!.findItem(R.id.menuMainAppBarSearch).actionView as SearchView
         mSearchView.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -169,14 +183,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         putExtra(MainBroadcastPreference.Extra.QueryString.KEY, query)
                     })
                     dismissMultiSelectionMode()
+                    suggestions.saveRecentQuery(query, null)
                     return true
                 }
-
-                override fun onQueryTextChange(newText: String?): Boolean = true
+                override fun onQueryTextChange(newText: String?): Boolean = newText?.isNotEmpty()?:false
             })
-            setOnCloseListener {
-                false
-            }
+            setOnSuggestionListener(object : SearchView.OnSuggestionListener {
+                override fun onSuggestionSelect(position: Int): Boolean = true
+                override fun onSuggestionClick(position: Int): Boolean {
+                    val cursor = suggestionsAdapter.getItem(position) as Cursor
+                    val index = cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_1)
+                    setQuery(cursor.getString(index), true)
+                    return true
+                }
+            })
+            setOnCloseListener { false }
+            isQueryRefinementEnabled = true
+            setIconifiedByDefault(false)
+            requestFocus(1)
         }
         return true
     }
@@ -235,6 +259,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
                     putExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 80)
                 })
+            }
+            R.id.menuMainAppBarClearSearchHistory -> {
+                SearchRecentSuggestions(this, MainRecentSearchSuggestionsProvider.AUTHORITY,
+                    MainRecentSearchSuggestionsProvider.MODE).clearHistory()
             }
         }
         dismissMultiSelectionMode()
@@ -309,6 +337,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             return
         }
 
+        if(mMainFragmentState == MainFragmentState.IMAGE_LIST){
+            if(mBackButtonEnabledFromDetail) {
+                sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.BACK_BUTTON_PRESSED
+                    putExtra(
+                        MainBroadcastPreference.Target.KEY,
+                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                    )
+                })
+            }
+            return
+        }
+
         if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL){
             if(mBackButtonEnabledFromDetail) {
                 sendBroadcast(Intent().apply {
@@ -322,6 +363,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             return
         }
 
+    }
+
+    fun finishApplication() {
         if(!mAppTerminateConfirmFlag) {
             Toast.makeText(this, R.string.press_again_to_exist, Toast.LENGTH_LONG).show()
             mAppTerminateConfirmFlag = true
@@ -332,7 +376,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             return
         }
         finish()
-
     }
 
     private fun dismissMultiSelectionMode() {
@@ -411,6 +454,22 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .setContentIntent(imageDownloadCompletePendingIntent)
             .build()
         mNotificationManager.notify(mImageDownloadCompleteNotificationId, imageDownloadCompleteNotification)
+    }
+
+    private fun setImageOperationIndicator() {
+        mViewDataBinding.imageOperationIndicator.bringToFront()
+        mImageOperationController.mIsOnOperation.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if(mImageOperationController.mIsOnOperation.get()!!) {
+                    mMainViewModel.mProgressIndicatorVisibility.set(true)
+                    mViewDataBinding.imageOperationIndicator.showProgressBar()
+                }
+                else {
+                    mMainViewModel.mProgressIndicatorVisibility.set(false)
+                    mViewDataBinding.imageOperationIndicator.hideProgressBar()
+                }
+            }
+        })
     }
 
 }

@@ -22,6 +22,11 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import io.reactivex.Completable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.io.FileOutputStream
 import java.util.ArrayList
@@ -41,6 +46,7 @@ class ImageOperationController(
         }
     }
     private val mImageModelMap : HashMap<String, KakaoImageModel> = HashMap()
+    private val mCompositeDisposable : CompositeDisposable = CompositeDisposable()
     var mIsOnOperation = ObservableField(false)
     private var mIsImageOnSharing = false
     fun isImageModelExists(imageModel: KakaoImageModel) : Boolean = mImageModelMap.containsKey(imageModel.imageUrl)
@@ -59,6 +65,7 @@ class ImageOperationController(
             mShareDirectory.listFiles().forEach {
                 if (it.exists()) it.canonicalFile.delete()
             }
+            mCompositeDisposable.clear()
         }
     }
 
@@ -114,51 +121,63 @@ class ImageOperationController(
         var currentImageCount = 0
         val directoryToStore = if(imageOperation == ImageOperation.SHARE)mShareDirectory else mDownloadDirectory
         mIsOnOperation.set(true)
-        clonedImageModelMap.forEach {
-            Glide.with(application)
-                .asBitmap()
-                .load(it.value.imageUrl)
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onLoadCleared(placeholder: Drawable?) = Unit
-                    override fun onResourceReady(bitmapImage: Bitmap, transition: Transition<in Bitmap>?) {
-                        val imageFile = File(directoryToStore, application.getString(R.string.download_image_prefix, it.value.hashCode()) + ".jpg")
-                        try {
-                            FileOutputStream(imageFile).also { fileOutputStream ->
-                                bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-                                fileOutputStream.close()
-                                notifyAndroidNewImageAdded(imageFile)
+        mCompositeDisposable.add(
+            Completable.create {
+                emitter ->
+                clonedImageModelMap.forEach {
+                    Glide.with(application)
+                        .asBitmap()
+                        .load(it.value.imageUrl)
+                        .into(object : CustomTarget<Bitmap>() {
+                            override fun onLoadFailed(errorDrawable: Drawable?) {
                                 currentImageCount++
-                                if(currentImageCount == totalImageCount) {
-                                    mIsOnOperation.set(false)
-                                    application.sendBroadcast(Intent().apply {
-                                        action = MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED
-                                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
-                                        when(imageOperation) {
-                                            ImageOperation.SHARE -> {
-                                                putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.SHARE)
-                                                putExtra(Intent.EXTRA_INTENT, Intent().apply {
-                                                    action = Intent.ACTION_SEND_MULTIPLE
-                                                    type = "image/jpeg"
-                                                    putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList<Uri>().also {
-                                                        mShareDirectory.listFiles().forEach { eachFileToShare ->
-                                                            if(eachFileToShare.extension == "jpg") it.add(FileProvider.getUriForFile(application, BuildConfig.APPLICATION_ID, eachFileToShare))
-                                                        }
-                                                    })
-                                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                })
-                                                mIsImageOnSharing = true
-                                            }
-                                            ImageOperation.DOWNLOAD -> {
-                                                putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.DOWNLOAD)
-                                            }
-                                        }
-                                    })
-                                }
+                                if(currentImageCount == totalImageCount) emitter.onComplete()
                             }
-                        } catch(e : Exception) { e.printStackTrace() }
+                            override fun onLoadCleared(placeholder: Drawable?) = Unit
+                            override fun onResourceReady(bitmapImage: Bitmap, transition: Transition<in Bitmap>?) {
+                                val imageFile = File(directoryToStore, application.getString(R.string.download_image_prefix, it.value.hashCode()) + ".jpg")
+                                try {
+                                    FileOutputStream(imageFile).also { fileOutputStream ->
+                                        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+                                        fileOutputStream.close()
+                                        notifyAndroidNewImageAdded(imageFile)
+                                    }
+                                } catch(e : Exception) { e.printStackTrace() }
+                                currentImageCount++
+                                if(currentImageCount == totalImageCount) emitter.onComplete()
+                            }
+                        })
+                }
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                mIsOnOperation.set(false)
+                application.sendBroadcast(Intent().apply {
+                    action = MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
+                    when(imageOperation) {
+                        ImageOperation.SHARE -> {
+                            putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.SHARE)
+                            putExtra(Intent.EXTRA_INTENT, Intent().apply {
+                                action = Intent.ACTION_SEND_MULTIPLE
+                                type = "image/jpeg"
+                                putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList<Uri>().also {
+                                    mShareDirectory.listFiles().forEach { eachFileToShare ->
+                                        if(eachFileToShare.extension == "jpg") it.add(FileProvider.getUriForFile(application, BuildConfig.APPLICATION_ID, eachFileToShare))
+                                    }
+                                })
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            })
+                            mIsImageOnSharing = true
+                        }
+                        ImageOperation.DOWNLOAD -> {
+                            putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.DOWNLOAD)
+                        }
                     }
                 })
-        }
+            }
+        )
     }
 
     private fun notifyAndroidNewImageAdded(imageFile : File) {
@@ -169,3 +188,27 @@ class ImageOperationController(
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

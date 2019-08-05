@@ -16,6 +16,7 @@ object MainBroadcastPreference {
         const val CLOSE_IMAGE_DETAIL_FRAGMENT = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.CLOSE_IMAGE_DETAIL_FRAGMENT"
         const val IMAGE_ITEM_SELECTION_MODE_CHANGED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED"
         const val IMAGE_OPERATION_FINISHED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.IMAGE_OPERATION_FINISHED"
+        const val FINISH_APPLICATION = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.FINISH_APPLICATION"
     }
 
     object Target {

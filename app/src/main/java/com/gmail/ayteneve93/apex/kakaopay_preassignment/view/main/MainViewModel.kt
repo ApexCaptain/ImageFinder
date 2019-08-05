@@ -6,9 +6,8 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperatio
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
 
 class MainViewModel(
-    application : Application,
-    imageOperationController: ImageOperationController
+    application : Application
 ) : BaseViewModel(application){
     val mFragmentVisibility = ObservableField(true)
-    val mIsImageOperationOnProgress = imageOperationController.mIsOnOperation
+    val mProgressIndicatorVisibility = ObservableField(false)
 }

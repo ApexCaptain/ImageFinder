@@ -28,8 +28,16 @@
             </intent-filter>
         </activity>
         <activity
+                android:launchMode="singleTop"
                 android:name=".view.main.MainActivity"
                 android:configChanges="orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/recent_search"/>
         </activity>
         
         <provider
@@ -40,6 +48,12 @@
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/image_share_path"/>
+        </provider>
+        <provider
+                android:enabled="true"
+                android:exported="false"
+                android:authorities="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainRecentSearchSuggestionsProvider"
+                android:name=".view.main.MainRecentSearchSuggestionsProvider">
         </provider>
         
 

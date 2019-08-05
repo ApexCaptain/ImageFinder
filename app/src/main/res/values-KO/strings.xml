@@ -23,6 +23,8 @@
     <string name="menu_title_display_count_50">50 개</string>
     <string name="menu_title_display_count_80">80 개</string>
 
+    <string name="menu_title_clear_search_history">최근 검색어 삭제</string>
+
     <string name="image_detail_sub_title">사진 상세정보 ▼ </string>
     <string name="image_detail_dialog_title">사진 정보</string>
     <string name="image_detail_info_collection">

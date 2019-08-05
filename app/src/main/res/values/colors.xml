@@ -5,7 +5,7 @@
     <color name="colorPrimary">#ffeda3</color>
     <color name="colorPrimaryDark">#222222</color>
     <color name="colorBrightDark">#A05a2D</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#FF6347</color>
     <color name="colorTransparent">#00000000</color>
     <color name="ic_launcher_background">#FFFFCC</color>
 </resources>

@@ -6,10 +6,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.databinding.Observable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.GridLayoutManager
 
@@ -83,7 +85,13 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                 MainBroadcastPreference.Action.PINCH_STATE -> {
                                     when(intent.getBooleanExtra(MainBroadcastPreference.Extra.IsPichBeigin.KEY, MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END)) {
                                         MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.BEGIN -> mViewDataBinding.imageListRefreshLayout.isEnabled = false
-                                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END -> mViewDataBinding.imageListRefreshLayout.isEnabled = true
+                                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END -> {
+                                            if(!mImageListViewModel.mFilterMenuVisibility.get()!!) {
+                                                Handler().postDelayed({
+                                                    mViewDataBinding.imageListRefreshLayout.isEnabled = true
+                                                }, 300)
+                                            }
+                                        }
                                     }
                                 }
 
@@ -94,7 +102,15 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                         if(this) showFilterMenu()
                                         else hideFilterMenu()
                                     }
+                                }
 
+                                // 백 버튼 눌림
+                                MainBroadcastPreference.Action.BACK_BUTTON_PRESSED -> {
+                                    if(mImageListViewModel.mPageNumber > 1) mImageListViewModel.boundOnPrevPageButtonClick()
+                                    else mActivity?.sendBroadcast(Intent().apply {
+                                        action = MainBroadcastPreference.Action.FINISH_APPLICATION
+                                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
+                                    })
                                 }
 
                             }
@@ -125,7 +141,8 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                 MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED,
                 MainBroadcastPreference.Action.PINCHING,
                 MainBroadcastPreference.Action.PINCH_STATE,
-                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
+                MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED,
+                MainBroadcastPreference.Action.BACK_BUTTON_PRESSED
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)
@@ -182,8 +199,6 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             setWaveRGBColor(255, 237, 163)
             isEnabled = false
             setOnRefreshListener {
-                mImageListRecyclerAdapter.setSelectionMode(false)
-                hideFilterMenu()
                 mViewDataBinding.imageListRecyclerView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_alpha_disappear).apply {
                     setAnimationListener(object : Animation.AnimationListener {
                         override fun onAnimationRepeat(p0: Animation?) = Unit
@@ -225,19 +240,22 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         mImageListViewModel.showFilterMenu()
         val filterAppearAnim = AnimationUtils.loadAnimation(context, R.anim.anim_filter_menu_appear)
         mViewDataBinding.imageListFilterMenu.startAnimation(filterAppearAnim)
+        mViewDataBinding.imageListRefreshLayout.isEnabled = false
     }
 
     private fun hideFilterMenu() {
-        val filterDisappearAnim = AnimationUtils.loadAnimation(context, R.anim.anim_filter_menu_disappear)
-        filterDisappearAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationEnd(p0: Animation?) {
-                mImageListViewModel.hideFilterMenu()
-            }
-            override fun onAnimationRepeat(p0: Animation?) = Unit
-            override fun onAnimationStart(p0: Animation?) = Unit
-        })
-        mViewDataBinding.imageListFilterMenu.startAnimation(filterDisappearAnim)
-
+        if(mImageListViewModel.mFilterMenuVisibility.get()!!) {
+            val filterDisappearAnim = AnimationUtils.loadAnimation(context, R.anim.anim_filter_menu_disappear)
+            filterDisappearAnim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationEnd(p0: Animation?) {
+                    mImageListViewModel.hideFilterMenu()
+                }
+                override fun onAnimationRepeat(p0: Animation?) = Unit
+                override fun onAnimationStart(p0: Animation?) = Unit
+            })
+            mViewDataBinding.imageListFilterMenu.startAnimation(filterDisappearAnim)
+            mViewDataBinding.imageListRefreshLayout.isEnabled = true
+        }
     }
 
     companion object {
