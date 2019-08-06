@@ -56,7 +56,7 @@
     <string name="dialog_image_download_wifi_warning_negative_button_txt">아니오</string>
 
     <string name="txt_image_download_succeed">다운로드가 완료되었습니다</string>
-    <string name="txt_image_download_failed">다운로드에 실패했습니다</string>
+    <string name="txt_image_operation_failed">이미지를 불러오는데 실패했습니다</string>
     <string name="txt_image_download_succeed_notification_message">파일 내용을 보시려면 클릭해주세요</string>
 
     <string name="intent_title_image_sharing_target">어디로 보낼까요?</string>

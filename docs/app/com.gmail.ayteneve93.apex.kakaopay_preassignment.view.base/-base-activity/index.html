@@ -9,6 +9,7 @@
 <br/>
 <h1>BaseActivity</h1>
 <code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseActivity</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewDataBinding</span><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
+<p>MVVM 디자인 패턴을 구축할 때 사용한 기본 Activity 클래스입니다.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +18,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">BaseActivity</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+<code><span class="identifier">BaseActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>MVVM 디자인 패턴을 구축할 때 사용한 기본 Activity 클래스입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,7 +32,9 @@
 <p><a href="m-view-data-binding.html">mViewDataBinding</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mViewDataBinding</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code></td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mViewDataBinding</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>데이터바인딩 객체입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -41,35 +46,47 @@
 <p><a href="get-binding-variable.html">getBindingVariable</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getBindingVariable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getBindingVariable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>BR 에서 viewModel 로 옵션을 잡아 반환하는 추상 메소드입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-layout-id.html">getLayoutId</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getLayoutId</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getLayoutId</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>액티비티와 연결할 Layout 의 Id를 반환하는 추상 메소드입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-view-model.html">getViewModel</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getViewModel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#V"><span class="identifier">V</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getViewModel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#V"><span class="identifier">V</span></a></code><ul><li>뷰 모델을 가져오는 추상 메소드입니다.</li>
+</ul>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-create.html">onCreate</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Activity 생명주기 onCreate 에 다음의 내용을 실행합니다.
+데이터 바인딩에 Binding 변수와 뷰 모델을 지정하고 생명주기 관리자를 본 액티비티 지정합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-up.html">setUp</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">setUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">setUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>onCreate 작업 이후에 실행되는 추상 메소드입니다.
+액티비티가 모든 작동준비를 마친 후에 실행됩니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -81,7 +98,10 @@
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main/-main-activity/index.html">MainActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">BaseActivity</span></a><span class="symbol">&lt;</span><span class="identifier">ActivityMainBinding</span><span class="symbol">,</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main/-main-view-model/index.html"><span class="identifier">MainViewModel</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">BaseActivity</span></a><span class="symbol">&lt;</span><span class="identifier">ActivityMainBinding</span><span class="symbol">,</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main/-main-view-model/index.html"><span class="identifier">MainViewModel</span></a><span class="symbol">&gt;</span></code>
+<p>애플리케이션의 중심이 되는 MainActivity 입니다. 툴 바와 프래그먼트, 기본적인
+Progress Indicator 등을 가지며 전체 앱을 통제하는 기능을 수행합니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

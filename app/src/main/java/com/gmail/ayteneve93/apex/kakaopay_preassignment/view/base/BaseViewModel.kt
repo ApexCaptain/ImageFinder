@@ -4,8 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 
 /**
- * 앱에서 사용하는 기본 뷰 모델, 공통으로 추가할 사항 있으면 아래에 내용 써 넣어야 함
- * 주의 : 반드시 Dependency Injection 패키지에서 관리해줄 것
+ * MVVM 디자인 패턴을 구축할 때 사용한 기본 ViewModel 클래스입니다.
+ * 이번 프로젝트에서는 예하 전체 ViewModel 에서 공통적으로 사용하는
+ * 메소드나 속성이 없습니다.
+ *
+ * @author ayteneve93@gmail.com
+ *
  */
-abstract class BaseViewModel(application : Application) : AndroidViewModel(application) {
-}
+abstract class BaseViewModel(application : Application) : AndroidViewModel(application)

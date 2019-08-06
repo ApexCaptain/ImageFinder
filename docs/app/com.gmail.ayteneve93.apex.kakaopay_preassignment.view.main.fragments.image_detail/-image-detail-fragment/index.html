@@ -9,6 +9,8 @@
 <br/>
 <h1>ImageDetailFragment</h1>
 <code><span class="keyword">class </span><span class="identifier">ImageDetailFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a><span class="symbol">&lt;</span><span class="identifier">FragmentImageDetailBinding</span><span class="symbol">,</span>&nbsp;<a href="../-image-detail-view-model/index.html"><span class="identifier">ImageDetailViewModel</span></a><span class="symbol">&gt;</span></code>
+<p>선택한 이미지의 상세한 내용을 보여주는 프래그먼트입니다. 이미지 원본과 이미지가 게시된
+웹 페이지를 표시해주는 WebView, 그리고 공유, 정보, 다운로드 3개의 FAB 로 구성되어 있습니다.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +19,33 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">ImageDetailFragment</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/imageModel">imageModel</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">ImageDetailFragment</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/imageModel">imageModel</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code>
+<p>선택한 이미지의 상세한 내용을 보여주는 프래그먼트입니다. 이미지 원본과 이미지가 게시된
+웹 페이지를 표시해주는 WebView, 그리고 공유, 정보, 다운로드 3개의 FAB 로 구성되어 있습니다.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="m-image-detail-broadcast-receiver.html">mImageDetailBroadcastReceiver</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageDetailBroadcastReceiver</span><span class="symbol">: </span><span class="identifier">&lt;no name provided&gt;</span></code>
+<p>이미지 상세정보 프래그먼트에서 사용하는 방송 수신자입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-detail-view-model.html">mImageDetailViewModel</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageDetailViewModel</span><span class="symbol">: </span><a href="../-image-detail-view-model/index.html"><span class="identifier">ImageDetailViewModel</span></a></code>
+<p>이미지 상세정보 프래그먼트의 뷰 모델입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,14 +57,18 @@
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/m-activity.html">mActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">mActivity</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/index.html"><span class="identifier">BaseActivity</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+<code><span class="keyword">var </span><span class="identifier">mActivity</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/index.html"><span class="identifier">BaseActivity</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>상위 액티비티입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/m-view-data-binding.html">mViewDataBinding</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mViewDataBinding</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/index.html#T"><span class="identifier">T</span></a></code></td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mViewDataBinding</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/index.html#T"><span class="identifier">T</span></a></code>
+<p>데이터바인딩 객체입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -48,35 +80,87 @@
 <p><a href="get-binding-variable.html">getBindingVariable</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getBindingVariable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getBindingVariable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>BR 에서 viewModel 로 옵션을 잡아 반환하는 추상 메소드입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-layout-id.html">getLayoutId</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getLayoutId</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getLayoutId</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>프래그먼트와 연결할 Layout 의 Id를 반환하는 추상 메소드입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-view-model.html">getViewModel</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getViewModel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-image-detail-view-model/index.html"><span class="identifier">ImageDetailViewModel</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getViewModel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-image-detail-view-model/index.html"><span class="identifier">ImageDetailViewModel</span></a></code><ul><li>뷰 모델을 가져오는 추상 메소드입니다.</li>
+</ul>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-destroy.html">onDestroy</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onDestroy</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onDestroy</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fragment 생명주기 onDestroy 에 다음의 내용을 실행합니다.
+앞서 등록한 방송수신자를 제거합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-broadcast-receiver.html">setBroadcastReceiver</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setBroadcastReceiver</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>방송 수신자를 등록합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-collapsing-tool-bar.html">setCollapsingToolBar</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setCollapsingToolBar</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Collapsing Tool Bar 를 설정합니다.
+Tool Bar 타이틀의 텍스트와 Typeface 를 설정하고 Tool Bar 가 확장 될 경우는
+투명하게 보이도록 해줍니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-up.html">setUp</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>onViewCreated 작업 이후에 실행되는 추상 메소드입니다.
+프래그먼트가 모든 작동준비를 마친 후에 실행됩니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-view-model-listener.html">setViewModelListener</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setViewModelListener</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>View Model 에서 추가적으로 지정해줘야 하는 리스너들을 등록합니다.
+현재 상세정보 버튼을 눌렸을 경우 Fragment 에서 처리하도록 하며
+Dialog 에 ImageModel 의 정보를 담아서 화면에 보이도록 합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-web-view.html">setWebView</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setWebView</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>웹 뷰의 기본적인 설정들을 지정합니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -88,42 +172,48 @@
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/get-base-activity.html">getBaseActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getBaseActivity</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/index.html"><span class="identifier">BaseActivity</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getBaseActivity</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/index.html"><span class="identifier">BaseActivity</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>본 Fragment 를 사용하는 상위 Activity 를 가져옵니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/on-attach.html">onAttach</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onAttach</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onAttach(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
-</tr>
-<tr>
-<td>
-<p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/on-create.html">onCreate</a></p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onAttach</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onAttach(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fragment 생명주기 onAttach 에 다음의 내용을 실행합니다.
+Context 가 BaseActivity 일 경우 상위 액티비티에 Context 를 저장합니다</p>
 </td>
-<td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/on-create-view.html">onCreateView</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreateView</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/inflater">inflater</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/LayoutInflater.html"><span class="identifier">LayoutInflater</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/container">container</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreateView</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/inflater">inflater</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/LayoutInflater.html"><span class="identifier">LayoutInflater</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/container">container</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">?</span></code>
+<p>Fragment 생명주기 onCreateView 에 다음의 내용을 실행합니다.
+DataBindingUtil 로부터 지정한 레이아웃 파일에 맞는 DataBinding 객체를 가져와서 저장합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/on-detach.html">onDetach</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onDetach</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onDetach</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>상위 액티비티와의 연결을 제거합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-fragment/on-view-created.html">onViewCreated</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onViewCreated</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onViewCreated(android.view.View, android.os.Bundle)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onViewCreated(android.view.View, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onViewCreated</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onViewCreated(android.view.View, android.os.Bundle)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseFragment$onViewCreated(android.view.View, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fragment 생명주기 onViewCreated 에 다음의 내용을 실행합니다.
+데이터 바인딩에 Binding 변수와 뷰 모델을 지정하고 생명주기 관리자를 본 프래그먼트로 지정합니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

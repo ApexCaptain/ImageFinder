@@ -9,6 +9,7 @@
 <br/>
 <h1>ImageDetailViewModel</h1>
 <code><span class="keyword">class </span><span class="identifier">ImageDetailViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a></code>
+<p>ImageDetailFragment 의 ViewModel 입니다.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +18,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">ImageDetailViewModel</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/imageModel">imageModel</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">ImageDetailViewModel</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/imageModel">imageModel</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code>
+<p>ImageDetailFragment 의 ViewModel 입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,21 +32,36 @@
 <p><a href="m-image-detail-document-client.html">mImageDetailDocumentClient</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">mImageDetailDocumentClient</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/webkit/WebViewClient.html"><span class="identifier">WebViewClient</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">mImageDetailDocumentClient</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/webkit/WebViewClient.html"><span class="identifier">WebViewClient</span></a></code>
+<p>웹 뷰에 삽입할 클라이언트 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-operation-controller.html">mImageOperationController</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageOperationController</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a></code>
+<p>이미지 공유/다운로드 제어 객체입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="m-is-web-view-loading.html">mIsWebViewLoading</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">mIsWebViewLoading</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">val </span><span class="identifier">mIsWebViewLoading</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code>
+<p>웹 뷰가 로딩중인지 표시하는 Observable 객체입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="m-kakao-image-model.html">mKakaoImageModel</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">mKakaoImageModel</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a></code></td>
+<code><span class="keyword">var </span><span class="identifier">mKakaoImageModel</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a></code>
+<p>이미지 데이터 모델입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -62,21 +80,30 @@
 <p><a href="bound-on-download-button-click.html">boundOnDownloadButtonClick</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">boundOnDownloadButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnDownloadButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>다운로드 버튼이 눌렸을 경우 공유/다운로드 제어기 객체에 현재 이미지 모델을
+전당하고 다운로드를 시작합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="bound-on-info-button-click.html">boundOnInfoButtonClick</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">boundOnInfoButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnInfoButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>정보 버튼이 눌렸을 경우 Dialog 로 선택한 이미지의 기본 정보가 표시되는데,
+이 부분은 Fragmnet 에서 호출해야 되므로 콜백으로 처리했습니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="bound-on-share-button-click.html">boundOnShareButtonClick</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">boundOnShareButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnShareButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>공유 버튼이 눌렸을 경우 공유/다운로드 제어기 객체에 현재 이미지 모델을
+전달하고 공유를 시작합니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

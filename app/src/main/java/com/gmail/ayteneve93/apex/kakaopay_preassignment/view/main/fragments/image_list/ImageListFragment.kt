@@ -7,11 +7,9 @@ import android.content.IntentFilter
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.databinding.Observable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.GridLayoutManager
 
@@ -28,6 +26,21 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.math.roundToInt
 
+/**
+ * 검색한 이미지들을 Grid 로 뿌려주는 프래그먼트입니다. 페이지간 이동 버튼과
+ * Recycler View 등으로 구성되어 있습니다.
+ *
+ * @property mImageListViewModel 이미지 리스트 프래그먼트의 뷰 모델입니다.
+ * @property mImageListRecyclerAdapter 이미지 리스트를 보여주는 Recycler View 의 어댑터입니다.
+ * @property mPreferenceUtils 사용자 설정 정보 Utility 객체입니다.
+ * @property mImageOperationController 이미지 공유/다운로드 제어기 객체입니다.
+ * @property mColumnCountRatio 사용자 스마트의 가로/세로 비율에 맞춰 Recycler Grid 열의 갯수 비율을 정리합니다.
+ *                              가령 세로와 가로의 비율이 1:2 일 경우 이 값은 2가 되며 가로 모드일 때 열의 갯수는 2배가 됩니다.
+ * @property mImageListBroadcastReceiver 이미지 리스트 프래그먼트에서 사용하는 방송 수신자입니다.
+ *
+ * @author ayteneve93@gmail.com
+ *
+ */
 class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewModel>() {
 
     private val mImageListViewModel : ImageListViewModel by viewModel()
@@ -42,7 +55,6 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             else (heightPixels/widthPixels).roundToInt()
         }
     }
-
     private val mImageListBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
             intent?.let {
@@ -99,8 +111,8 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                 MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED -> {
                                     with(intent.getBooleanExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, true)) {
                                         mImageListRecyclerAdapter.setSelectionMode(this)
-                                        if(this) showFilterMenu()
-                                        else hideFilterMenu()
+                                        if(this) showFilterMenuWithAnimation()
+                                        else hideFilterMenuWithAnimation()
                                     }
                                 }
 
@@ -121,10 +133,15 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         }
     }
 
+    // BaseFragment 에서 상속받아 사용하는 기본적인 메소드입니다.
     override fun getLayoutId(): Int = R.layout.fragment_image_list
     override fun getBindingVariable(): Int = BR.viewModel
     override fun getViewModel(): ImageListViewModel = mImageListViewModel
 
+
+
+
+    // 전체 프래그먼트 설정 순서입니다. onViewCreated 에서 실행됩니다.
     override fun setUp() {
         setBroadcastReceiver()
         setImageListRecyclerAdapter()
@@ -133,6 +150,10 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         setFilterMenu()
     }
 
+
+
+
+    /** 방송 수신자를 등록합니다. */
     private fun setBroadcastReceiver() {
         activity?.registerReceiver(mImageListBroadcastReceiver, IntentFilter().also {
             arrayOf(
@@ -150,12 +171,20 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         })
     }
 
+    /**
+     * Fragment 생명주기 onDestroy 에 다음의 내용을 실행합니다.
+     * 앞서 등록한 방송수신자를 제거합니다.
+     */
     override fun onDestroy() {
         super.onDestroy()
         activity?.unregisterReceiver(mImageListBroadcastReceiver)
         mImageListRecyclerAdapter.clear()
     }
 
+
+
+
+    /** RecyclerView 에 어댑터를 등록해줍니다. */
     private fun setImageListRecyclerAdapter() {
        mViewDataBinding.imageListRecyclerView.apply {
            adapter = mImageListRecyclerAdapter
@@ -163,6 +192,11 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         setRecyclerViewLayoutManager()
     }
 
+    /**
+     * RecyclerView 에 LayoutManager 를 등록해줍니다.
+     * LayoutManager 는 기본적으로 GridLayoutManager 를 사용하며
+     * 현재 칼럼의 갯수와 화면 방향, 비율 등을 고려하여 Dynamic 하게 변경됩니다.
+     */
     private fun setRecyclerViewLayoutManager() {
         val portraitImageColumnCount = mPreferenceUtils.getImageColumnCount()
         mViewDataBinding.imageListRecyclerView.apply {
@@ -173,11 +207,21 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         }
     }
 
+    /** Fragment onConfigurationChanged 에 다음의 내용을 실행합니다.
+     * setRecyclerViewLayoutManager 를 다시 한 번 호출합니다.
+     */
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         setRecyclerViewLayoutManager()
     }
 
+
+
+    /**
+     * View Model 에서 추가적으로 지정해줘야 하는 리스너들을 등록합니다.
+     * 검색어가 변경되었을 때 Recycler View 에 새로운 검색 내용을 전달하고
+     * 그 결과를 다시 View Model 에 반환합니다.
+     */
     private fun setViewModelListener() {
         mImageListViewModel.apply {
             onQueryChangedListener = {
@@ -194,6 +238,13 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         }
     }
 
+
+    /**
+     * 사설 Refresh Layout 의 세부 사항을 설정합니다.
+     * Refresh 가 시작될 때 Recycler View 를 Alpha 애니메이션과 함께
+     * 제거하고 Recycler View 를 Clear 합니다. 이후 현재 View Model 에
+     * Refresh 를 요청합니다.
+     */
     private fun setRefreshLayout() {
         mViewDataBinding.imageListRefreshLayout.apply {
             setWaveRGBColor(255, 237, 163)
@@ -213,6 +264,12 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
         }
     }
 
+
+    /**
+     * 사설 Filter Menu 의 세부 사항을 설정합니다.
+     * 다운로드 버튼은 0, 공유 버튼을 1로 지정하고 각각의 아이콘을 설정하며
+     * 클릭 시의 이벤트에 따라 이미지 공유/다운로드 관리자에 메시지를 전달합니다.
+     */
     private fun setFilterMenu() {
         val downloadButton = 0
         val shareButton = 1
@@ -226,7 +283,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                         downloadButton -> mImageOperationController.startDownload()
                         shareButton -> mImageOperationController.startShare()
                     }
-                    hideFilterMenu()
+                    hideFilterMenuWithAnimation()
                     mImageOperationController.clearImageModels()
                     mImageListRecyclerAdapter.setSelectionMode(false)
                 }
@@ -236,14 +293,16 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             .build()
     }
 
-    private fun showFilterMenu() {
+    /** Filter Menu 를 Translation 애니메이션과 함께 화면에 띄웁니다. */
+    private fun showFilterMenuWithAnimation() {
         mImageListViewModel.showFilterMenu()
         val filterAppearAnim = AnimationUtils.loadAnimation(context, R.anim.anim_filter_menu_appear)
         mViewDataBinding.imageListFilterMenu.startAnimation(filterAppearAnim)
         mViewDataBinding.imageListRefreshLayout.isEnabled = false
     }
 
-    private fun hideFilterMenu() {
+    /** Filter Menu 를 Translation 애니메이션과 함께 화면에서 제거합니다. */
+    private fun hideFilterMenuWithAnimation() {
         if(mImageListViewModel.mFilterMenuVisibility.get()!!) {
             val filterDisappearAnim = AnimationUtils.loadAnimation(context, R.anim.anim_filter_menu_disappear)
             filterDisappearAnim.setAnimationListener(object : Animation.AnimationListener {

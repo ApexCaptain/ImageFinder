@@ -16,14 +16,18 @@
 <p><a href="-base-activity/index.html">BaseActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseActivity</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewDataBinding</span><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseActivity</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewDataBinding</span><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
+<p>MVVM 디자인 패턴을 구축할 때 사용한 기본 Activity 클래스입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="-base-fragment/index.html">BaseFragment</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseFragment</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewDataBinding</span><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Fragment</span></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseFragment</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewDataBinding</span><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Fragment</span></code>
+<p>MVVM 디자인 패턴을 구축할 때 사용한 기본 Fragment 클래스입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -31,8 +35,9 @@
 </td>
 <td>
 <code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AndroidViewModel</span></code>
-<p>앱에서 사용하는 기본 뷰 모델, 공통으로 추가할 사항 있으면 아래에 내용 써 넣어야 함
-주의 : 반드시 Dependency Injection 패키지에서 관리해줄 것</p>
+<p>MVVM 디자인 패턴을 구축할 때 사용한 기본 ViewModel 클래스입니다.
+이번 프로젝트에서는 예하 전체 ViewModel 에서 공통적으로 사용하는
+메소드나 속성이 없습니다.</p>
 </td>
 </tr>
 </tbody>

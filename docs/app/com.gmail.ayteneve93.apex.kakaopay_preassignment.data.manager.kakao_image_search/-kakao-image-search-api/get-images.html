@@ -10,5 +10,20 @@
 <h1>getImages</h1>
 <a name="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSearchApi$getImages(kotlin.String, kotlin.String, kotlin.Int, kotlin.Int)"></a>
 <code><span class="identifier">@Headers</span><span class="symbol">(</span>["Authorization: KakaoAK 096880bf3645de9453d183477e88f9f2"]<span class="symbol">)</span> <span class="identifier">@GET</span><span class="symbol">(</span>"v2/search/image"<span class="symbol">)</span> <span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getImages</span><span class="symbol">(</span><span class="identifier">@Query</span><span class="symbol">(</span>"query"<span class="symbol">, </span>true<span class="symbol">)</span> <span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSearchApi$getImages(kotlin.String, kotlin.String, kotlin.Int, kotlin.Int)/queryKeyword">queryKeyword</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier">@Query</span><span class="symbol">(</span>"sort"<span class="symbol">, </span>true<span class="symbol">)</span> <span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSearchApi$getImages(kotlin.String, kotlin.String, kotlin.Int, kotlin.Int)/sortOptionString">sortOptionString</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier">@Query</span><span class="symbol">(</span>"page"<span class="symbol">, </span>true<span class="symbol">)</span> <span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSearchApi$getImages(kotlin.String, kotlin.String, kotlin.Int, kotlin.Int)/pageNumber">pageNumber</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier">@Query</span><span class="symbol">(</span>"size"<span class="symbol">, </span>true<span class="symbol">)</span> <span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSearchApi$getImages(kotlin.String, kotlin.String, kotlin.Int, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Single</span><span class="symbol">&lt;</span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model-list/index.html"><span class="identifier">KakaoImageModelList</span></a><span class="symbol">&gt;</span></code>
+<p>카카오 Image Api 입니다.</p>
+<h3>Parameters</h3>
+<p><a name="queryKeyword"></a>
+<code>queryKeyword</code> - 검색할 문자열입니다.</p>
+<p><a name="sortOptionString"></a>
+<code>sortOptionString</code> - 검색 정렬 기준입니다.</p>
+<p><a name="pageNumber"></a>
+<code>pageNumber</code> - 검색 페이지 번호입니다.</p>
+<p><a name="size"></a>
+<code>size</code> - 한 페이지에 표시될 이미지의 갯수입니다.</p>
+<p><strong>Return</strong><br/>
+Rx Single 을 Return 하며 내부 Generic Type은 KakaoImageModelList입니다.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model-list/index.html">com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModelList</a></p>
+</p>
 </BODY>
 </HTML>

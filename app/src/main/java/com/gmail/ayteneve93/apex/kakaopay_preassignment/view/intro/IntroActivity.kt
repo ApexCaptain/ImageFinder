@@ -7,7 +7,15 @@ import android.os.Handler
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity
 
-// 이번 앱의 인트로는 추가적인 프로세스가 요구되지 않으므로 뷰 모델을 작성하지 않음
+/**
+ * 앱 실행시 나타나는 Into 화면입니다.
+ * 따로 ViewModel 이 필요한 액티비티가 아니므로
+ * 예외적으로 MVVM 패턴에서 제외되었습니다.
+ * 기본적으로 0.5초의 시간이 진행된 후에 MainActivity 로 화면을 전환합니다.
+ *
+ * @author ayteneve93@gmail.com
+ *
+ */
 class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

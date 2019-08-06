@@ -9,6 +9,7 @@
 <br/>
 <h1>ImageListRecyclerAdapter</h1>
 <code><span class="keyword">class </span><span class="identifier">ImageListRecyclerAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><a href="-image-list-item-view-holder/index.html"><span class="identifier">ImageListItemViewHolder</span></a><span class="symbol">&gt;</span></code>
+<p>ImageListFragmnet 의 Recycler View 에 등록되는 RecyclerAdpater 입니다.</p>
 <h3>Types</h3>
 <table>
 <tbody>
@@ -17,7 +18,10 @@
 <p><a href="-image-list-item-view-holder/index.html">ImageListItemViewHolder</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">ImageListItemViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code></td>
+<code><span class="keyword">class </span><span class="identifier">ImageListItemViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code>
+<p>이미지 리스트 아이템의 뷰 홀더입니다.
+일반 뷰 홀더와 달리 각각의 뷰의 viewModel 을 바인딩 해줍니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,7 +33,167 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">ImageListRecyclerAdapter</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mKakaoImageModelManager">mKakaoImageModelManager</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-model-manager/index.html"><span class="identifier">KakaoImageModelManager</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mPreferenceUtils">mPreferenceUtils</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.utils/-preference-utils/index.html"><span class="identifier">PreferenceUtils</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">ImageListRecyclerAdapter</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mKakaoImageModelManager">mKakaoImageModelManager</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-model-manager/index.html"><span class="identifier">KakaoImageModelManager</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mPreferenceUtils">mPreferenceUtils</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.utils/-preference-utils/index.html"><span class="identifier">PreferenceUtils</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager, com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code>
+<p>ImageListFragmnet 의 Recycler View 에 등록되는 RecyclerAdpater 입니다.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="application.html">application</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">application</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a></code>
+<p>애플리케이션 객체입니다. 시스템 서비스 호출, 리소스 조회 및 Broadcast 에 사용됩니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-anim-appear-mills.html">mAnimAppearMills</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mAnimAppearMills</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>각각의 이미지 아이템이 생성될 때 애니메이션의 지속시간입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-composite-disposable.html">mCompositeDisposable</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mCompositeDisposable</span><span class="symbol">: </span><span class="identifier">CompositeDisposable</span></code>
+<p>Rx 작업 종료 후 Disposable 객체를 모아두었다 한 번에 처리하기 위한 CompositeDisposable 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-diasble-appear-anim-handler.html">mDiasbleAppearAnimHandler</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mDiasbleAppearAnimHandler</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/os/Handler.html"><span class="identifier">Handler</span></a></code>
+<p>이미지 아이템의 애니메이션 비활성화를 시간차를 두고 풀어주기 위한 Handler 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-disable-appear-anim.html">mDisableAppearAnim</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mDisableAppearAnim</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>이미지 아이템의 애니메이션을 비활성화 할지 여부의 Boolean 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-list-item-view-model-list.html">mImageListItemViewModelList</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageListItemViewModelList</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-image-list-item-view-model/index.html"><span class="identifier">ImageListItemViewModel</span></a><span class="symbol">&gt;</span></code>
+<p>카카오 이미지 검색 Api 에서 가져오는 전체 정보를 담는 데이터 리스트입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-operation-controller.html">mImageOperationController</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageOperationController</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a></code>
+<p>이미지 공유/다운로드 제어기 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-resize-offset.html">mImageResizeOffset</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageResizeOffset</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>한 번 Resize 를 수행할 때 Percent 간격입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-size-percentage.html">mImageSizePercentage</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageSizePercentage</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code>
+<p>사용자 정보에 저장된 이미지의 Percent 크기입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-is-on-multiple-selection-mode.html">mIsOnMultipleSelectionMode</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mIsOnMultipleSelectionMode</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code>
+<p>현재 다중선택 모드인지를 알려주는 Observable 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-kakao-image-model-manager.html">mKakaoImageModelManager</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mKakaoImageModelManager</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-model-manager/index.html"><span class="identifier">KakaoImageModelManager</span></a></code>
+<p>카카오 Api 에서 이미지 모델들을 추출하기 위한 관리자 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-max-image-size-percentage.html">mMaxImageSizePercentage</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mMaxImageSizePercentage</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>각각의 이미지가 가질 수 있는 최대한도의 Percent 크기입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-max-portrait-column-count.html">mMaxPortraitColumnCount</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mMaxPortraitColumnCount</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Portrait 상태의 화면에서 최대한도의 이미지 열의 갯수입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-min-image-size-percentage.html">mMinImageSizePercentage</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mMinImageSizePercentage</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>각각의 이미지가 가질 수 있는 최소한도의 Percent 크기입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-min-image-size-pixels.html">mMinImageSizePixels</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mMinImageSizePixels</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>각각의 이미지가 가질 수 있는 최소한도의 Pixel 크기입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-min-portrait-column-count.html">mMinPortraitColumnCount</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mMinPortraitColumnCount</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Portrait 상태의 화면에서 최소한도의 이미지 열의 갯수입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-preference-utils.html">mPreferenceUtils</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mPreferenceUtils</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.utils/-preference-utils/index.html"><span class="identifier">PreferenceUtils</span></a></code>
+<p>사용자 설정 정보 Utility 객체입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -41,49 +205,64 @@
 <p><a href="clear.html">clear</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">clear</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">clear</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>리스트의 내용을 모두 정리하고 Disposable 객체를 Clear 해줍니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-item-count.html">getItemCount</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getItemCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getItemCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>현재 총 몇 개의 아이템이 있는지 갯수를 확인합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-bind-view-holder.html">onBindViewHolder</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onBindViewHolder(com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter.ImageListItemViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<a href="-image-list-item-view-holder/index.html"><span class="identifier">ImageListItemViewHolder</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onBindViewHolder(com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter.ImageListItemViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onBindViewHolder(com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter.ImageListItemViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<a href="-image-list-item-view-holder/index.html"><span class="identifier">ImageListItemViewHolder</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onBindViewHolder(com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter.ImageListItemViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>각각의 뷰 홀더를 Bind 해주고 Tag 설정 후 필요시 애니메이션을 출력합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-create-view-holder.html">onCreateViewHolder</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-image-list-item-view-holder/index.html"><span class="identifier">ImageListItemViewHolder</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-image-list-item-view-holder/index.html"><span class="identifier">ImageListItemViewHolder</span></a></code>
+<p>각가의 뷰 홀더를 Inflate 로 Layout과 함께 생성 해줍니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="resize-on-pinch.html">resizeOnPinch</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">resizeOnPinch</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$resizeOnPinch(kotlin.Boolean, kotlin.Function0((kotlin.Unit)))/isZoomIn">isZoomIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$resizeOnPinch(kotlin.Boolean, kotlin.Function0((kotlin.Unit)))/notifyColumnCountChanged">notifyColumnCountChanged</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">resizeOnPinch</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$resizeOnPinch(kotlin.Boolean, kotlin.Function0((kotlin.Unit)))/isZoomIn">isZoomIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$resizeOnPinch(kotlin.Boolean, kotlin.Function0((kotlin.Unit)))/notifyColumnCountChanged">notifyColumnCountChanged</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Pinch 이벤트에 따라 이미지 크기와 열의 갯수를 조정해줍니다. 열의 갯수가 변할 때는
+가벼운 진동도 발생시킵니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="search-image.html">searchImage</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">searchImage</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/queryKeyword">queryKeyword</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/sortOption">sortOption</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/pageNumber">pageNumber</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/onSearchResult">onSearchResult</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">isError</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">errorMessage</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<span class="identifier">isEmpty</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">isEnd</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">searchImage</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/queryKeyword">queryKeyword</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/sortOption">sortOption</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/pageNumber">pageNumber</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$searchImage(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int, kotlin.Function4((kotlin.Boolean, kotlin.String, , , kotlin.Unit)))/onSearchResult">onSearchResult</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">isError</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">errorMessage</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<span class="identifier">isEmpty</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">isEnd</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>이미지를 검색합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-selection-mode.html">setSelectionMode</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setSelectionMode</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$setSelectionMode(kotlin.Boolean)/selectionMode">selectionMode</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setSelectionMode</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter$setSelectionMode(kotlin.Boolean)/selectionMode">selectionMode</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>선택 모드를 일반 혹은 다중 선택으로 변경해줍니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

@@ -9,6 +9,7 @@
 <br/>
 <h1>PreferenceUtils</h1>
 <code><span class="keyword">class </span><span class="identifier">PreferenceUtils</span></code>
+<p>SharedPreference 에 사용자의 최신 설정 내용을 저장하는 Utility 입니다.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +18,23 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">PreferenceUtils</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$<init>(android.app.Application)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">PreferenceUtils</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$<init>(android.app.Application)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">)</span></code>
+<p>SharedPreference 에 사용자의 최신 설정 내용을 저장하는 Utility 입니다.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="user-preference.html">userPreference</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">userPreference</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/SharedPreferences.html"><span class="identifier">SharedPreferences</span></a></code>
+<p>사용자 환경설정 정보를 담는 SharedPreference 객체입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,56 +46,72 @@
 <p><a href="get-display-count.html">getDisplayCount</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getDisplayCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getDisplayCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>최근 사용자가 사용한 페이지당 사진 표시 갯수를 가져옵니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-image-column-count.html">getImageColumnCount</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getImageColumnCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getImageColumnCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>최근 사용자가 사용한 이미지를 표시하는데 사용되는 열의 갯수입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-image-size-percentage.html">getImageSizePercentage</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getImageSizePercentage</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getImageSizePercentage</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>최근 사용자가 사용한 이미지 확대 수치를 가져옵니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-sort-option.html">getSortOption</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getSortOption</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getSortOption</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a></code>
+<p>최근 사용자가 사용한 사진 정렬 옵션을 가져옵니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-display-count.html">setDisplayCount</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setDisplayCount</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setDisplayCount(kotlin.Int)/displayCount">displayCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setDisplayCount</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setDisplayCount(kotlin.Int)/displayCount">displayCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>페이지당 사진 표시 갯수를 저장합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-image-column-count.html">setImageColumnCount</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setImageColumnCount</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setImageColumnCount(kotlin.Int)/imageColumnCount">imageColumnCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setImageColumnCount</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setImageColumnCount(kotlin.Int)/imageColumnCount">imageColumnCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>이미지 표시 열의 갯수를 저장합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-image-size-percentage.html">setImageSizePercentage</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setImageSizePercentage</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setImageSizePercentage(kotlin.Float)/imageSizePercentage">imageSizePercentage</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setImageSizePercentage</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setImageSizePercentage(kotlin.Float)/imageSizePercentage">imageSizePercentage</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>이미지 확대 수치를 저장합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-sort-option.html">setSortOption</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setSortOption</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setSortOption(com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption)/sortOption">sortOption</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setSortOption</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils$setSortOption(com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption)/sortOption">sortOption</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search/-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>사용자의 정렬 옵션을 저장합니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

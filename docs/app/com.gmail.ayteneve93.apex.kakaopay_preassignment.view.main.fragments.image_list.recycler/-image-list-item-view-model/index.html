@@ -9,6 +9,7 @@
 <br/>
 <h1>ImageListItemViewModel</h1>
 <code><span class="keyword">class </span><span class="identifier">ImageListItemViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a></code>
+<p>ImageListRecycler 에서 사용하는 Item ViewModel 입니다.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +18,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">ImageListItemViewModel</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">ImageListItemViewModel</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code>
+<p>ImageListRecycler 에서 사용하는 Item ViewModel 입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -26,31 +29,67 @@
 <tbody>
 <tr>
 <td>
+<p><a href="m-application.html">mApplication</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mApplication</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a></code>
+<p>애플리케이션 객체입니다. 진동과 Broadcast 를 위해 사용합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-click-mode-changed.html">mClickModeChanged</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mClickModeChanged</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>클릭 모드의 변경을 지정하는 Boolean 변수입니다. LongClick 이벤트로 선택 모드를 변경하는데,
+    해당 이벤트가 끝난 뒤 일반 Click 이벤트가 함께 발생해서 이를 막기 위해 생성되었습니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-operation-controller.html">mImageOperationController</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageOperationController</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a></code>
+<p>이미지 공유/정보 제어 객체입니다</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="m-image-size-percentage.html">mImageSizePercentage</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mImageSizePercentage</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mImageSizePercentage</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code>
+<p>이미지 확대 수치입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="m-is-item-selected.html">mIsItemSelected</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mIsItemSelected</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mIsItemSelected</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code>
+<p>현재의 아이템이 선택되었는지 여부를 지정하는 Observable 객체입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="m-is-on-multiple-selection-mode.html">mIsOnMultipleSelectionMode</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mIsOnMultipleSelectionMode</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mIsOnMultipleSelectionMode</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code>
+<p>이미지 선택 모드가 다중 선택인지 여부를 지정하는 Observable 객체입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="m-kakao-image-model.html">mKakaoImageModel</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mKakaoImageModel</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a></code></td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mKakaoImageModel</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a></code>
+<p>이미지 정보를 담고있는 데이터 모델입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -69,28 +108,36 @@
 <p><a href="bound-on-image-item-checked-changed.html">boundOnImageItemCheckedChanged</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemCheckedChanged</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$boundOnImageItemCheckedChanged(kotlin.Boolean)/isChecked">isChecked</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemCheckedChanged</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$boundOnImageItemCheckedChanged(kotlin.Boolean)/isChecked">isChecked</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>다중 선택 모드에서 체크가 해제 혹은 등록 되었을 때 이미지 공유/다운로드 제어 객체에 이미지 모델을 등록해줍니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="bound-on-image-item-click.html">boundOnImageItemClick</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>이미지 클릭시 처리는 Adapter에서 지정한 리스너에서 처리합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="bound-on-image-item-long-click.html">boundOnImageItemLongClick</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemLongClick</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$boundOnImageItemLongClick(android.view.View)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemLongClick</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$boundOnImageItemLongClick(android.view.View)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>이미지를 길게 누르면 Broadcast 로 해당 내용을 전파하고 선택 모드를 다중으로 변경합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-event-handler-on-selection-mode-changed.html">setEventHandlerOnSelectionModeChanged</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setEventHandlerOnSelectionModeChanged</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setEventHandlerOnSelectionModeChanged</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>선택 모드가 변경될 때 마다 해당 내용을 뷰에 반영해줍니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

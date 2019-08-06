@@ -9,6 +9,8 @@
 <br/>
 <h1>MainActivity</h1>
 <code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/index.html"><span class="identifier">BaseActivity</span></a><span class="symbol">&lt;</span><span class="identifier">ActivityMainBinding</span><span class="symbol">,</span>&nbsp;<a href="../-main-view-model/index.html"><span class="identifier">MainViewModel</span></a><span class="symbol">&gt;</span></code>
+<p>애플리케이션의 중심이 되는 MainActivity 입니다. 툴 바와 프래그먼트, 기본적인
+Progress Indicator 등을 가지며 전체 앱을 통제하는 기능을 수행합니다.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +19,186 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">MainActivity</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+<code><span class="identifier">MainActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>애플리케이션의 중심이 되는 MainActivity 입니다. 툴 바와 프래그먼트, 기본적인
+Progress Indicator 등을 가지며 전체 앱을 통제하는 기능을 수행합니다.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="m-app-terminate-confirm-flag.html">mAppTerminateConfirmFlag</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mAppTerminateConfirmFlag</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>애플리케이션 종료 확인 요청이 있었는지 확인하는 Boolean 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-app-terminate-confirm-handler.html">mAppTerminateConfirmHandler</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mAppTerminateConfirmHandler</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/os/Handler.html"><span class="identifier">Handler</span></a></code>
+<p>애플리케이션 종료를 시간차를 두고 진행하기 위핸 Handler 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-back-button-enabled-from-detail.html">mBackButtonEnabledFromDetail</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mBackButtonEnabledFromDetail</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>이미지 상세정보 프래그먼트에서 BackButton 을 허용하는지 여부를 지정하는 Boolean 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-fragment-manager.html">mFragmentManager</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mFragmentManager</span><span class="symbol">: </span><span class="identifier">FragmentManager</span></code>
+<p>프래그먼트 전환을 관리하는 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-download-complete-notification-channel-id.html">mImageDownloadCompleteNotificationChannelId</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageDownloadCompleteNotificationChannelId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>이미지 다운로드 완료 Notification 의 채널 Id 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-download-complete-notification-channel-name.html">mImageDownloadCompleteNotificationChannelName</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageDownloadCompleteNotificationChannelName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>이미지 다운로드 완료 Notification 의 채널 명입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-download-complete-notification-id.html">mImageDownloadCompleteNotificationId</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageDownloadCompleteNotificationId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>이미지 다운로드 완료 Notification 의 Id 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-download-complete-notification-req-code.html">mImageDownloadCompleteNotificationReqCode</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageDownloadCompleteNotificationReqCode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>이미지 다운로드 완료 Notification 의 요청 코드입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-list-fragment.html">mImageListFragment</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mImageListFragment</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list/-image-list-fragment/index.html"><span class="identifier">ImageListFragment</span></a></code>
+<p>이미지 리스트 프래그먼트입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-image-operation-controller.html">mImageOperationController</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageOperationController</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a></code>
+<p>이미지 공유/다운로드 제어기 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-is-on-multiple-selection-mode.html">mIsOnMultipleSelectionMode</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mIsOnMultipleSelectionMode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>현재 이미지 선택 모드가 다중 선택 모드인지 확인하는 Boolean 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-is-search-view-shown-at-first-time.html">mIsSearchViewShownAtFirstTime</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mIsSearchViewShownAtFirstTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>처음 앱 시작시 서치 뷰에 focus 가 가해졌는지 확인하는 Boolean 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-main-broadcast-receiver.html">mMainBroadcastReceiver</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mMainBroadcastReceiver</span><span class="symbol">: </span><span class="identifier">&lt;no name provided&gt;</span></code>
+<p>메인 액티비티에서 사용하는 방송 수신자입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-main-fragment-state.html">mMainFragmentState</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mMainFragmentState</span><span class="symbol">: </span><a href="../-main-fragment-state/index.html"><span class="identifier">MainFragmentState</span></a></code>
+<p>현재 프래그먼트 상태입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-main-view-model.html">mMainViewModel</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mMainViewModel</span><span class="symbol">: </span><a href="../-main-view-model/index.html"><span class="identifier">MainViewModel</span></a></code>
+<p>메인 액티비티의 뷰 모델입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-notification-manager.html">mNotificationManager</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mNotificationManager</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/app/NotificationManager.html"><span class="identifier">NotificationManager</span></a></code>
+<p>Notification 수행 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-preference-utils.html">mPreferenceUtils</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mPreferenceUtils</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.utils/-preference-utils/index.html"><span class="identifier">PreferenceUtils</span></a></code>
+<p>사용자 설정 정보 Utility 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-scale-gesture-detector.html">mScaleGestureDetector</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mScaleGestureDetector</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/ScaleGestureDetector.html"><span class="identifier">ScaleGestureDetector</span></a></code>
+<p>Pinch 이벤트를 처리하는 디텍터 객체입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="m-search-view.html">mSearchView</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mSearchView</span><span class="symbol">: </span><span class="identifier">SearchView</span></code>
+<p>이미지 검색 쿼리를 관리하는 서치 뷰입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,7 +210,9 @@
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/m-view-data-binding.html">mViewDataBinding</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mViewDataBinding</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/index.html#T"><span class="identifier">T</span></a></code></td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mViewDataBinding</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/index.html#T"><span class="identifier">T</span></a></code>
+<p>데이터바인딩 객체입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -38,87 +221,209 @@
 <tbody>
 <tr>
 <td>
+<p><a href="dismiss-multi-selection-mode.html">dismissMultiSelectionMode</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">dismissMultiSelectionMode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>다중 선택 모드를 해제합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="dispatch-touch-event.html">dispatchTouchEvent</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">dispatchTouchEvent</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$dispatchTouchEvent(android.view.MotionEvent)/ev">ev</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MotionEvent.html"><span class="identifier">MotionEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">dispatchTouchEvent</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$dispatchTouchEvent(android.view.MotionEvent)/ev">ev</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MotionEvent.html"><span class="identifier">MotionEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Activity dispatchTouchEvent 에 다음의 내용을 실행합니다.
+사설 제스쳐 디텍터가 정의된 경우 디텍터에 터치 이벤트를 전달합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="finish-application.html">finishApplication</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">finishApplication</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">finishApplication</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>애플리케이션을 종료하는 메소드입니다. 단, 뒤로가기 버튼을 눌렀다고 바로
+종료되지는 않고, 3초 정도 대기시간을 부여한 후에 한 번 더 눌릴 경우 종료합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-binding-variable.html">getBindingVariable</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getBindingVariable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getBindingVariable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>BR 에서 viewModel 로 옵션을 잡아 반환하는 추상 메소드입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-layout-id.html">getLayoutId</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getLayoutId</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getLayoutId</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>액티비티와 연결할 Layout 의 Id를 반환하는 추상 메소드입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-view-model.html">getViewModel</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getViewModel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-main-view-model/index.html"><span class="identifier">MainViewModel</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getViewModel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-main-view-model/index.html"><span class="identifier">MainViewModel</span></a></code><ul><li>뷰 모델을 가져오는 추상 메소드입니다.</li>
+</ul>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-back-pressed.html">onBackPressed</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onBackPressed</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onBackPressed</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Activity onBackPressed 에 다음의 내용을 실행합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-create-options-menu.html">onCreateOptionsMenu</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onCreateOptionsMenu</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$onCreateOptionsMenu(android.view.Menu)/menu">menu</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/Menu.html"><span class="identifier">Menu</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onCreateOptionsMenu</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$onCreateOptionsMenu(android.view.Menu)/menu">menu</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/Menu.html"><span class="identifier">Menu</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Activity onCreateOptionsMenu 에 다음의 내용을 실행합니다.
+서치 뷰를 Inflate 하고 리스너를 등록합니다. 또한 제출된 Query 를
+Suggestion 에 저장하고 ImageList Fragment 에 전달합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-destroy.html">onDestroy</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onDestroy</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onDestroy</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Activity 생명주기 onDestroy 에 다음의 내용을 실행합니다.
+앞서 등록한 방송수신자를 제거합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-options-item-selected.html">onOptionsItemSelected</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onOptionsItemSelected</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$onOptionsItemSelected(android.view.MenuItem)/item">item</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MenuItem.html"><span class="identifier">MenuItem</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onOptionsItemSelected</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$onOptionsItemSelected(android.view.MenuItem)/item">item</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MenuItem.html"><span class="identifier">MenuItem</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Activity onOptionsItemSelected 에 다음의 내용을 실행합니다.
+선택된 Id 값을 기반으로 Image List 프래그먼트에 그에 맞는
+정보를 Broadcast 로 전달합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-prepare-options-menu.html">onPrepareOptionsMenu</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onPrepareOptionsMenu</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$onPrepareOptionsMenu(android.view.Menu)/menu">menu</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/Menu.html"><span class="identifier">Menu</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onPrepareOptionsMenu</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$onPrepareOptionsMenu(android.view.Menu)/menu">menu</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/Menu.html"><span class="identifier">Menu</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Activity onPrepareOptionsMenu 에 다음의 내용을 실행합니다.
+PreferenceUtils 로 부터 환경설정 정보를 읽어와
+정렬 기준과 표시 갯수를 설정합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="on-resume.html">onResume</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onResume</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onResume</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Activity 생명주기 onResume 에 다음의 내용을 실행합니다.
+이미지 공유/다운로드 제어 객체에 임시 공유 파일과 Disposable 을 제거하라고 명령합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-broadcast-receiver.html">setBroadcastReceiver</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setBroadcastReceiver</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>방송 수신자를 등록합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-fragment-manager.html">setFragmentManager</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setFragmentManager</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>프래그먼트 매니져를 설정합니다. ImageList 프래그먼트는 애플리케이션 특성상
+여러개가 생성될 일이 없으므로 Activity 의 Property 로 지정하고 바로 Show 해줍니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-image-operation-indicator.html">setImageOperationIndicator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setImageOperationIndicator</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>이미지 파일이 다운 혹은 공유 작업 중일 때 Indicator 를 보여줍니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-notification-channel.html">setNotificationChannel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setNotificationChannel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>알림 채널을 설정합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-scale-gesture-detector.html">setScaleGestureDetector</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setScaleGestureDetector</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>사설 제스쳐 디텍터인 ScaleGestureDector 를 선언합니다.
+ScaleGestureDetector 는 사용자가 화면을 Pinch 한 이벤트를
+Catch 하여 Image List 프래그먼트로 전달합니다. 단, 현재 프래그먼트가
+Image Detail 인 경우에는 전달하지 않습니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-tool-bar.html">setToolBar</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setToolBar</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>앱 툴 바를 사설 Layout Component 로 교체합니다.
+또한 아이콘은 앱 런쳐로, 타이틀은 개발자 이름으로 지정합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-up.html">setUp</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>onCreate 작업 이후에 실행되는 추상 메소드입니다.
+액티비티가 모든 작동준비를 마친 후에 실행됩니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="show-image-detail-fragment.html">showImageDetailFragment</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">showImageDetailFragment</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity$showImageDetailFragment(com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel)/imageModel">imageModel</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>프래그먼트를 Image Detail 로 변경합니다.
+이 때는 Image Detail 프래그먼트를 새로이 생성하고 화면을 전환합니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="show-image-download-complete-notification.html">showImageDownloadCompleteNotification</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">showImageDownloadCompleteNotification</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>다운로드가 완료된 경우 해당 채널에 Notification 을 보냅니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -130,7 +435,10 @@
 <p><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-activity/on-create.html">onCreate</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Activity 생명주기 onCreate 에 다음의 내용을 실행합니다.
+데이터 바인딩에 Binding 변수와 뷰 모델을 지정하고 생명주기 관리자를 본 액티비티 지정합니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

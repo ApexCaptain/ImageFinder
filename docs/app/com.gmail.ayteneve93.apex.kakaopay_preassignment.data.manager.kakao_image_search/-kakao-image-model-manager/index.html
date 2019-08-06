@@ -9,6 +9,24 @@
 <br/>
 <h1>KakaoImageModelManager</h1>
 <code><span class="keyword">class </span><span class="identifier">KakaoImageModelManager</span></code>
+<p>카카오 Image Api 를 사용해서 Query 한 내용을
+호출자에게 반환하는 기능을 가집니다.
+DI를 통해 관리되는 SingleTon 클래스입니다.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-kakao-image-model-deserializer/index.html">KakaoImageModelDeserializer</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">KakaoImageModelDeserializer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">JsonDeserializer</span><span class="symbol">&lt;</span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model-list/index.html"><span class="identifier">KakaoImageModelList</span></a><span class="symbol">&gt;</span></code>
+<p>카카오 Image Api 에서 받아온 데이터를 효과적으로 Json 화 하기 위해 작성한
+JsonDeserializer 입니다. Api에서 받아온 정보를 설계한 모델에 맞게 파싱하여 저장하고 반환합니다.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +35,34 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">KakaoImageModelManager</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+<code><span class="identifier">KakaoImageModelManager</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>카카오 Image Api 를 사용해서 Query 한 내용을
+호출자에게 반환하는 기능을 가집니다.
+DI를 통해 관리되는 SingleTon 클래스입니다.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="base-url.html">baseUrl</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">baseUrl</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>기본적인 Kakao Api URL 입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="kakao-image-model-gson.html">kakaoImageModelGson</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">kakaoImageModelGson</span><span class="symbol">: </span><span class="identifier">Gson</span></code>
+<p>KakaoImageModelDeserializer 과 KakaoImageModelList 를 사용해 만든 Gson 입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,7 +74,9 @@
 <p><a href="rx-kakao-image-search-by-keyword.html">rxKakaoImageSearchByKeyword</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">rxKakaoImageSearchByKeyword</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/queryKeyword">queryKeyword</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/sortOption">sortOption</span><span class="symbol">:</span>&nbsp;<a href="../-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/pageNumber">pageNumber</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Single</span><span class="symbol">&lt;</span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model-list/index.html"><span class="identifier">KakaoImageModelList</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">rxKakaoImageSearchByKeyword</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/queryKeyword">queryKeyword</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/sortOption">sortOption</span><span class="symbol">:</span>&nbsp;<a href="../-kakao-image-sort-option/index.html"><span class="identifier">KakaoImageSortOption</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/pageNumber">pageNumber</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageModelManager$rxKakaoImageSearchByKeyword(kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption, kotlin.Int, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Single</span><span class="symbol">&lt;</span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model-list/index.html"><span class="identifier">KakaoImageModelList</span></a><span class="symbol">&gt;</span></code>
+<p>외부에서 호출자가 Api 를 실질적으로 호출하는 메소드입니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

@@ -9,6 +9,10 @@
 <br/>
 <h1>BindingUtils</h1>
 <code><span class="keyword">object </span><span class="identifier">BindingUtils</span></code>
+<p>MVVM 디자인 패턴을 구축할 때 사용한 BindingAdapter 메소드를 모아둔
+Object 입니다.</p>
+<p><strong>Author</strong><br/>
+ayteneve93@gmail.com</p>
 <h3>Functions</h3>
 <table>
 <tbody>
@@ -17,35 +21,52 @@
 <p><a href="load-image-detail-document-url.html">loadImageDetailDocumentUrl</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">loadImageDetailDocumentUrl</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadImageDetailDocumentUrl(android.webkit.WebView, kotlin.String)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/webkit/WebView.html"><span class="identifier">WebView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadImageDetailDocumentUrl(android.webkit.WebView, kotlin.String)/url">url</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">loadImageDetailDocumentUrl</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadImageDetailDocumentUrl(android.webkit.WebView, kotlin.String)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/webkit/WebView.html"><span class="identifier">WebView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadImageDetailDocumentUrl(android.webkit.WebView, kotlin.String)/url">url</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>WebView 에 Url 로 Document 를 삽입하는 Binding 입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="load-main-image.html">loadMainImage</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">loadMainImage</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadMainImage(android.widget.ImageView, kotlin.String)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/ImageView.html"><span class="identifier">ImageView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadMainImage(android.widget.ImageView, kotlin.String)/imageUrl">imageUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">loadMainImage</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadMainImage(android.widget.ImageView, kotlin.String)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/ImageView.html"><span class="identifier">ImageView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadMainImage(android.widget.ImageView, kotlin.String)/imageUrl">imageUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>ImageView 에 이미지를 삽입할 때 사용하는 메소드입니다.
+네트워크 Url 을 받아와서 이미지를 입히며 Glide 를 사용했습니다.
+추가적으로 이번엔 thumbnail 이 아닌 용량이 큰 메인 이미지 파일을 로드합니다.
+따라서 PlaceHolder 를 CircularProgressDrawable 로 달아 이미지가 로드 중임을
+표시합니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="load-thumbnail.html">loadThumbnail</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">loadThumbnail</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadThumbnail(android.widget.ImageView, kotlin.String)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/ImageView.html"><span class="identifier">ImageView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadThumbnail(android.widget.ImageView, kotlin.String)/imageUrl">imageUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">loadThumbnail</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadThumbnail(android.widget.ImageView, kotlin.String)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/ImageView.html"><span class="identifier">ImageView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$loadThumbnail(android.widget.ImageView, kotlin.String)/imageUrl">imageUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>ImageView 에 이미지를 삽입할 때 사용하는 메소드입니다.
+네트워크 Url 을 받아와서 이미지를 입히며 Glide 를 사용했습니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-image-detail-document-client.html">setImageDetailDocumentClient</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setImageDetailDocumentClient</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setImageDetailDocumentClient(android.webkit.WebView, android.webkit.WebViewClient)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/webkit/WebView.html"><span class="identifier">WebView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setImageDetailDocumentClient(android.webkit.WebView, android.webkit.WebViewClient)/client">client</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/webkit/WebViewClient.html"><span class="identifier">WebViewClient</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setImageDetailDocumentClient</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setImageDetailDocumentClient(android.webkit.WebView, android.webkit.WebViewClient)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/webkit/WebView.html"><span class="identifier">WebView</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setImageDetailDocumentClient(android.webkit.WebView, android.webkit.WebViewClient)/client">client</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/webkit/WebViewClient.html"><span class="identifier">WebViewClient</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>WebView 에 Client 를 삽입하는 Binding 입니다.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-layout-constraint-guide-begin.html">setLayoutConstraintGuideBegin</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setLayoutConstraintGuideBegin</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setLayoutConstraintGuideBegin(androidx.constraintlayout.widget.Guideline, kotlin.Float)/guideline">guideline</span><span class="symbol">:</span>&nbsp;<span class="identifier">Guideline</span><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setLayoutConstraintGuideBegin(androidx.constraintlayout.widget.Guideline, kotlin.Float)/percent">percent</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setLayoutConstraintGuideBegin</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setLayoutConstraintGuideBegin(androidx.constraintlayout.widget.Guideline, kotlin.Float)/guideline">guideline</span><span class="symbol">:</span>&nbsp;<span class="identifier">Guideline</span><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.BindingUtils$setLayoutConstraintGuideBegin(androidx.constraintlayout.widget.Guideline, kotlin.Float)/percent">percent</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>이미지 Thumbnail 을 표시하는 Recycler View 는 Pinch 제스쳐로
+확대/축소를 지원하는데, 이 때 ConstraintLayout 의 Guideline 을 두고
+GuideLine 의 시작 위치를 percent 로 제어해서 구현합니다.</p>
+</td>
 </tr>
 </tbody>
 </table>

@@ -27,12 +27,38 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.imag
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * 애플리케이션의 중심이 되는 MainActivity 입니다. 툴 바와 프래그먼트, 기본적인
+ * Progress Indicator 등을 가지며 전체 앱을 통제하는 기능을 수행합니다.
+ *
+ * @property mMainViewModel 메인 액티비티의 뷰 모델입니다.
+ * @property mPreferenceUtils 사용자 설정 정보 Utility 객체입니다.
+ * @property mImageOperationController 이미지 공유/다운로드 제어기 객체입니다.
+ * @property mAppTerminateConfirmHandler 애플리케이션 종료를 시간차를 두고 진행하기 위핸 Handler 객체입니다.
+ * @property mImageDownloadCompleteNotificationId 이미지 다운로드 완료 Notification 의 Id 입니다.
+ * @property mImageDownloadCompleteNotificationReqCode 이미지 다운로드 완료 Notification 의 요청 코드입니다.
+ * @property mImageDownloadCompleteNotificationChannelId 이미지 다운로드 완료 Notification 의 채널 Id 입니다.
+ * @property mImageDownloadCompleteNotificationChannelName 이미지 다운로드 완료 Notification 의 채널 명입니다.
+ * @property mBackButtonEnabledFromDetail 이미지 상세정보 프래그먼트에서 BackButton 을 허용하는지 여부를 지정하는 Boolean 입니다.
+ * @property mIsOnMultipleSelectionMode 현재 이미지 선택 모드가 다중 선택 모드인지 확인하는 Boolean 입니다.
+ * @property mAppTerminateConfirmFlag 애플리케이션 종료 확인 요청이 있었는지 확인하는 Boolean 입니다.
+ * @property mIsSearchViewShownAtFirstTime 처음 앱 시작시 서치 뷰에 focus 가 가해졌는지 확인하는 Boolean 입니다.
+ * @property mSearchView 이미지 검색 쿼리를 관리하는 서치 뷰입니다.
+ * @property mScaleGestureDetector Pinch 이벤트를 처리하는 디텍터 객체입니다.
+ * @property mFragmentManager 프래그먼트 전환을 관리하는 객체입니다.
+ * @property mMainFragmentState 현재 프래그먼트 상태입니다.
+ * @property mImageListFragment 이미지 리스트 프래그먼트입니다.
+ * @property mNotificationManager Notification 수행 객체입니다.
+ * @property mMainBroadcastReceiver 메인 액티비티에서 사용하는 방송 수신자입니다.
+ *
+ * @author ayteneve93@gmail.com
+ *
+ */
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private val mMainViewModel : MainViewModel by viewModel()
     private val mPreferenceUtils : PreferenceUtils by inject()
     private val mImageOperationController : ImageOperationController by inject()
-
     private val mAppTerminateConfirmHandler = Handler()
     private val mImageDownloadCompleteNotificationId = 0
     private val mImageDownloadCompleteNotificationReqCode = 1000
@@ -61,7 +87,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         if(target == MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY) {
                             when(actionString) {
 
-                                // 이미지 아이템이 클릭됨
+                                // 이미지 아이템이 클릭된 경우
                                 MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED -> {
                                     showImageDetailFragment(intent.getSerializableExtra(MainBroadcastPreference.Extra.ImageItem.KEY) as KakaoImageModel)
                                 }
@@ -85,6 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     }
                                 }
 
+                                // 이미지 공유/다운로드 절차가 완료된 경우
                                 MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED -> {
                                     when(intent.getStringExtra(MainBroadcastPreference.Extra.ImageOperation.KEY)) {
                                         MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.SHARE -> {
@@ -94,10 +121,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                         MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.DOWNLOAD -> {
                                             Toast.makeText(this@MainActivity, R.string.txt_image_download_succeed, Toast.LENGTH_LONG).show()
                                             showImageDownloadCompleteNotification()
+                                            mImageOperationController.clearDisposable()
                                         }
                                     }
                                 }
 
+                                // 애플리케이션 종료 명령
                                 MainBroadcastPreference.Action.FINISH_APPLICATION -> {
                                     finishApplication()
                                 }
@@ -110,11 +139,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    // BaseActivity 에서 상속받아 사용하는 기본적인 메소드입니다.
     override fun getLayoutId(): Int = R.layout.activity_main
     override fun getViewModel(): MainViewModel = mMainViewModel
     override fun getBindingVariable(): Int = BR.viewModel
 
 
+
+    // 전체 액티비티 설정 순서입니다. onCreate 에서 실행됩니다.
     override fun setUp() {
         setBroadcastReceiver()
         setToolBar()
@@ -124,11 +156,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         setImageOperationIndicator()
     }
 
+    /**
+     * Activity 생명주기 onResume 에 다음의 내용을 실행합니다.
+     * 이미지 공유/다운로드 제어 객체에 임시 공유 파일과 Disposable 을 제거하라고 명령합니다.
+     */
     override fun onResume() {
         super.onResume()
         mImageOperationController.clearSharedDriectory()
     }
 
+
+
+    /** 방송 수신자를 등록합니다. */
     private fun setBroadcastReceiver() {
         registerReceiver(mMainBroadcastReceiver, IntentFilter().also {
             arrayOf(
@@ -144,11 +183,22 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         })
     }
 
+    /**
+     * Activity 생명주기 onDestroy 에 다음의 내용을 실행합니다.
+     * 앞서 등록한 방송수신자를 제거합니다.
+     */
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(mMainBroadcastReceiver)
     }
 
+
+
+
+    /**
+     * 앱 툴 바를 사설 Layout Component 로 교체합니다.
+     * 또한 아이콘은 앱 런쳐로, 타이틀은 개발자 이름으로 지정합니다.
+     */
     private fun setToolBar() {
         setSupportActionBar(mViewDataBinding.mainToolbar)
         supportActionBar?.let {
@@ -158,6 +208,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    /**
+     * Activity onCreateOptionsMenu 에 다음의 내용을 실행합니다.
+     * 서치 뷰를 Inflate 하고 리스너를 등록합니다. 또한 제출된 Query 를
+     * Suggestion 에 저장하고 ImageList Fragment 에 전달합니다.
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main_app_bar, menu)
         val searchManager : SearchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -209,6 +264,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         return true
     }
 
+    /**
+     * Activity onPrepareOptionsMenu 에 다음의 내용을 실행합니다.
+     * PreferenceUtils 로 부터 환경설정 정보를 읽어와
+     * 정렬 기준과 표시 갯수를 설정합니다.
+     */
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         when(mPreferenceUtils.getSortOption()) {
             KakaoImageSortOption.ACCURACY -> menu!!.findItem(R.id.menuMainAppBarSortByAccuracy).isChecked = true
@@ -222,6 +282,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         return super.onPrepareOptionsMenu(menu)
     }
 
+    /**
+     * Activity onOptionsItemSelected 에 다음의 내용을 실행합니다.
+     * 선택된 Id 값을 기반으로 Image List 프래그먼트에 그에 맞는
+     * 정보를 Broadcast 로 전달합니다.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menuMainAppBarSortByAccuracy -> {
@@ -276,6 +341,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
 
 
+
+    /**
+     * 사설 제스쳐 디텍터인 ScaleGestureDector 를 선언합니다.
+     * ScaleGestureDetector 는 사용자가 화면을 Pinch 한 이벤트를
+     * Catch 하여 Image List 프래그먼트로 전달합니다. 단, 현재 프래그먼트가
+     * Image Detail 인 경우에는 전달하지 않습니다.
+     */
     private fun setScaleGestureDetector() {
         mScaleGestureDetector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             private val scaleSensitivity = 7
@@ -327,11 +399,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         })
     }
 
+    /**
+     * Activity dispatchTouchEvent 에 다음의 내용을 실행합니다.
+     * 사설 제스쳐 디텍터가 정의된 경우 디텍터에 터치 이벤트를 전달합니다.
+     */
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if(::mScaleGestureDetector.isInitialized) mScaleGestureDetector.onTouchEvent(ev)
         return super.dispatchTouchEvent(ev)
     }
 
+
+    /**
+     * Activity onBackPressed 에 다음의 내용을 실행합니다.
+     * 1. 현재 선택 모드가 다중 모드일 경우 -> 단일 모드로 변경
+     * 2. Search View 가 활성화 된 경우 -> Search View Collapse
+     * 3. 현재 프래그먼트 상태가 ImageList 인 경우 -> 해당 프래그먼트에 이벤트 전달
+     * 4. 현재 프래그먼트 상태가 ImageDetail 인 경우 -> 해당 프래그먼트에 이벤트 전달
+     */
     override fun onBackPressed() {
         if(mIsOnMultipleSelectionMode) {
             dismissMultiSelectionMode()
@@ -371,7 +455,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     }
 
-    fun finishApplication() {
+    /**
+     * 애플리케이션을 종료하는 메소드입니다. 단, 뒤로가기 버튼을 눌렀다고 바로
+     * 종료되지는 않고, 3초 정도 대기시간을 부여한 후에 한 번 더 눌릴 경우 종료합니다.
+     */
+    private fun finishApplication() {
         if(!mAppTerminateConfirmFlag) {
             Toast.makeText(this, R.string.press_again_to_exist, Toast.LENGTH_LONG).show()
             mAppTerminateConfirmFlag = true
@@ -384,6 +472,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         finish()
     }
 
+    /**
+     * 다중 선택 모드를 해제합니다.
+     */
     private fun dismissMultiSelectionMode() {
         if(mIsOnMultipleSelectionMode) {
             sendBroadcast(Intent().apply {
@@ -401,6 +492,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+
+    /**
+     * 프래그먼트 매니져를 설정합니다. ImageList 프래그먼트는 애플리케이션 특성상
+     * 여러개가 생성될 일이 없으므로 Activity 의 Property 로 지정하고 바로 Show 해줍니다.
+     */
     private fun setFragmentManager() {
         mMainFragmentState = MainFragmentState.IMAGE_LIST
         mFragmentManager = supportFragmentManager
@@ -412,6 +508,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .commit()
     }
 
+    /**
+     * 프래그먼트를 Image Detail 로 변경합니다.
+     * 이 때는 Image Detail 프래그먼트를 새로이 생성하고 화면을 전환합니다.
+     */
     private fun showImageDetailFragment(imageModel : KakaoImageModel) {
         mMainFragmentState = MainFragmentState.IMAGE_DETAIL
         val imageDetailFragment = ImageDetailFragment.newInstance(application, imageModel, mImageOperationController)
@@ -429,7 +529,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
 
-
+    /**
+     * 알림 채널을 설정합니다.
+     */
     private fun setNotificationChannel() {
         mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val imageDownloadCompleteNotificationChannel : NotificationChannel = NotificationChannel (
@@ -443,6 +545,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mNotificationManager.createNotificationChannel(imageDownloadCompleteNotificationChannel)
     }
 
+    /**
+     * 다운로드가 완료된 경우 해당 채널에 Notification 을 보냅니다.
+     */
     private fun showImageDownloadCompleteNotification() {
         val openGalleryIntent : Intent = Intent().apply {
             action = Intent.ACTION_VIEW
@@ -462,6 +567,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mNotificationManager.notify(mImageDownloadCompleteNotificationId, imageDownloadCompleteNotification)
     }
 
+
+
+
+    /**
+     * 이미지 파일이 다운 혹은 공유 작업 중일 때 Indicator 를 보여줍니다.
+     */
     private fun setImageOperationIndicator() {
         mViewDataBinding.imageOperationIndicator.bringToFront()
         mImageOperationController.mIsOnOperation.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {

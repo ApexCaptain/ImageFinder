@@ -23,6 +23,7 @@ android {
         outputFormat = "html"
         outputDirectory = "$rootDir/docs"
         skipDeprecated = true
+        includeNonPublic = true
     }
     buildTypes {
         debug {
