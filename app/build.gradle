@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: "kotlin-kapt"
 
+apply plugin: 'org.jetbrains.dokka-android'
+
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.1"
@@ -16,6 +18,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    dokka {
+        outputFormat = "html"
+        outputDirectory = "$rootDir/doc/kotlindoc"
+        skipDeprecated = true
     }
     buildTypes {
         debug {
@@ -71,4 +78,7 @@ dependencies {
 
     // TedPermission
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
+
+
+
 }

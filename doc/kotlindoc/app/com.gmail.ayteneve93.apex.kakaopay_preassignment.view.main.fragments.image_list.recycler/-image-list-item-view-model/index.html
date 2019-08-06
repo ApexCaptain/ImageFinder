@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ImageListItemViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler</a>&nbsp;/&nbsp;<a href="./index.html">ImageListItemViewModel</a><br/>
+<br/>
+<h1>ImageListItemViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">ImageListItemViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ImageListItemViewModel</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="m-image-size-percentage.html">mImageSizePercentage</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mImageSizePercentage</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-is-item-selected.html">mIsItemSelected</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mIsItemSelected</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-is-on-multiple-selection-mode.html">mIsOnMultipleSelectionMode</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mIsOnMultipleSelectionMode</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-kakao-image-model.html">mKakaoImageModel</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mKakaoImageModel</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-image-item-click-listener.html">onImageItemClickListener</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">onImageItemClickListener</span><span class="symbol">: </span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="bound-on-image-item-checked-changed.html">boundOnImageItemCheckedChanged</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemCheckedChanged</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$boundOnImageItemCheckedChanged(kotlin.Boolean)/isChecked">isChecked</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="bound-on-image-item-click.html">boundOnImageItemClick</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="bound-on-image-item-long-click.html">boundOnImageItemLongClick</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnImageItemLongClick</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListItemViewModel$boundOnImageItemLongClick(android.view.View)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-event-handler-on-selection-mode-changed.html">setEventHandlerOnSelectionModeChanged</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setEventHandlerOnSelectionModeChanged</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
