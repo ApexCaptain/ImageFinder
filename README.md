@@ -1,0 +1,1 @@
+# KakaoPay_PreAssignment
