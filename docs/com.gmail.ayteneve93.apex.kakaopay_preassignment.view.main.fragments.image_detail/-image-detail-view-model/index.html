@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ImageDetailViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail</a>&nbsp;/&nbsp;<a href="./index.html">ImageDetailViewModel</a><br/>
+<br/>
+<h1>ImageDetailViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">ImageDetailViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base/-base-view-model/index.html"><span class="identifier">BaseViewModel</span></a></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ImageDetailViewModel</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/imageModel">imageModel</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailViewModel$<init>(android.app.Application, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel, com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController)/mImageOperationController">mImageOperationController</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.controller/-image-operation-controller/index.html"><span class="identifier">ImageOperationController</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="m-image-detail-document-client.html">mImageDetailDocumentClient</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mImageDetailDocumentClient</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/webkit/WebViewClient.html"><span class="identifier">WebViewClient</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-is-web-view-loading.html">mIsWebViewLoading</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mIsWebViewLoading</span><span class="symbol">: </span><span class="identifier">ObservableField</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-kakao-image-model.html">mKakaoImageModel</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mKakaoImageModel</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-info-button-click-listener.html">onInfoButtonClickListener</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">onInfoButtonClickListener</span><span class="symbol">: </span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="bound-on-download-button-click.html">boundOnDownloadButtonClick</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnDownloadButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="bound-on-info-button-click.html">boundOnInfoButtonClick</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnInfoButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="bound-on-share-button-click.html">boundOnShareButtonClick</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">boundOnShareButtonClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
