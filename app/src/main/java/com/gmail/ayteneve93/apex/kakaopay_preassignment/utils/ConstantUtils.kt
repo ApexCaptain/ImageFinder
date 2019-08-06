@@ -4,6 +4,7 @@ object ConstantUtils {
 
     object SuppressWarningAttributes {
         const val SPELL_CHECKING_INSPECTION = "spellCheckingInspection"
+        const val UNUSED_PARAMTER = "UNUSED_PARAMETER"
     }
 
 }

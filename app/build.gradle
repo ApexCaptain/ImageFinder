@@ -22,7 +22,7 @@ android {
             buildConfigField("String", "KakaoImageSearchApiKey", KakaoImageSearchApiKey)
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "KakaoImageSearchApiKey", KakaoImageSearchApiKey)
         }
@@ -43,7 +43,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
     kapt "com.android.databinding:compiler:$android_plugin_version"
 
     // Kotlin Koin Dependency Injection
@@ -67,12 +66,9 @@ dependencies {
     // Custom Layout Components
     implementation "com.wang.avi:library:$wang_avi_process_indicator_version"
     implementation "com.github.recruit-lifestyle:WaveSwipeRefreshLayout:$wave_swpie_refresh_layout_version"
-
-    implementation 'com.github.shadowalker77:wp7progressbar:1.0.5'
+    implementation "com.github.shadowalker77:wp7progressbar:$wp_progress_bar_version"
+    implementation "com.linroid.filtermenu:library:$filter_menu_version"
 
     // TedPermission
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
-    implementation 'com.linroid.filtermenu:library:0.2.3'
-
-
 }

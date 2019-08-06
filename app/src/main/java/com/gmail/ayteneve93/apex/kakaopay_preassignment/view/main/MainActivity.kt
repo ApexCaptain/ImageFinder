@@ -42,6 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private var mBackButtonEnabledFromDetail = true
     private var mIsOnMultipleSelectionMode = false
     private var mAppTerminateConfirmFlag = false
+    private var mIsSearchViewShownAtFirstTime = false
 
     private lateinit var mSearchView : SearchView
     private lateinit var mScaleGestureDetector : ScaleGestureDetector
@@ -199,8 +200,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             })
             setOnCloseListener { false }
             isQueryRefinementEnabled = true
-            setIconifiedByDefault(false)
-            requestFocus(1)
+            if(!mIsSearchViewShownAtFirstTime) {
+                isIconified = false
+                requestFocus(0)
+                mIsSearchViewShownAtFirstTime = true
+            }
         }
         return true
     }
@@ -269,6 +273,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL) onBackPressed()
         return false
     }
+
+
 
     private fun setScaleGestureDetector() {
         mScaleGestureDetector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
