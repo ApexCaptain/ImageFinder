@@ -10,24 +10,42 @@ Kakao 이미지 API를 활용해서 개발한 안드로이드 검색 애플리�
 - [O] API : Retrofit2 + RxJava
 
 ## 1. 기능 시연
-### 이미지 검색 및 페이지 변경 기능
+### 이미지 검색 기능
 <img src="readmeRes/demonstrate_query.gif" width="40%">
+<br><br><br>
+
+### 페이지 변경 기능
 <img src="readmeRes/demonstrate_page_swipe.gif" width="40%">
+<br><br><br>
 
-### 검색 옵션 변경과 이미지 새로고침 기능
+### 검색 옵션 변경 기능
 <img src="readmeRes/demonstrate_change_option.gif" width="40%">
+<br><br><br>
+
+### 새로고침 기능
 <img src="readmeRes/demonstrate_refresh.gif" width="40%">
+<br><br><br>
 
-### 이미지 상세정보 보기 및 최근 검색어 표시
+### 이미지 상세정보 보기 기능
 <img src="readmeRes/demonstrate_image_detail.gif" width="40%">
+<br><br><br>
+
+
+### 최근 검색어 표시 기능
 <img src="readmeRes/demonstrate_suggestion.gif" width="40%">
+<br><br><br>
 
-### 이미지 크기 조절과 다중 선택을 통한 파일 이미지 공유
+
+### 이미지 크기 조절 기능
 <img src="readmeRes/demonstrate_resize.gif" width="40%">
-<img src="readmeRes/demonstrate_multiselection_and_share.gif" width="40%">
+<br><br><br>
 
-## 2. 주요 기능
-### 패키지 구성
+
+### 다중 선택을 통한 파일 이미지 공유 기능
+<img src="readmeRes/demonstrate_multiselection_and_share.gif" width="40%">
+<br><br><br>
+
+## 2. 패키지 구성
 개발에 사용한 소스코드 패키지는 Dokka로 문서화 되어있으며, 본 Git Repo의 GitHubPage와 연동되어 있습니다. 
 
 자세한 사항은 [링크](https://apexcaptain.github.io/KakaoPay_PreAssignment/app/index.html)를 참고해주세요.
