@@ -91,13 +91,6 @@
 <p>이미지 정보를 담고있는 데이터 모델입니다.</p>
 </td>
 </tr>
-<tr>
-<td>
-<p><a href="on-image-item-click-listener.html">onImageItemClickListener</a></p>
-</td>
-<td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">onImageItemClickListener</span><span class="symbol">: </span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
-</tr>
 </tbody>
 </table>
 <h3>Functions</h3>
@@ -118,7 +111,7 @@
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">boundOnImageItemClick</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>이미지 클릭시 처리는 Adapter에서 지정한 리스너에서 처리합니다.</p>
+<p>이미지 클릭시 Broadcast 로 뷰 모델이 가지고 있는 이미지 모델을 Main Activity 로 전송합니다.</p>
 </td>
 </tr>
 <tr>

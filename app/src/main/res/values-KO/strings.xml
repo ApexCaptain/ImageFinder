@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">이미지 탐색기</string>
+    <string name="missing_image_content">사진을 불러올 수 없습니다</string>
     <string name="developer_name">이상훈</string>
+
     <string name="search_view_hint">이미지 검색</string>
     <string name="search_list_title_hint">키워드를 입력해주세요</string>
     <string name="search_list_title">\'%1$s\'(으)로 검색</string>

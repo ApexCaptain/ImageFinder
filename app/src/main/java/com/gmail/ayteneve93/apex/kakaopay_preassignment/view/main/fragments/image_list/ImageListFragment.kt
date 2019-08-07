@@ -35,7 +35,7 @@ import kotlin.math.roundToInt
  * @property mPreferenceUtils 사용자 설정 정보 Utility 객체입니다.
  * @property mImageOperationController 이미지 공유/다운로드 제어기 객체입니다.
  * @property mColumnCountRatio 사용자 스마트의 가로/세로 비율에 맞춰 Recycler Grid 열의 갯수 비율을 정리합니다.
- *                              가령 세로와 가로의 비율이 1:2 일 경우 이 값은 2가 되며 가로 모드일 때 열의 갯수는 2배가 됩니다.
+ *                              가령, 세로와 가로의 비율이 1:2 일 경우 이 값은 2가 되며 가로 모드일 때 열의 갯수는 2배가 됩니다.
  * @property mImageListBroadcastReceiver 이미지 리스트 프래그먼트에서 사용하는 방송 수신자입니다.
  *
  * @author ayteneve93@gmail.com
@@ -62,7 +62,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                     actionString ->
                     intent.getStringExtra(MainBroadcastPreference.Target.KEY)?.let {
                         target ->
-                        if(target == MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST) {
+                        if(target == MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST) {
                             when(actionString) {
 
                                 // 새로운 검색어 입력됨
@@ -86,18 +86,17 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
 
                                 // 사용자가 화면을 Pinch 함(줌 인 혹은 줌 아웃)
                                 MainBroadcastPreference.Action.PINCHING -> {
-                                    intent.getBooleanExtra(MainBroadcastPreference.Extra.IsZoomIn.KEY, MainBroadcastPreference.Extra.IsZoomIn.PredefinedValues.ZOOM_IN).also {
-                                        mImageListRecyclerAdapter.resizeOnPinch(it) {
-                                            setRecyclerViewLayoutManager()
-                                        }
+                                    when(intent.getSerializableExtra(MainBroadcastPreference.Extra.PinchingOperation.KEY)) {
+                                        MainBroadcastPreference.Extra.PinchingOperation.PreDefinedValues.ZOOM_IN -> mImageListRecyclerAdapter.resizeOnPinch(true) { setRecyclerViewLayoutManager() }
+                                        MainBroadcastPreference.Extra.PinchingOperation.PreDefinedValues.ZOOM_OUT -> mImageListRecyclerAdapter.resizeOnPinch(false) { setRecyclerViewLayoutManager() }
                                     }
                                 }
 
                                 // Pinch 중에는 Refresh 비활성화
                                 MainBroadcastPreference.Action.PINCH_STATE -> {
-                                    when(intent.getBooleanExtra(MainBroadcastPreference.Extra.IsPichBeigin.KEY, MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END)) {
-                                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.BEGIN -> mViewDataBinding.imageListRefreshLayout.isEnabled = false
-                                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END -> {
+                                    when(intent.getSerializableExtra(MainBroadcastPreference.Extra.PinchingState.KEY)) {
+                                        MainBroadcastPreference.Extra.PinchingState.PreDefinedValues.PINCH_START -> mViewDataBinding.imageListRefreshLayout.isEnabled = false
+                                        MainBroadcastPreference.Extra.PinchingState.PreDefinedValues.PINCH_END -> {
                                             if(!mImageListViewModel.mFilterMenuVisibility.get()!!) {
                                                 Handler().postDelayed({
                                                     mViewDataBinding.imageListRefreshLayout.isEnabled = true
@@ -109,10 +108,15 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
 
                                 // 이미지 선택 모드(단일 & 다중) 변경 알림
                                 MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED -> {
-                                    with(intent.getBooleanExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, true)) {
-                                        mImageListRecyclerAdapter.setSelectionMode(this)
-                                        if(this) showFilterMenuWithAnimation()
-                                        else hideFilterMenuWithAnimation()
+                                    when(intent.getSerializableExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY)) {
+                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PreDefinedValues.MULTI_SELECTION_MODE -> {
+                                            mImageListRecyclerAdapter.setSelectionMode(true)
+                                            showFilterMenuWithAnimation()
+                                        }
+                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PreDefinedValues.SIGNLE_SELECTION_MODE -> {
+                                            mImageListRecyclerAdapter.setSelectionMode(false)
+                                            hideFilterMenuWithAnimation()
+                                        }
                                     }
                                 }
 
@@ -121,7 +125,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                     if(mImageListViewModel.mPageNumber > 1) mImageListViewModel.boundOnPrevPageButtonClick()
                                     else mActivity?.sendBroadcast(Intent().apply {
                                         action = MainBroadcastPreference.Action.FINISH_APPLICATION
-                                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
+                                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
                                     })
                                 }
 
@@ -318,6 +322,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
     }
 
     companion object {
+        /** 새로운 프래그먼트를 생성합니다. */
         fun newInstance() = ImageListFragment()
     }
 

@@ -2,12 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.gmail.ayteneve93.apex.kakaopay_preassignment">
 
+    <!-- 퍼미션 리스트 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- 애플리케이션 설정. BroadcastReceiver 는 별도로 Manifest 에 등록하지 않고 동적으로 사용 -->
     <application
             android:name=".PreAssignmentApplication"
             android:allowBackup="true"
@@ -17,6 +19,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+
+        <!-- 액티비티 -->
         <activity
                 android:name=".view.intro.IntroActivity"
                 android:noHistory="true"
@@ -39,7 +43,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/recent_search"/>
         </activity>
-        
+
+        <!-- 컨텐츠 프로바이더 -->
         <provider
                 android:grantUriPermissions="true"
                 android:exported="false"
@@ -52,10 +57,9 @@
         <provider
                 android:enabled="true"
                 android:exported="false"
-                android:authorities="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainRecentSearchSuggestionsProvider"
+                android:authorities="${applicationId}.view.main.MainRecentSearchSuggestionsProvider"
                 android:name=".view.main.MainRecentSearchSuggestionsProvider">
         </provider>
-        
 
     </application>
 

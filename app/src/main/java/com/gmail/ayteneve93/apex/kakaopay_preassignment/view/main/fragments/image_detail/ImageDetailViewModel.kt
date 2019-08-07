@@ -18,6 +18,7 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
  * @property mKakaoImageModel 이미지 데이터 모델입니다.
  * @property mIsWebViewLoading 웹 뷰가 로딩중인지 표시하는 Observable<Boolean> 객체입니다.
  * @property mImageDetailDocumentClient 웹 뷰에 삽입할 클라이언트 객체입니다.
+ * @property onInfoButtonClickListener ImageDetailFragment 에서 설정하는 값으로, 뷰의 Info 버튼이 클릭되었을 때의 처리를 담당합니다.
  *
  * @author ayteneve93@gmail.com
  *

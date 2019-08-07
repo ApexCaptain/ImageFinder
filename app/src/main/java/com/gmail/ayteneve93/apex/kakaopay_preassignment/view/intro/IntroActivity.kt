@@ -17,6 +17,9 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainActivity
  *
  */
 class IntroActivity : AppCompatActivity() {
+    /** Activity 생명주기 onCreate 에 다음의 내용을 실행합니다.
+     * Handler 객체를 생성해 0.5 초의 지연 시간을 주고 MainActivity 로 전환합니다.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)

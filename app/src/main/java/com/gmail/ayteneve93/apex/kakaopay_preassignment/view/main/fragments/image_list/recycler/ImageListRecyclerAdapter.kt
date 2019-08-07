@@ -129,13 +129,6 @@ class ImageListRecyclerAdapter(
                                 mIsOnMultipleSelectionMode = this@ImageListRecyclerAdapter.mIsOnMultipleSelectionMode
                                 mIsItemSelected = ObservableField(mImageOperationController.isImageModelExists(mKakaoImageModel))
                                 setEventHandlerOnSelectionModeChanged()
-                                onImageItemClickListener = {
-                                    application.sendBroadcast(Intent().apply {
-                                        action = MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED
-                                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
-                                        putExtra(MainBroadcastPreference.Extra.ImageItem.KEY, mKakaoImageModel)
-                                    })
-                                }
                             })
                         }
                         notifyDataSetChanged()
@@ -207,10 +200,14 @@ class ImageListRecyclerAdapter(
     /**
      * 이미지 리스트 아이템의 뷰 홀더입니다.
      * 일반 뷰 홀더와 달리 각각의 뷰의 viewModel 을 바인딩 해줍니다.
+     *
+     * @property binding 이미지 뷰 Layout 의 바인딩 객체입니다.
+     *
      */
     class ImageListItemViewHolder(
         private val binding : ItemImageListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        /** 이미지 뷰 Layout 바인딩에 viewModel 을 입력합니다. */
         fun bind(item : ImageListItemViewModel) {
             binding.apply {
                 viewModel = item

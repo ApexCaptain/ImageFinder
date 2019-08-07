@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
-        <variable name="viewModel" type="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainViewModel"/>
+        <variable
+                name="viewModel"
+                type="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent" android:id="@+id/mainParentConstraint">
         <androidx.appcompat.widget.Toolbar
                 app:titleMarginStart="32dp"
                 android:fitsSystemWindows="true"
@@ -22,20 +22,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
         </androidx.appcompat.widget.Toolbar>
-
         <FrameLayout android:layout_width="0dp" android:layout_height="0dp"
                      android:visibility="@{safeUnbox(viewModel.mFragmentVisibility) ? View.VISIBLE : View.GONE}"
                      app:layout_constraintEnd_toEndOf="parent"
                      app:layout_constraintStart_toStartOf="parent"
                      app:layout_constraintBottom_toBottomOf="parent"
                      app:layout_constraintTop_toBottomOf="@+id/mainToolbar" android:id="@+id/mainFragmentContainer"/>
-
-
         <ir.alirezabdn.wp7progress.WP7ProgressBar
                 app:layout_collapseMode="none"
-                android:id="@+id/imageOperationIndicator"
+                android:id="@+id/mainImageOperationIndicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{safeUnbox(viewModel.mProgressIndicatorVisibility) ? View.VISIBLE : View.GONE}"
@@ -44,22 +40,7 @@
                 app:indicatorRadius="5"
                 app:interval="100" app:layout_constraintBottom_toBottomOf="@+id/mainFragmentContainer"
                 android:layout_marginBottom="50dp">
-
         </ir.alirezabdn.wp7progress.WP7ProgressBar>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
-
-<!--
-
-        <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
-                android:indeterminateOnly="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/mainFragmentContainer"/>
-                android:visibility="@{safeUnbox(viewModel.mIsImageOperationOnProgress) ? View.VISIBLE : View.GONE}"
--->

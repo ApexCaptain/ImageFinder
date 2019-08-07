@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="android.view.View" />
         <variable
@@ -13,7 +14,7 @@
             android:onClick="@{() -> viewModel.boundOnImageItemClick()}"
             android:onLongClick="@{(v) -> viewModel.boundOnImageItemLongClick(v)}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" android:id="@+id/imageParentConstraint">
         <CheckBox
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_percent="0.2"
@@ -21,39 +22,33 @@
                 android:onCheckedChanged="@{(compoundButton, checked) -> viewModel.boundOnImageItemCheckedChanged(checked)}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:id="@+id/checkBox"
+                android:id="@+id/imageMultiSelectionCheckBox"
                 android:visibility="@{safeUnbox(viewModel.mIsOnMultipleSelectionMode) ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toStartOf="@+id/gl_right"
+                app:layout_constraintEnd_toStartOf="@+id/imageVerticalGuidlineRight"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/gl_left" app:layout_constraintHorizontal_bias="1.0"/>
+                app:layout_constraintStart_toStartOf="@+id/imageVerticalGuidlineLeft" app:layout_constraintHorizontal_bias="1.0"/>
         <ImageView
+                android:contentDescription="@string/missing_image_content"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="1:1"
                 android:scaleType="fitCenter"
                 app:thumbnail="@{viewModel.mKakaoImageModel.thumbnailUrl}"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/gl_right"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/imageVerticalGuidlineRight"
                 android:layout_marginTop="24dp" android:layout_marginBottom="24dp"
-                android:layout_marginEnd="24dp" android:id="@+id/imageView2"
+                android:layout_marginEnd="24dp" android:id="@+id/imageThumbnailImage"
                 android:layout_marginStart="24dp"
-                app:layout_constraintStart_toStartOf="@+id/gl_left"/>
+                app:layout_constraintStart_toStartOf="@+id/imageVerticalGuidlineLeft"/>
         <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/gl_left"
+                                                    android:layout_height="wrap_content" android:id="@+id/imageVerticalGuidlineLeft"
                                                     app:layout_constraintGuide_begin="@{0.5f - safeUnbox(viewModel.mImageSizePercentage)/2}"
                                                     android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/gl_right"
+                                                    android:layout_height="wrap_content" android:id="@+id/imageVerticalGuidlineRight"
                                                     app:layout_constraintGuide_begin="@{0.5f + safeUnbox(viewModel.mImageSizePercentage)/2}"
                                                     android:orientation="vertical"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
 
-<!--
-               app:layout_constraintGuide_percent="0.2"
-                           app:layout_constraintGuide_percent="0.8"
-                                                    app:layout_constraintGuide_begin="@{0.5f - safeUnbox(viewModel.mImageSizePercentage)/2}"
-                                                                                                        app:layout_constraintGuide_begin="@{0.5f + safeUnbox(viewModel.mImageSizePercentage)/2}"
--->
+</layout>

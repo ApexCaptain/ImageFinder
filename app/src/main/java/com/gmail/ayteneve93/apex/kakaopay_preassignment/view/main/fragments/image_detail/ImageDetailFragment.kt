@@ -40,17 +40,17 @@ class ImageDetailFragment(application : Application, imageModel: KakaoImageModel
                     actionString ->
                     intent.getStringExtra(MainBroadcastPreference.Target.KEY)?.let {
                         target ->
-                        if(target == MainBroadcastPreference.Target.PredefinedValues.IMAGE_DETAIL) {
+                        if(target == MainBroadcastPreference.Target.PreDefinedValues.IMAGE_DETAIL) {
                             when(actionString) {
 
                                 // 뒤로가기 버튼이 눌렸을 경우
                                 MainBroadcastPreference.Action.BACK_BUTTON_PRESSED -> {
-                                    mViewDataBinding.detailWebView.let {
+                                    mViewDataBinding.imageDetailWebView.let {
                                         imageDetailWebView ->
                                         if(imageDetailWebView.canGoBack() && imageDetailWebView.url != mImageDetailViewModel.mKakaoImageModel.docUrl) imageDetailWebView.goBack()
                                         else application.sendBroadcast(Intent().apply {
                                             action = MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT
-                                            putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
+                                            putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
                                         })
                                     }
                                 }
@@ -112,7 +112,7 @@ class ImageDetailFragment(application : Application, imageModel: KakaoImageModel
      * 투명하게 보이도록 해줍니다.
      */
     private fun setCollapsingToolBar() {
-        mViewDataBinding.collapsingToolBar.apply {
+        mViewDataBinding.imageDetailCollapsingAppToolBar.apply {
             title = getString(R.string.image_detail_sub_title)
             setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
             setExpandedTitleColor(ContextCompat.getColor(context, R.color.colorTransparent))
@@ -128,7 +128,7 @@ class ImageDetailFragment(application : Application, imageModel: KakaoImageModel
      * 4. 모바일 지원이 안 되는 웹을 모바일 화면에 끼워 맞추기 - True
      */
     private fun setWebView() {
-        mViewDataBinding.detailWebView.settings.apply {
+        mViewDataBinding.imageDetailWebView.settings.apply {
             javaScriptEnabled = true
             javaScriptCanOpenWindowsAutomatically = true
             loadsImagesAutomatically = true
@@ -165,6 +165,7 @@ class ImageDetailFragment(application : Application, imageModel: KakaoImageModel
     }
 
     companion object {
+        /** 새로운 프래그먼트를 생성합니다. */
         fun newInstance(application: Application, imageModel: KakaoImageModel, imageOperationController: ImageOperationController) = ImageDetailFragment(application, imageModel, imageOperationController)
     }
 

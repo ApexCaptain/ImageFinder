@@ -95,10 +95,11 @@ class PreferenceUtils(
 }
 
 /**
- * 유저 저장 정보 범주입니다.
+ * 저장 정보 범주입니다.
  */
 @Suppress(ConstantUtils.SuppressWarningAttributes.SPELL_CHECKING_INSPECTION)
 private object PreferenceCategory {
+    /** 유저와 관련된 환경설정 정보 범주입니다. */
     enum class User(val attributeName : String) {
         /** 이미지 정렬 기준 */
         KAKAO_IMAGE_SORT_OPTION("utils.PreferenceCategory.User.KAKAO_IMAGE_SORT_OPTION"),

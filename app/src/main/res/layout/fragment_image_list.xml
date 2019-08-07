@@ -4,29 +4,27 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View"/>
-        <variable name="viewModel" type="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListViewModel"/>
+        <variable
+                name="viewModel"
+                type="com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent" android:id="@+id/imageListParentCoordinator">
         <com.google.android.material.appbar.AppBarLayout
                 app:elevation="0dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content" android:id="@+id/imageListAppBar">
             <com.google.android.material.appbar.CollapsingToolbarLayout
                     app:layout_scrollFlags="scroll|enterAlways"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_height="match_parent" android:id="@+id/imageListCollapsingAppToolBar">
                 <androidx.constraintlayout.widget.ConstraintLayout
                         app:layout_collapseMode="parallax"
                         android:layout_margin="7sp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
+                        android:layout_height="wrap_content" android:id="@+id/imageListToolBarContainerConstraint">
                     <TextView
                             android:text="@{viewModel.mSearchResultTitle}"
                             android:textSize="18sp"
@@ -35,17 +33,15 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-                            android:id="@+id/searchResultTitle" app:layout_constraintEnd_toStartOf="@+id/currentPage"
+                            android:id="@+id/imageListSearchResultTitle" app:layout_constraintEnd_toStartOf="@+id/imageListCurrentPage"
                             android:layout_marginEnd="8dp"/>
-
                     <TextView
                             android:text="@{viewModel.mPageNumberText}"
                             android:visibility="@{safeUnbox(viewModel.mNoSearchResult) ? View.GONE : View.VISIBLE}"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:id="@+id/currentPage"
+                            android:layout_height="wrap_content" android:id="@+id/imageListCurrentPage"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"/>
-
                     <Button
                             android:visibility="@{safeUnbox(viewModel.mPageButtonVisibility) ? View.VISIBLE : View.GONE}"
                             android:enabled="@{safeUnbox(viewModel.mPrevPageButtonAvailability) ? true : false}"
@@ -57,10 +53,10 @@
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:id="@+id/prevPageButton"
+                            android:layout_height="wrap_content" android:id="@+id/imageListPrevPageButton"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="8dp"
-                            app:layout_constraintTop_toBottomOf="@+id/searchResultTitle"
+                            app:layout_constraintTop_toBottomOf="@+id/imageListSearchResultTitle"
                             android:layout_marginStart="16dp"/>
                     <Button
                             android:visibility="@{safeUnbox(viewModel.mPageButtonVisibility) ? View.VISIBLE : View.GONE}"
@@ -73,23 +69,17 @@
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:id="@+id/nextPageButton"
+                            android:layout_height="wrap_content" android:id="@+id/imageListNextPageButton"
                             android:layout_marginTop="8dp"
-                            app:layout_constraintTop_toBottomOf="@+id/searchResultTitle"
+                            app:layout_constraintTop_toBottomOf="@+id/imageListSearchResultTitle"
                             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
-
         </com.google.android.material.appbar.AppBarLayout>
-
         <com.linroid.filtermenu.library.FilterMenuLayout
                 android:id="@+id/imageListFilterMenu"
-
                 app:fm_expandedRadius="100dp"
                 app:fm_collapsedRadius="30dp"
-
                 app:fm_centerBottom="50dp"
                 app:fm_centerRight="50dp"
                 app:fm_primaryColor="@color/colorAccent"
@@ -98,22 +88,18 @@
                 android:elevation="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
         </com.linroid.filtermenu.library.FilterMenuLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-
+                android:layout_height="match_parent" android:id="@+id/imageListRecyclerContainerConstraint">
             <ImageView
+                    android:contentDescription="@string/missing_image_content"
                     android:visibility="@{safeUnbox(viewModel.mNoSearchResult) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintHeight_percent="0.3"
                     android:layout_width="0dp"
                     android:layout_height="0dp" app:srcCompat="@drawable/ic_no_search_result"
-                    android:id="@+id/imageView"
+                    android:id="@+id/imgaeListNoSearchResultImage"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
@@ -124,33 +110,25 @@
                     android:text="@{viewModel.mAbnormalResultMessage}"
                     android:gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView"
+                    android:layout_height="wrap_content" android:id="@+id/imageListNoSearchResultText"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                     app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imgaeListNoSearchResultImage"/>
             <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
-
                     android:id="@+id/imageListRefreshLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:layout_editor_absoluteX="0dp">
-
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/imageListRecyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                >
-
+                        android:layout_height="match_parent">
                 </androidx.recyclerview.widget.RecyclerView>
             </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-
 
 </layout>

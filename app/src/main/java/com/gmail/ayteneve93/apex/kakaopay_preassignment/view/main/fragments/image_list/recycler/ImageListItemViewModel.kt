@@ -51,14 +51,18 @@ class ImageListItemViewModel(
     }
 
     // Layout 과 바인딩 된 메소드
-    lateinit var onImageItemClickListener : () -> Unit
-    /** 이미지 클릭시 처리는 Adapter에서 지정한 리스너에서 처리합니다. */
+    /** 이미지 클릭시 Broadcast 로 뷰 모델이 가지고 있는 이미지 모델을 Main Activity 로 전송합니다. */
     fun boundOnImageItemClick() {
         if(mIsOnMultipleSelectionMode.get()!!) {
             if(mClickModeChanged) mClickModeChanged = false
             else mIsItemSelected.set(!mIsItemSelected.get()!!)
-
-        } else onImageItemClickListener()
+        } else {
+            mApplication.sendBroadcast(Intent().apply {
+                action = MainBroadcastPreference.Action.IMAGE_ITEM_CLICKED
+                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
+                putExtra(MainBroadcastPreference.Extra.ImageItem.KEY, mKakaoImageModel)
+            })
+        }
     }
 
     /** 이미지를 길게 누르면 Broadcast 로 해당 내용을 전파하고 선택 모드를 다중으로 변경합니다. */
@@ -71,13 +75,13 @@ class ImageListItemViewModel(
             mClickModeChanged = true
             mApplication.sendBroadcast(Intent().apply {
                 action = MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
-                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
-                putExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.SELECTION_MODE)
+                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
+                putExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, MainBroadcastPreference.Extra.ImageItemSelectionMode.PreDefinedValues.MULTI_SELECTION_MODE)
             })
             mApplication.sendBroadcast(Intent().apply {
                 action = MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
-                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
-                putExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.SELECTION_MODE)
+                putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST)
+                putExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, MainBroadcastPreference.Extra.ImageItemSelectionMode.PreDefinedValues.MULTI_SELECTION_MODE)
             })
         }
         return false

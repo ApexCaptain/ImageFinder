@@ -3,7 +3,7 @@ package com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 
 /**
- * MainActivity 와 예하 프래그먼트간의 Broadcast 통신 절차를 저장하는 Object 입니다.
+ * MainActivity 와 예하 프래그먼트간의 Broadcast 통신 규약을 지정하는 Object 입니다.
  *
  * @author ayteneve93@gmail.com
  *
@@ -42,13 +42,13 @@ object MainBroadcastPreference {
         /** 방송 수신 대상자의 키 값 */
         const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.KEY"
         /** 미리 정의된 값 목록 */
-        object PredefinedValues {
+        object PreDefinedValues {
             /** 매인 액티비티 */
-            const val MAIN_ACTIVITY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PredefinedValues.MAIN_ACTIVITY"
+            const val MAIN_ACTIVITY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PreDefinedValues.MAIN_ACTIVITY"
             /** 이미지 리스트 프래그먼트 */
-            const val IMAGE_LIST = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PredefinedValues.IMAGE_LIST"
+            const val IMAGE_LIST = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PreDefinedValues.IMAGE_LIST"
             /** 이미지 상세정보 프래그먼트 */
-            const val IMAGE_DETAIL = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PredefinedValues.IMAGE_DETAIL"
+            const val IMAGE_DETAIL = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Target.PreDefinedValues.IMAGE_DETAIL"
         }
     }
 
@@ -65,27 +65,27 @@ object MainBroadcastPreference {
             const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.SortOption.KEY"
         }
         /** Pinch 정보 */
-        object IsZoomIn {
+        object PinchingOperation {
             /** Pinch 정보 키 값 */
-            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.IsZoomIn.KEY"
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.PinchingOperation.KEY"
             /** 미리 정의된 값 목록 */
-            object PredefinedValues {
+            enum class PreDefinedValues {
                 /** 줌 인 */
-                const val ZOOM_IN = true
+                ZOOM_IN,
                 /** 줌 아웃 */
-                const val ZOOM_OUT = false
+                ZOOM_OUT
             }
         }
         /** Pinch 시작/종료 정보 */
-        object IsPichBeigin {
+        object PinchingState {
             /** Pinch 시작/종료 정보 키 값*/
-            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.IsPichBeigin.KEY"
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.PinchingState.KEY"
             /** 미리 정의된 값 목록 */
-            object PredefinedValues {
+            enum class PreDefinedValues {
                 /** Picn 시작 */
-                const val BEGIN = true
+                PINCH_START,
                 /** Pinch 종료 */
-                const val END = false
+                PINCH_END,
             }
         }
         /** 변경된 이미지 표시 갯수 */
@@ -103,23 +103,23 @@ object MainBroadcastPreference {
             /** 변경된 이미지 선택 모드 키 값 */
             const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImageItemSelectionMode.KEY"
             /** 미리 정의된 값 목록 */
-            object PredefinedValues {
+            enum class PreDefinedValues {
                 /** 다중 선택 모드 */
-                const val SELECTION_MODE = true
+                MULTI_SELECTION_MODE,
                 /** 일반 단일 선택 모드 */
-                const val NORMAL_MODE = false
+                SIGNLE_SELECTION_MODE,
             }
         }
         /** 이미지 다운로드/공유 정보 */
         object ImageOperation {
             /** 이미지 다운로드/공유 정보 키 값 */
-            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImagerOperation.KEY"
+            const val KEY = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImageOperation.KEY"
             /** 미리 정의된 값 목록 */
-            object PredefinedValues {
+            enum class PreDefinedValues {
                 /** 이미지 공유 */
-                const val SHARE = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImagerOperation.PredefinedValues.SHARE"
+                SHARE,
                 /** 이미지 다운로드 */
-                const val DOWNLOAD = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Extra.ImagerOperation.PredefinedValues.DOWNLOAD"
+                DOWNLOAD
             }
         }
     }

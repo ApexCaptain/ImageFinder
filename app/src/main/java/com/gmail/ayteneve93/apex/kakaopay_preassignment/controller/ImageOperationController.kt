@@ -218,10 +218,10 @@ class ImageOperationController(
                 mIsOnOperation.set(false)
                 application.sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED
-                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY)
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
                     when(imageOperation) {
                         ImageOperation.SHARE -> {
-                            putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.SHARE)
+                            putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.SHARE)
                             putExtra(Intent.EXTRA_INTENT, Intent().apply {
                                 action = Intent.ACTION_SEND_MULTIPLE
                                 type = "image/jpeg"
@@ -235,7 +235,7 @@ class ImageOperationController(
                             mIsImageOnSharing = true
                         }
                         ImageOperation.DOWNLOAD -> {
-                            putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.DOWNLOAD)
+                            putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.DOWNLOAD)
                         }
                     }
                 })

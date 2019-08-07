@@ -84,7 +84,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     actionString ->
                     intent.getStringExtra(MainBroadcastPreference.Target.KEY)?.let {
                         target ->
-                        if(target == MainBroadcastPreference.Target.PredefinedValues.MAIN_ACTIVITY) {
+                        if(target == MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY) {
                             when(actionString) {
 
                                 // 이미지 아이템이 클릭된 경우
@@ -100,25 +100,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
                                 // 이미지 선택 모드(단일 & 다중) 변경 알림
                                 MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED -> {
-                                    when(intent.getBooleanExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY, true)) {
-                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.SELECTION_MODE -> {
-                                            mIsOnMultipleSelectionMode = true
-
-                                        }
-                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.NORMAL_MODE -> {
-                                            mIsOnMultipleSelectionMode = false
-                                        }
+                                    when(intent.getSerializableExtra(MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY)) {
+                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PreDefinedValues.MULTI_SELECTION_MODE -> mIsOnMultipleSelectionMode = true
+                                        MainBroadcastPreference.Extra.ImageItemSelectionMode.PreDefinedValues.SIGNLE_SELECTION_MODE -> mIsOnMultipleSelectionMode = false
                                     }
                                 }
 
                                 // 이미지 공유/다운로드 절차가 완료된 경우
                                 MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED -> {
-                                    when(intent.getStringExtra(MainBroadcastPreference.Extra.ImageOperation.KEY)) {
-                                        MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.SHARE -> {
+                                    when(intent.getSerializableExtra(MainBroadcastPreference.Extra.ImageOperation.KEY)) {
+                                        MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.SHARE -> {
                                             this@MainActivity.startActivity(
                                                 Intent.createChooser(intent.getParcelableExtra<Intent>(Intent.EXTRA_INTENT), getString(R.string.intent_title_image_sharing_target)))
                                         }
-                                        MainBroadcastPreference.Extra.ImageOperation.PredefinedValues.DOWNLOAD -> {
+                                        MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.DOWNLOAD -> {
                                             Toast.makeText(this@MainActivity, R.string.txt_image_download_succeed, Toast.LENGTH_LONG).show()
                                             showImageDownloadCompleteNotification()
                                             mImageOperationController.clearDisposable()
@@ -235,7 +230,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     if(mMainFragmentState == MainFragmentState.IMAGE_DETAIL) onBackPressed()
                     sendBroadcast(Intent().apply {
                         action = MainBroadcastPreference.Action.NEW_SEARCH_QUERY_INPUT
-                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                        putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST)
                         putExtra(MainBroadcastPreference.Extra.QueryString.KEY, query)
                     })
                     dismissMultiSelectionMode()
@@ -293,7 +288,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 mPreferenceUtils.setSortOption(KakaoImageSortOption.ACCURACY)
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.SORT_OPTION_CHANGED
-                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST)
                     putExtra(MainBroadcastPreference.Extra.SortOption.KEY, KakaoImageSortOption.ACCURACY)
                 })
             }
@@ -301,7 +296,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 mPreferenceUtils.setSortOption(KakaoImageSortOption.RECENCY)
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.SORT_OPTION_CHANGED
-                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST)
                     putExtra(MainBroadcastPreference.Extra.SortOption.KEY, KakaoImageSortOption.RECENCY)
                 })
             }
@@ -309,7 +304,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 mPreferenceUtils.setDisplayCount(30)
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED
-                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST)
                     putExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 30)
                 })
             }
@@ -317,7 +312,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 mPreferenceUtils.setDisplayCount(50)
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED
-                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST)
                     putExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 50)
                 })
             }
@@ -325,7 +320,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 mPreferenceUtils.setDisplayCount(80)
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.DISPLAY_COUNT_CHANGED
-                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST)
+                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST)
                     putExtra(MainBroadcastPreference.Extra.DisplayCount.KEY, 80)
                 })
             }
@@ -343,25 +338,29 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
 
     /**
-     * 사설 제스쳐 디텍터인 ScaleGestureDector 를 선언합니다.
+     * 사설 제스쳐 디텍터인 ScaleGestureDetector 를 선언합니다.
      * ScaleGestureDetector 는 사용자가 화면을 Pinch 한 이벤트를
      * Catch 하여 Image List 프래그먼트로 전달합니다. 단, 현재 프래그먼트가
      * Image Detail 인 경우에는 전달하지 않습니다.
      */
     private fun setScaleGestureDetector() {
         mScaleGestureDetector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-            private val scaleSensitivity = 7
+            private val mScaleSensitivity = 7
+            private val mStandardScaleFactor = 1.0f
+            /** Pinch 제스쳐 이벤트가 감지되면 Zoom In 이벤트 인지 Zomm Out 이벤트인지 구분해서 ImageList 프래그먼트에 전달합니다. */
             override fun onScale(detector: ScaleGestureDetector?): Boolean {
                 if(mMainFragmentState == MainFragmentState.IMAGE_LIST) {
                     detector?.let {
-                        if (kotlin.math.abs(it.currentSpan - it.previousSpan) > scaleSensitivity) {
+                        if (kotlin.math.abs(it.currentSpan - it.previousSpan) > mScaleSensitivity) {
                             sendBroadcast(Intent().apply {
                                 action = MainBroadcastPreference.Action.PINCHING
                                 putExtra(
                                     MainBroadcastPreference.Target.KEY,
-                                    MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                                    MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST
                                 )
-                                putExtra(MainBroadcastPreference.Extra.IsZoomIn.KEY, it.scaleFactor > 1)
+                                putExtra(MainBroadcastPreference.Extra.PinchingOperation.KEY,
+                                    if(it.scaleFactor > mStandardScaleFactor) MainBroadcastPreference.Extra.PinchingOperation.PreDefinedValues.ZOOM_IN
+                                    else MainBroadcastPreference.Extra.PinchingOperation.PreDefinedValues.ZOOM_OUT)
                             })
                         }
                     }
@@ -369,30 +368,32 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 return true
             }
 
+            /** Pinch 제스쳐 이벤트가 시작될 때 해당 사항을 ImageList 프래그먼트에 전달합니다. */
             override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.PINCH_STATE
                     putExtra(
                         MainBroadcastPreference.Target.KEY,
-                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                        MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST
                     )
                     putExtra(
-                        MainBroadcastPreference.Extra.IsPichBeigin.KEY,
-                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.BEGIN)
+                        MainBroadcastPreference.Extra.PinchingState.KEY,
+                        MainBroadcastPreference.Extra.PinchingState.PreDefinedValues.PINCH_START)
                 })
                 return super.onScaleBegin(detector)
             }
 
+            /** Pinch 제스쳐 이벤트가 종료될 때 해당 사항을 ImageList 프래그먼트에 전달합니다. */
             override fun onScaleEnd(detector: ScaleGestureDetector?) {
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.PINCH_STATE
                     putExtra(
                         MainBroadcastPreference.Target.KEY,
-                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                        MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST
                     )
                     putExtra(
-                        MainBroadcastPreference.Extra.IsPichBeigin.KEY,
-                        MainBroadcastPreference.Extra.IsPichBeigin.PredefinedValues.END)
+                        MainBroadcastPreference.Extra.PinchingState.KEY,
+                        MainBroadcastPreference.Extra.PinchingState.PreDefinedValues.PINCH_END)
                 })
                 super.onScaleEnd(detector)
             }
@@ -433,7 +434,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     action = MainBroadcastPreference.Action.BACK_BUTTON_PRESSED
                     putExtra(
                         MainBroadcastPreference.Target.KEY,
-                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                        MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST
                     )
                 })
             }
@@ -446,13 +447,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     action = MainBroadcastPreference.Action.BACK_BUTTON_PRESSED
                     putExtra(
                         MainBroadcastPreference.Target.KEY,
-                        MainBroadcastPreference.Target.PredefinedValues.IMAGE_DETAIL
+                        MainBroadcastPreference.Target.PreDefinedValues.IMAGE_DETAIL
                     )
                 })
             }
             return
         }
-
     }
 
     /**
@@ -472,20 +472,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         finish()
     }
 
-    /**
-     * 다중 선택 모드를 해제합니다.
-     */
+    /** 다중 선택 모드를 해제합니다. */
     private fun dismissMultiSelectionMode() {
         if(mIsOnMultipleSelectionMode) {
             sendBroadcast(Intent().apply {
                 action = MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED
                 putExtra(
                     MainBroadcastPreference.Target.KEY,
-                    MainBroadcastPreference.Target.PredefinedValues.IMAGE_LIST
+                    MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST
                 )
                 putExtra(
                     MainBroadcastPreference.Extra.ImageItemSelectionMode.KEY,
-                    MainBroadcastPreference.Extra.ImageItemSelectionMode.PredefinedValues.NORMAL_MODE
+                    MainBroadcastPreference.Extra.ImageItemSelectionMode.PreDefinedValues.SIGNLE_SELECTION_MODE
                 )
             })
             mIsOnMultipleSelectionMode = false
@@ -574,16 +572,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
      * 이미지 파일이 다운 혹은 공유 작업 중일 때 Indicator 를 보여줍니다.
      */
     private fun setImageOperationIndicator() {
-        mViewDataBinding.imageOperationIndicator.bringToFront()
+        mViewDataBinding.mainImageOperationIndicator.bringToFront()
         mImageOperationController.mIsOnOperation.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 if(mImageOperationController.mIsOnOperation.get()!!) {
                     mMainViewModel.mProgressIndicatorVisibility.set(true)
-                    mViewDataBinding.imageOperationIndicator.showProgressBar()
+                    mViewDataBinding.mainImageOperationIndicator.showProgressBar()
                 }
                 else {
                     mMainViewModel.mProgressIndicatorVisibility.set(false)
-                    mViewDataBinding.imageOperationIndicator.hideProgressBar()
+                    mViewDataBinding.mainImageOperationIndicator.hideProgressBar()
                 }
             }
         })

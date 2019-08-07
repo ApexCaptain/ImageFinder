@@ -28,6 +28,7 @@ import org.koin.ext.isInt
  * @property mDisplayCount 화면에 표시되는 이미지의 갯수 입니다.
  * @property mFilterMenuVisibility Filter Menu 의 가시성 여부를 지정하는 Observable<Boolean> 객체입니다.
  * @property mRecentQueryKeyword 최근에 입력된 검색어입니다.
+ * @property onQueryChangedListener ImageListFragment 에서 설정하는 값으로, 검색 값이(쿼리 단어나 정렬 기준 등) 변경되었을 때 콜 백 해줍니다.
  *
  * @author ayteneve93@gmail.com
  *

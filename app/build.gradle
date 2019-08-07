@@ -19,6 +19,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    // Kdoc 출력을 위한 Dokka 설정. GithubPage 와 함께 사용하기 위해 디렉토리를 /docs 로 지정함
+    // 추가로 private 메소드나 필드를 문서에 포함시켰는데 실제 릴리즈 할 때는 이 설정을 제거하는 것을 고려해야 함
     dokka {
         outputFormat = "html"
         outputDirectory = "$rootDir/docs"
@@ -27,9 +29,11 @@ android {
     }
     buildTypes {
         debug {
+            // 디버그 빌드
             buildConfigField("String", "KakaoImageSearchApiKey", KakaoImageSearchApiKey)
         }
         release {
+            // 릴리즈 빌드, 코드 최적화 & 난독화 적용
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "KakaoImageSearchApiKey", KakaoImageSearchApiKey)
@@ -79,7 +83,4 @@ dependencies {
 
     // TedPermission
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
-
-
-
 }
