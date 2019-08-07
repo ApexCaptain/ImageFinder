@@ -122,9 +122,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                 }
 
                                 // 애플리케이션 종료 명령
-                                MainBroadcastPreference.Action.FINISH_APPLICATION -> {
-                                    finishApplication()
-                                }
+                                MainBroadcastPreference.Action.FINISH_APPLICATION -> finishApplication()
 
                             }
                         }
@@ -527,9 +525,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
 
-    /**
-     * 알림 채널을 설정합니다.
-     */
+    /** 알림 채널을 설정합니다. */
     private fun setNotificationChannel() {
         mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val imageDownloadCompleteNotificationChannel : NotificationChannel = NotificationChannel (
@@ -543,9 +539,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mNotificationManager.createNotificationChannel(imageDownloadCompleteNotificationChannel)
     }
 
-    /**
-     * 다운로드가 완료된 경우 해당 채널에 Notification 을 보냅니다.
-     */
+    /** 다운로드가 완료된 경우 해당 채널에 Notification 을 보냅니다. */
     private fun showImageDownloadCompleteNotification() {
         val openGalleryIntent : Intent = Intent().apply {
             action = Intent.ACTION_VIEW
@@ -568,9 +562,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
 
 
-    /**
-     * 이미지 파일이 다운 혹은 공유 작업 중일 때 Indicator 를 보여줍니다.
-     */
+    /** 이미지 파일이 다운 혹은 공유 작업 중일 때 Indicator 를 보여줍니다. */
     private fun setImageOperationIndicator() {
         mViewDataBinding.mainImageOperationIndicator.bringToFront()
         mImageOperationController.mIsOnOperation.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {

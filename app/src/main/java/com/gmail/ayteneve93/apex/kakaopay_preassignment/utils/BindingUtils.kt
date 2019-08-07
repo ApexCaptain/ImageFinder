@@ -65,7 +65,7 @@ object BindingUtils {
      * 확대/축소를 지원하는데, 이 때 ConstraintLayout 의 Guideline 을 두고
      * GuideLine 의 시작 위치를 percent 로 제어해서 구현합니다.
      *
-     * @param guideline 리사이징에 주체가 되는 Guidleine 입니다.
+     * @param guideline 리사이징에 주체가 되는 Guideline 입니다.
      * @param percent Guideline 의 크기입니다. 1.0 일 경우 최대, 0.0 일 경우 최소입니다.
      *
      */

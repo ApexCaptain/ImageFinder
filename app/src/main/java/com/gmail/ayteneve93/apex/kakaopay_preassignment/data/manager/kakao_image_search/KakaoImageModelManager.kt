@@ -39,7 +39,6 @@ class KakaoImageModelManager{
             typeOfT: Type?,
             context: JsonDeserializationContext?
         ): KakaoImageModelList {
-
             val jsonObject = json!!.asJsonObject
             val metaData = jsonObject.getAsJsonObject("meta")
             val kakaoImageModelList = KakaoImageModelList(

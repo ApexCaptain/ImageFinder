@@ -24,10 +24,10 @@
                 android:layout_height="0dp"
                 android:id="@+id/imageMultiSelectionCheckBox"
                 android:visibility="@{safeUnbox(viewModel.mIsOnMultipleSelectionMode) ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toStartOf="@+id/imageVerticalGuidlineRight"
+                app:layout_constraintEnd_toStartOf="@+id/imageVerticalGuidelineRight"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/imageVerticalGuidlineLeft" app:layout_constraintHorizontal_bias="1.0"/>
+                app:layout_constraintStart_toStartOf="@+id/imageVerticalGuidelineLeft" app:layout_constraintHorizontal_bias="1.0"/>
         <ImageView
                 android:contentDescription="@string/missing_image_content"
                 android:layout_width="0dp"
@@ -36,17 +36,17 @@
                 android:scaleType="fitCenter"
                 app:thumbnail="@{viewModel.mKakaoImageModel.thumbnailUrl}"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/imageVerticalGuidlineRight"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/imageVerticalGuidelineRight"
                 android:layout_marginTop="24dp" android:layout_marginBottom="24dp"
                 android:layout_marginEnd="24dp" android:id="@+id/imageThumbnailImage"
                 android:layout_marginStart="24dp"
-                app:layout_constraintStart_toStartOf="@+id/imageVerticalGuidlineLeft"/>
+                app:layout_constraintStart_toStartOf="@+id/imageVerticalGuidelineLeft"/>
         <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/imageVerticalGuidlineLeft"
+                                                    android:layout_height="wrap_content" android:id="@+id/imageVerticalGuidelineLeft"
                                                     app:layout_constraintGuide_begin="@{0.5f - safeUnbox(viewModel.mImageSizePercentage)/2}"
                                                     android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/imageVerticalGuidlineRight"
+                                                    android:layout_height="wrap_content" android:id="@+id/imageVerticalGuidelineRight"
                                                     app:layout_constraintGuide_begin="@{0.5f + safeUnbox(viewModel.mImageSizePercentage)/2}"
                                                     android:orientation="vertical"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
