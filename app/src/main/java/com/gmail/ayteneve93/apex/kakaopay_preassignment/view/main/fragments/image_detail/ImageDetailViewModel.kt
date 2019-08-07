@@ -69,7 +69,7 @@ class ImageDetailViewModel (
 
     /**
      * 다운로드 버튼이 눌렸을 경우 공유/다운로드 제어기 객체에 현재 이미지 모델을
-     * 전당하고 다운로드를 시작합니다.
+     * 전달하고 다운로드를 시작합니다.
      */
     fun boundOnDownloadButtonClick() {
         if(!mImageOperationController.mIsOnOperation.get()!!) {
