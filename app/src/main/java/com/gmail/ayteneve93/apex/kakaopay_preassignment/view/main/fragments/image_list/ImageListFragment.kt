@@ -37,6 +37,7 @@ import kotlin.math.roundToInt
  * @property mColumnCountRatio 사용자 스마트의 가로/세로 비율에 맞춰 Recycler Grid 열의 갯수 비율을 정리합니다.
  *                              가령, 세로와 가로의 비율이 1:2 일 경우 이 값은 2가 되며 가로 모드일 때 열의 갯수는 2배가 됩니다.
  * @property mImageListBroadcastReceiver 이미지 리스트 프래그먼트에서 사용하는 방송 수신자입니다.
+ * @property mRefreshDisableHandler Pinch 종료 후 Refresh 를 다시 활성화 할 때 지연시간을 담아 처리해주는 핸들러입니다.
  *
  * @author ayteneve93@gmail.com
  *
@@ -55,6 +56,7 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             else (heightPixels/widthPixels).roundToInt()
         }
     }
+    private val mRefreshDisableHandler = Handler()
     private val mImageListBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
             intent?.let {
@@ -98,7 +100,8 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                                         MainBroadcastPreference.Extra.PinchingState.PreDefinedValues.PINCH_START -> mViewDataBinding.imageListRefreshLayout.isEnabled = false
                                         MainBroadcastPreference.Extra.PinchingState.PreDefinedValues.PINCH_END -> {
                                             if(!mImageListViewModel.mFilterMenuVisibility.get()!!) {
-                                                Handler().postDelayed({
+                                                mRefreshDisableHandler.removeCallbacksAndMessages(null)
+                                                mRefreshDisableHandler.postDelayed({
                                                     mViewDataBinding.imageListRefreshLayout.isEnabled = true
                                                 }, 300)
                                             }
