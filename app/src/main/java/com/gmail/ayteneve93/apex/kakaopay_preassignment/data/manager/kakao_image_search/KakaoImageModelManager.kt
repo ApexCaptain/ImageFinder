@@ -42,23 +42,23 @@ class KakaoImageModelManager{
             val jsonObject = json!!.asJsonObject
             val metaData = jsonObject.getAsJsonObject("meta")
             val kakaoImageModelList = KakaoImageModelList(
-                metaData.get("is_end").asBoolean,
-                metaData.get("pageable_count").asInt,
-                metaData.get("total_count").asInt,
-                ArrayList()
+                isEnd = metaData.get("is_end").asBoolean,
+                pageableCount = metaData.get("pageable_count").asInt,
+                totalCount = metaData.get("total_count").asInt,
+                documents = ArrayList()
             )
             jsonObject.getAsJsonArray("documents").forEach {
                 val eachJsonObject = it.asJsonObject
                 kakaoImageModelList.documents.add(
                     KakaoImageModel(
-                        eachJsonObject.get("collection").asString,
-                        LocalDate.parse(eachJsonObject.get("datetime").asString.substring(0..9)),
-                        eachJsonObject.get("display_sitename").asString,
-                        eachJsonObject.get("doc_url").asString,
-                        eachJsonObject.get("height").asInt,
-                        eachJsonObject.get("image_url").asString,
-                        eachJsonObject.get("thumbnail_url").asString,
-                        eachJsonObject.get("width").asInt
+                        collection = eachJsonObject.get("collection").asString,
+                        date = LocalDate.parse(eachJsonObject.get("datetime").asString.substring(0..9)),
+                        displaySitename = eachJsonObject.get("display_sitename").asString,
+                        docUrl = eachJsonObject.get("doc_url").asString,
+                        height = eachJsonObject.get("height").asInt,
+                        imageUrl = eachJsonObject.get("image_url").asString,
+                        thumbnailUrl = eachJsonObject.get("thumbnail_url").asString,
+                        width = eachJsonObject.get("width").asInt
                     )
                 )
             }
