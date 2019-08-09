@@ -1,11 +1,11 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.controller
 
-import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.Environment
@@ -63,6 +63,7 @@ class ImageOperationController(
         }
     }
     private val mImageModelMap : HashMap<String, KakaoImageModel> = HashMap()
+    val mClonedImageModelMap : HashMap<String, KakaoImageModel> = HashMap()
     private val mCompositeDisposable : CompositeDisposable = CompositeDisposable()
 
     var mIsOnOperation = ObservableField(false)
@@ -103,7 +104,6 @@ class ImageOperationController(
     fun removeImageModel(imageModel: KakaoImageModel) = mImageModelMap.remove(imageModel.imageUrl)
     /** 추가된 모든 이미지 모델을 제거하는 메소드입니다. */
     fun clearImageModels() = mImageModelMap.clear()
-
     /** 공유 절차를 시작합니다. */
     fun startShare() = checkPermsiionAndLoadImagesForOperation(ImageOperation.SHARE)
     /** 다운로드 절차를 시작합니다. */
@@ -120,6 +120,15 @@ class ImageOperationController(
     }
     /** compositeDisposable 에 입력된 Disposable 들을 모두 제거합니다. */
     fun clearDisposable() = mCompositeDisposable.clear()
+    /** 와이파이 연결상태 예외처리 결과 후처리 메소드입니다. */
+    fun runRetardedImageOperation(doStart : Boolean, prefImageOperation : MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues? = null) {
+        if(doStart && prefImageOperation != null) {
+            loadImageTo(when(prefImageOperation) {
+                MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.SHARE -> ImageOperation.SHARE
+                MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.DOWNLOAD -> ImageOperation.DOWNLOAD
+            })
+        } else mClonedImageModelMap.clear()
+    }
 
 
 
@@ -130,27 +139,30 @@ class ImageOperationController(
      * @param imageOperation 이미지를 공유(SHARE)할지  다운로드(DOWNLOAD) 할지 확인합니다,
      */
     private fun checkPermsiionAndLoadImagesForOperation(imageOperation: ImageOperation) {
-        val clonedImageModelMap : HashMap<String, KakaoImageModel> = with(mImageModelMap) {
-            val tmpHashMap = HashMap<String, KakaoImageModel>()
-            forEach { tmpHashMap[it.key] = it.value }
-            tmpHashMap
-        }
+        mImageModelMap.forEach { mClonedImageModelMap[it.key] = it.value }
         TedPermission.with(application)
             .setPermissionListener(object : PermissionListener {
                 override fun onPermissionGranted() {
-                    val isWifiConnected : Boolean = with((application.getSystemService(Context.WIFI_SERVICE) as WifiManager)) {
-                        isWifiEnabled && connectionInfo.networkId != -1
-                    }
-                    if(isWifiConnected) loadImageTo(clonedImageModelMap, imageOperation)
-                    else {
-                        AlertDialog.Builder(application).apply {
-                            setTitle(R.string.dialog_image_download_wifi_warning_title)
-                            setMessage(R.string.dialog_image_download_wifi_warning_message)
-                            setPositiveButton(R.string.dialog_image_download_wifi_warning_positive_button_txt) { _, _ ->
-                                loadImageTo(clonedImageModelMap, imageOperation)
-                            }
-                            setNegativeButton(R.string.dialog_image_download_wifi_warning_negative_button_txt) { _, _ ->
+                    with((application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)) {
+                        activeNetworkInfo.let {
+                            networkInfo ->
+                            if(networkInfo == null) {
                                 preProcessRejected()
+                                return
+                            }
+                            val isWifiConnected : Boolean = with((application.getSystemService(Context.WIFI_SERVICE) as WifiManager)) {
+                                isWifiEnabled && connectionInfo.networkId != -1
+                            }
+                            if(isWifiConnected) loadImageTo(imageOperation)
+                            else {
+                                application.sendBroadcast(Intent().apply {
+                                    action = MainBroadcastPreference.Action.CHECK_IMAGE_OPERATION_PROCEEDING_WHEN_WIFI_DISCONNECTED
+                                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
+                                    putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, when(imageOperation) {
+                                        ImageOperation.SHARE -> MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.SHARE
+                                        ImageOperation.DOWNLOAD -> MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.DOWNLOAD
+                                    })
+                                })
                             }
                         }
                     }
@@ -162,6 +174,7 @@ class ImageOperationController(
 
                 private fun preProcessRejected() {
                     Toast.makeText(application, R.string.txt_image_operation_failed, Toast.LENGTH_LONG).show()
+                    mClonedImageModelMap.clear()
                 }
 
             })
@@ -176,18 +189,17 @@ class ImageOperationController(
      * Rx Completable 에 Glide 프로세스를 등록해서 사용합니다. 이미지 모델에서 imageUrl 을 추출하여
      * 네트워크에서 이미지 Resource 를 추출하고(Bitmap) 이를 .jpg 로 압축 후 저장 혹은 공유합니다.
      *
-     * @param clonedImageModelMap 이미지 모델들이 저장된 map 객체의 사본입니다.
      * @param imageOperation 추출/압축 한 이미지들을 저장할지 공유할지 판단합니다.
      */
-    private fun loadImageTo(clonedImageModelMap : HashMap<String, KakaoImageModel>, imageOperation : ImageOperation) {
-        val totalImageCount = clonedImageModelMap.size
+    private fun loadImageTo(imageOperation : ImageOperation) {
+        val totalImageCount = mClonedImageModelMap.size
         var currentImageCount = 0
         val directoryToStore = if(imageOperation == ImageOperation.SHARE)mShareDirectory else mDownloadDirectory
         mIsOnOperation.set(true)
         mCompositeDisposable.add(
             Completable.create {
                 emitter ->
-                clonedImageModelMap.forEach {
+                mClonedImageModelMap.forEach {
                     Glide.with(application)
                         .asBitmap()
                         .load(it.value.imageUrl)
@@ -239,6 +251,7 @@ class ImageOperationController(
                         }
                     }
                 })
+                mClonedImageModelMap.clear()
             }
         )
     }

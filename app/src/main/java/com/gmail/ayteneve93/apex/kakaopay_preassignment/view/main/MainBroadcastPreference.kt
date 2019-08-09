@@ -35,6 +35,8 @@ object MainBroadcastPreference {
         const val IMAGE_OPERATION_FINISHED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.IMAGE_OPERATION_FINISHED"
         /** 애플리케이션을 종료하라는 명령인 경우 */
         const val FINISH_APPLICATION = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.FINISH_APPLICATION"
+        /** 와이파이가 연결되지 않은 상태에서의 이미지 작업 수행 여부 확인 */
+        const val CHECK_IMAGE_OPERATION_PROCEEDING_WHEN_WIFI_DISCONNECTED = "com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.Action.CHECK_IMAGE_OPERATION_PROCEEDING_WHEN_WIFI_DISCONNECTED"
     }
 
     /** 방송 수신 대상자 정보입니다. */

@@ -124,6 +124,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                 // 애플리케이션 종료 명령
                                 MainBroadcastPreference.Action.FINISH_APPLICATION -> finishApplication()
 
+                                MainBroadcastPreference.Action.CHECK_IMAGE_OPERATION_PROCEEDING_WHEN_WIFI_DISCONNECTED -> {
+                                    // ToDo 다시 묻지 않음 기능 추가해야함
+                                    AlertDialog.Builder(this@MainActivity).apply {
+                                        setTitle(R.string.dialog_image_download_wifi_warning_title)
+                                        setMessage(R.string.dialog_image_download_wifi_warning_message)
+                                        setPositiveButton(R.string.dialog_image_download_wifi_warning_positive_button_txt) { _, _ ->
+                                            (intent.getSerializableExtra(MainBroadcastPreference.Extra.ImageOperation.KEY) as MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues).let {
+                                                prefImageOperation ->
+                                                mImageOperationController.runRetardedImageOperation(true, prefImageOperation)
+                                            }
+                                        }
+                                        setNegativeButton(R.string.dialog_image_download_wifi_warning_negative_button_txt) { _, _ ->
+                                            mImageOperationController.runRetardedImageOperation(false)
+                                        }
+                                    }.show()
+                                }
+
                             }
                         }
                     }
@@ -168,7 +185,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 MainBroadcastPreference.Action.CLOSE_IMAGE_DETAIL_FRAGMENT,
                 MainBroadcastPreference.Action.IMAGE_ITEM_SELECTION_MODE_CHANGED,
                 MainBroadcastPreference.Action.IMAGE_OPERATION_FINISHED,
-                MainBroadcastPreference.Action.FINISH_APPLICATION
+                MainBroadcastPreference.Action.FINISH_APPLICATION,
+                MainBroadcastPreference.Action.CHECK_IMAGE_OPERATION_PROCEEDING_WHEN_WIFI_DISCONNECTED
             ).forEach {
                 eachAction ->
                 it.addAction(eachAction)

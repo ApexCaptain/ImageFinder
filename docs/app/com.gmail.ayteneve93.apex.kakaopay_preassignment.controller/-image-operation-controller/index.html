@@ -56,6 +56,13 @@ DI를 통해 관리되는 SingleTon 클래스입니다.</p>
 </tr>
 <tr>
 <td>
+<p><a href="m-cloned-image-model-map.html">mClonedImageModelMap</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mClonedImageModelMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-hash-map/index.html"><span class="identifier">HashMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="m-composite-disposable.html">mCompositeDisposable</a></p>
 </td>
 <td>
@@ -172,7 +179,7 @@ DI를 통해 관리되는 SingleTon 클래스입니다.</p>
 <p><a href="load-image-to.html">loadImageTo</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">loadImageTo</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController$loadImageTo(java.util.HashMap((kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel)), com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController.ImageOperation)/clonedImageModelMap">clonedImageModelMap</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-hash-map/index.html"><span class="identifier">HashMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController$loadImageTo(java.util.HashMap((kotlin.String, com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel)), com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController.ImageOperation)/imageOperation">imageOperation</span><span class="symbol">:</span>&nbsp;<a href="-image-operation/index.html"><span class="identifier">ImageOperation</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<code><span class="keyword">fun </span><span class="identifier">loadImageTo</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController$loadImageTo(com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController.ImageOperation)/imageOperation">imageOperation</span><span class="symbol">:</span>&nbsp;<a href="-image-operation/index.html"><span class="identifier">ImageOperation</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Rx Completable 에 Glide 프로세스를 등록해서 사용합니다. 이미지 모델에서 imageUrl 을 추출하여
 네트워크에서 이미지 Resource 를 추출하고(Bitmap) 이를 .jpg 로 압축 후 저장 혹은 공유합니다.</p>
 </td>
@@ -194,6 +201,15 @@ DI를 통해 관리되는 SingleTon 클래스입니다.</p>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">removeImageModel</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController$removeImageModel(com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel)/imageModel">imageModel</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.data/-kakao-image-model/index.html"><span class="identifier">KakaoImageModel</span></a><span class="symbol">?</span></code>
 <p>이미지 모델을 제거하는 메소드입니다.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="run-retarded-image-operation.html">runRetardedImageOperation</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">runRetardedImageOperation</span><span class="symbol">(</span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController$runRetardedImageOperation(kotlin.Boolean, com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues)/doStart">doStart</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController$runRetardedImageOperation(kotlin.Boolean, com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues)/prefImageOperation">prefImageOperation</span><span class="symbol">:</span>&nbsp;<a href="../../com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main/-main-broadcast-preference/-extra/-image-operation/-pre-defined-values/index.html"><span class="identifier">PreDefinedValues</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>와이파이 연결상태 예외처리 결과 후처리 메소드입니다.</p>
 </td>
 </tr>
 <tr>
