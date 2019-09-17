@@ -48,7 +48,7 @@ Kakao 이미지 API를 활용해서 개발한 안드로이드 검색 애플리�
 ## 2. 패키지 구성
 개발에 사용한 소스코드 패키지는 Dokka로 문서화 되어있으며, 본 Git Repo의 GitHubPage와 연동되어 있습니다. 
 
-자세한 사항은 [링크](https://apexcaptain.github.io/KakaoPay_PreAssignment/app/index.html)를 참고해주세요.
+자세한 사항은 [링크](https://apexcaptain.github.io/ImageFinder/app/index.html)를 참고해주세요.
 
 ## 3. 빌드 정보
 ### SDK 버젼
