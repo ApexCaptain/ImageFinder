@@ -1,4 +1,4 @@
-![RepoCard](readmeRes/repo_card.png)
+ ![RepoCard](readmeRes/repo_card.png)
 # Image Finder
 
 Kakao 이미지 API를 활용해서 개발한 안드로이드 검색 애플리케이션입니다.
