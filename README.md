@@ -64,28 +64,29 @@ Kakao 이미지 API를 활용해서 개발한 안드로이드 검색 애플리�
 ### SDK 버젼
 
 ```
-compileSdkVersion : 28
-minSdkVersion : 27
-targetSdkVersion : 28
+    minSdkVersion 27
+    targetSdkVersion 30
 ```
 
 ### 플러그인
 
 ```
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: "kotlin-kapt"
-apply plugin: 'org.jetbrains.dokka-android'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'org.jetbrains.dokka-android'
+}
 ```
 
 ### Gradle 종속성
 
 ```
+kapt "com.android.databinding:compiler:$android_plugin_version"
+
+
 // Kotlin Koin Dependency Injection
-implementation "org.koin:koin-android:$koin_version"
-implementation "org.koin:koin-android-scope:$koin_version"
-implementation "org.koin:koin-android-viewmodel:$koin_version"
+implementation "io.insert-koin:koin-android:$koin_version"
 
 // RxJava & RxAndroid
 implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
@@ -98,16 +99,14 @@ implementation "com.squareup.retrofit2:converter-gson:$retroift2_gson_converter_
 
 // Glide dependency
 implementation "com.github.bumptech.glide:glide:$glide_version"
-annotationProcessor "com.github.bumptech.glide:compiler:$glide_compiler_version"
+kapt "com.github.bumptech.glide:compiler:$glide_compiler_version"
 
 // Custom Layout Components
-implementation "com.wang.avi:library:$wang_avi_process_indicator_version"
-implementation "com.github.recruit-lifestyle:WaveSwipeRefreshLayout:$wave_swpie_refresh_layout_version"
 implementation "com.github.shadowalker77:wp7progressbar:$wp_progress_bar_version"
 implementation "com.linroid.filtermenu:library:$filter_menu_version"
 
 // TedPermission
-implementation "gun0912.ted:tedpermission:$ted_permission_version"
+implementation "io.github.ParkSangGwon:tedpermission-normal:$ted_permission_version"
 ```
 
 ## 4. 개발자 정보
