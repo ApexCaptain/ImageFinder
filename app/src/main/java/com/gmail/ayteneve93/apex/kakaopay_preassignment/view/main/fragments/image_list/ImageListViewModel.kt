@@ -8,7 +8,6 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.manager.kakao_image_search.KakaoImageSortOption
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.PreferenceUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseViewModel
-import org.koin.ext.isInt
 
 /**
  * ImageListFragment 의 ViewModel 입니다.

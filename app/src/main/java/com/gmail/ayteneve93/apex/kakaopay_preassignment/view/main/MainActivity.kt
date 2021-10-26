@@ -6,15 +6,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.database.Cursor
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.NetworkCallback
 import android.os.Handler
 import android.provider.SearchRecentSuggestions
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.Observable
-import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.FragmentManager
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.BR
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
@@ -25,7 +28,15 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.base.BaseActivity
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_detail.ImageDetailFragment
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.ImageListFragment
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.net.Network
+
+import android.net.NetworkRequest
+import com.gun0912.tedpermission.provider.TedPermissionProvider
+
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
+import java.lang.Exception
+
 
 /**
  * 애플리케이션의 중심이 되는 MainActivity 입니다. 툴 바와 프래그먼트, 기본적인
@@ -215,7 +226,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         supportActionBar?.let {
             it.setDisplayShowHomeEnabled(true)
             it.setIcon(R.drawable.ic_image_finder_mini)
-            it.title = getString(R.string.developer_name)
+            it.title = getString(R.string.app_name)
         }
     }
 
@@ -434,6 +445,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
      * 4. 현재 프래그먼트 상태가 ImageDetail 인 경우 -> 해당 프래그먼트에 이벤트 전달
      */
     override fun onBackPressed() {
+        Log.d("ayteneve93_test", "onBackPressed")
         if(mIsOnMultipleSelectionMode) {
             dismissMultiSelectionMode()
             return
@@ -445,6 +457,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         if(mMainFragmentState == MainFragmentState.IMAGE_LIST){
+            Log.d("ayteneve93_test", "Image List")
             if(mBackButtonEnabledFromDetail) {
                 sendBroadcast(Intent().apply {
                     action = MainBroadcastPreference.Action.BACK_BUTTON_PRESSED

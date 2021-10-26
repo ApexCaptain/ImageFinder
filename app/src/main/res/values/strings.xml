@@ -4,7 +4,6 @@
 
     <string name="app_name">Image Finder</string>
     <string name="missing_image_content">Cannot load image</string>
-    <string name="developer_name">SangHun Lee</string>
 
     <string name="search_view_hint">Image Search</string>
     <string name="search_list_title_hint">Please, type keyword</string>

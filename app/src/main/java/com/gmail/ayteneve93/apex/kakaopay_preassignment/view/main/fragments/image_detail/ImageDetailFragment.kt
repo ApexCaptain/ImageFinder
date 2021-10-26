@@ -10,7 +10,7 @@ import android.content.IntentFilter
 import android.graphics.Typeface
 import android.os.Handler
 import androidx.core.content.ContextCompat
-import androidx.databinding.library.baseAdapters.BR
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.BR
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel

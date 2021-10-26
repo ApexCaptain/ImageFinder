@@ -7,11 +7,12 @@ import android.content.IntentFilter
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.GridLayoutManager
+import com.gmail.ayteneve93.apex.kakaopay_preassignment.BR
 
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.R
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.controller.ImageOperationController
@@ -23,7 +24,8 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastP
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.fragments.image_list.recycler.ImageListRecyclerAdapter
 import com.linroid.filtermenu.library.FilterMenu
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -56,7 +58,9 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
             else (heightPixels/widthPixels).roundToInt()
         }
     }
-    private val mRefreshDisableHandler = Handler()
+    private var mPrevQuery : String? = null
+    private val mPrevQueryStack = Stack<String>()
+    private val mRefreshDisableHandler = Handler(Looper.myLooper()!!)
     private val mImageListBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
             intent?.let {
@@ -66,11 +70,11 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
                         target ->
                         if(target == MainBroadcastPreference.Target.PreDefinedValues.IMAGE_LIST) {
                             when(actionString) {
-
                                 // 새로운 검색어 입력됨
                                 MainBroadcastPreference.Action.NEW_SEARCH_QUERY_INPUT -> {
-                                    val queryKeyword = intent.getStringExtra(MainBroadcastPreference.Extra.QueryString.KEY)
-                                    queryKeyword?.let {
+                                    intent.getStringExtra(MainBroadcastPreference.Extra.QueryString.KEY)?.let { queryKeyword ->
+                                        if(mPrevQuery != null) mPrevQueryStack.push(mPrevQuery)
+                                        mPrevQuery = queryKeyword
                                         mImageListViewModel.inputNewKeyword(queryKeyword)
                                     }
                                 }
@@ -125,11 +129,11 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
 
                                 // 백 버튼 눌림
                                 MainBroadcastPreference.Action.BACK_BUTTON_PRESSED -> {
-                                    if(mImageListViewModel.mPageNumber > 1) mImageListViewModel.boundOnPrevPageButtonClick()
-                                    else mActivity?.sendBroadcast(Intent().apply {
+                                    // if(mImageListViewModel.mPageNumber > 1) mImageListViewModel.boundOnPrevPageButtonClick()
+                                    if(mPrevQueryStack.empty()) mActivity?.sendBroadcast(Intent().apply {
                                         action = MainBroadcastPreference.Action.FINISH_APPLICATION
                                         putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
-                                    })
+                                    }) else mImageListViewModel.inputNewKeyword(mPrevQueryStack.pop())
                                 }
 
                             }
@@ -247,15 +251,14 @@ class ImageListFragment : BaseFragment<FragmentImageListBinding, ImageListViewMo
 
 
     /**
-     * 사설 Refresh Layout 의 세부 사항을 설정합니다.
      * Refresh 가 시작될 때 Recycler View 를 Alpha 애니메이션과 함께
      * 제거하고 Recycler View 를 Clear 합니다. 이후 현재 View Model 에
      * Refresh 를 요청합니다.
      */
     private fun setRefreshLayout() {
         mViewDataBinding.imageListRefreshLayout.apply {
-            setWaveRGBColor(255, 237, 163)
             isEnabled = false
+            setColorSchemeResources(R.color.colorAccent)
             setOnRefreshListener {
                 mViewDataBinding.imageListRecyclerView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_alpha_disappear).apply {
                     setAnimationListener(object : Animation.AnimationListener {

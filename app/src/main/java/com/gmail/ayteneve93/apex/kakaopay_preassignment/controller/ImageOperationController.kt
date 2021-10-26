@@ -1,14 +1,19 @@
 package com.gmail.ayteneve93.apex.kakaopay_preassignment.controller
 
 import android.app.Application
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.media.MediaScannerConnection
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
-import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.databinding.ObservableField
@@ -21,14 +26,16 @@ import com.gmail.ayteneve93.apex.kakaopay_preassignment.data.KakaoImageModel
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.utils.ConstantUtils
 import com.gmail.ayteneve93.apex.kakaopay_preassignment.view.main.MainBroadcastPreference
 import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
+import com.gun0912.tedpermission.normal.TedPermission
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.io.FileOutputStream
-import java.util.ArrayList
+import java.io.OutputStream
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * Glide 를 활용해서 이미지 URL 을 바탕으로 이미지 파일을 참조, 압축하고
@@ -51,17 +58,10 @@ import java.util.ArrayList
 class ImageOperationController(
     private val application: Application
 ) {
+    private val mShareDirectory: File by lazy {
+        File(application.filesDir.canonicalPath + "/sharedImages")
+    }
 
-    private val mDownloadDirectory : File by lazy {
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).also {
-            if(!it.exists()) it.mkdir()
-        }
-    }
-    private val mShareDirectory : File by lazy {
-        File(application.filesDir.canonicalPath + "/sharedImages").also {
-            if(!it.exists()) it.mkdir()
-        }
-    }
     private val mImageModelMap : HashMap<String, KakaoImageModel> = HashMap()
     val mClonedImageModelMap : HashMap<String, KakaoImageModel> = HashMap()
     private val mCompositeDisposable : CompositeDisposable = CompositeDisposable()
@@ -112,7 +112,7 @@ class ImageOperationController(
     fun clearSharedDriectory() {
         if(mIsImageOnSharing) {
             mIsImageOnSharing = false
-            mShareDirectory.listFiles().forEach {
+            mShareDirectory.listFiles()?.forEach {
                 if (it.exists()) it.canonicalFile.delete()
             }
             mCompositeDisposable.clear()
@@ -140,35 +140,43 @@ class ImageOperationController(
      */
     private fun checkPermsiionAndLoadImagesForOperation(imageOperation: ImageOperation) {
         mImageModelMap.forEach { mClonedImageModelMap[it.key] = it.value }
-        TedPermission.with(application)
+        TedPermission
+            .create()
             .setPermissionListener(object : PermissionListener {
                 override fun onPermissionGranted() {
-                    with((application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)) {
-                        activeNetworkInfo.let {
-                            networkInfo ->
-                            if(networkInfo == null) {
-                                preProcessRejected()
-                                return
-                            }
-                            val isWifiConnected : Boolean = with((application.getSystemService(Context.WIFI_SERVICE) as WifiManager)) {
-                                isWifiEnabled && connectionInfo.networkId != -1
-                            }
-                            if(isWifiConnected) loadImageTo(imageOperation)
-                            else {
-                                application.sendBroadcast(Intent().apply {
-                                    action = MainBroadcastPreference.Action.CHECK_IMAGE_OPERATION_PROCEEDING_WHEN_WIFI_DISCONNECTED
-                                    putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
-                                    putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, when(imageOperation) {
-                                        ImageOperation.SHARE -> MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.SHARE
-                                        ImageOperation.DOWNLOAD -> MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.DOWNLOAD
-                                    })
-                                })
-                            }
-                        }
+                    val isConnectedToNetwork = (application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).run {
+                        getNetworkCapabilities(activeNetwork)?.run {
+                            hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                                    || hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                                    || hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+                        } ?: false
                     }
+                    if(!isConnectedToNetwork) {
+                        preProcessRejected()
+                        return
+                    }
+                    loadImageTo(imageOperation)
+
+                    /*
+                    ToDo 와이파이 연결 상태에 따른 분기점 추가 해야함 (현재 파악 못 하고 있음) <- 이거 분명 구글이 시키는 데로 다 했는데도 안 됨. 내 폰이 이상한 건지 확인 해봐야 할 듯?
+                    val isWifiConnected : Boolean = with((application.getSystemService(Context.WIFI_SERVICE) as WifiManager)) {
+                        isWifiEnabled && connectionInfo.networkId != -1
+                    }
+                    if(isWifiConnected) loadImageTo(imageOperation)
+                    else {
+                        application.sendBroadcast(Intent().apply {
+                            action = MainBroadcastPreference.Action.CHECK_IMAGE_OPERATION_PROCEEDING_WHEN_WIFI_DISCONNECTED
+                            putExtra(MainBroadcastPreference.Target.KEY, MainBroadcastPreference.Target.PreDefinedValues.MAIN_ACTIVITY)
+                            putExtra(MainBroadcastPreference.Extra.ImageOperation.KEY, when(imageOperation) {
+                                ImageOperation.SHARE -> MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.SHARE
+                                ImageOperation.DOWNLOAD -> MainBroadcastPreference.Extra.ImageOperation.PreDefinedValues.DOWNLOAD
+                            })
+                        })
+                    }
+                    */
                 }
 
-                override fun onPermissionDenied(deniedPermissions: ArrayList<String>?) {
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
                     preProcessRejected()
                 }
 
@@ -176,12 +184,11 @@ class ImageOperationController(
                     Toast.makeText(application, R.string.txt_image_operation_failed, Toast.LENGTH_LONG).show()
                     mClonedImageModelMap.clear()
                 }
-
             })
             .setRationaleMessage(R.string.permission_external_storage_rational_message)
             .setDeniedMessage(R.string.permission_external_storage_denied_message)
             .setGotoSettingButton(true)
-            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.ACCESS_WIFI_STATE)
             .check()
     }
 
@@ -194,7 +201,6 @@ class ImageOperationController(
     private fun loadImageTo(imageOperation : ImageOperation) {
         val totalImageCount = mClonedImageModelMap.size
         var currentImageCount = 0
-        val directoryToStore = if(imageOperation == ImageOperation.SHARE)mShareDirectory else mDownloadDirectory
         mIsOnOperation.set(true)
         mCompositeDisposable.add(
             Completable.create {
@@ -210,18 +216,37 @@ class ImageOperationController(
                             }
                             override fun onLoadCleared(placeholder: Drawable?) = Unit
                             override fun onResourceReady(bitmapImage: Bitmap, transition: Transition<in Bitmap>?) {
-                                val imageFile = File(directoryToStore, application.getString(R.string.download_image_prefix, it.value.hashCode()) + ".jpg")
                                 try {
-                                    FileOutputStream(imageFile).also { fileOutputStream ->
+                                    val fileName = "${application.getString(R.string.download_image_prefix, it.value.hashCode())}.jpg"
+                                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && imageOperation == ImageOperation.DOWNLOAD) {
+                                        val resolver = application.contentResolver
+                                        val contentValues = ContentValues().apply {
+                                            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                                            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                                            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                                        }
+                                        val fileUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)!!
+                                        val fileOutputStream = resolver.openOutputStream(fileUri)!! as FileOutputStream
+                                        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+                                        contentValues.clear()
+                                        resolver.notifyChange(fileUri, null)
+                                    } else {
+                                        val file = File(
+                                            if(imageOperation == ImageOperation.DOWNLOAD) Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
+                                            else mShareDirectory.absolutePath , fileName
+                                        )
+                                        val fileUri = Uri.fromFile(file)
+                                        val fileOutputStream = FileOutputStream(file)
                                         bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
                                         fileOutputStream.close()
-                                        if(imageOperation == ImageOperation.DOWNLOAD) notifyAndroidNewImageAdded(imageFile)
+                                        if(imageOperation == ImageOperation.DOWNLOAD) notifyAndroidNewImageAdded(fileUri)
                                     }
                                 } catch(e : Exception) { e.printStackTrace() }
                                 currentImageCount++
                                 if(currentImageCount == totalImageCount) emitter.onComplete()
                             }
                         })
+
                 }
             }
             .subscribeOn(Schedulers.io())
@@ -238,7 +263,7 @@ class ImageOperationController(
                                 action = Intent.ACTION_SEND_MULTIPLE
                                 type = "image/jpeg"
                                 putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList<Uri>().also {
-                                    mShareDirectory.listFiles().forEach { eachFileToShare ->
+                                    mShareDirectory.listFiles()!!.forEach { eachFileToShare ->
                                         if(eachFileToShare.extension == "jpg") it.add(FileProvider.getUriForFile(application, BuildConfig.APPLICATION_ID, eachFileToShare))
                                     }
                                 })
@@ -262,10 +287,10 @@ class ImageOperationController(
      *
      * @param imageFile 추가된 이미지 파일입니다.
      */
-    private fun notifyAndroidNewImageAdded(imageFile : File) {
+    private fun notifyAndroidNewImageAdded(imageFileUri: Uri) {
         application.sendBroadcast(Intent().apply {
             action = Intent.ACTION_MEDIA_SCANNER_SCAN_FILE
-            data = Uri.fromFile(imageFile)
+            data = imageFileUri
         })
     }
 
