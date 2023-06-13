@@ -2,10 +2,10 @@ buildscript {
     // Gradle 종속성 버전 관리
     ext {
         // 안드로이드 플러그인
-        android_plugin_version = '7.0.3'
+        android_plugin_version = '7.4.2'
 
         // 코틀린
-        kotlin_version = '1.5.31'
+        kotlin_version = '1.6.21'
         koin_version = '3.1.2'
 
         // Kdoc Dokka

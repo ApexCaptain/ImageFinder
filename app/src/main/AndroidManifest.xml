@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.gmail.ayteneve93.apex.kakaopay_preassignment">
+        xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 퍼미션 리스트 -->
     <uses-permission android:name="android.permission.INTERNET"/>
